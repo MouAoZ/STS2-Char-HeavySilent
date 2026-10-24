@@ -1,12 +1,12 @@
 # 初始化教学样例
 
-这份文档解释当前可运行样例的结算与验收。策划输入见[设计草稿 v0.1](设计草稿v0.1.md)；完整设计、稳定模型 ID、实现状态和源码统一登记在[设计到实现跟踪](implementation-tracker.md)。测试占位不代表修改正式起始套牌。
+这份文档解释当前可运行样例的结算与验收。卡牌效果、稳定模型 ID、实现状态和源码统一登记在[卡牌设计](cards.md)，汇总见[设计到实现跟踪](implementation-tracker.md)。测试占位不代表修改正式起始套牌。
 
 | 样例条目 | 阅读重点 |
 | --- | --- |
-| [HS-BASE-001 · 打击](implementation-tracker.md#hs-base-001) | 伤害命令、目标、力量与敌人格挡 |
-| [HS-BASE-002 · 防御](implementation-tracker.md#hs-base-002) | 格挡命令、敏捷与升级数值 |
-| [HS-TOKEN-001 · 气](implementation-tracker.md#hs-token-001) | 普通抽牌、洗牌与消耗时机 |
+| [HS-BASE-001 · 打击](cards.md#hs-base-001) | 伤害命令、目标、力量与敌人格挡 |
+| [HS-BASE-002 · 防御](cards.md#hs-base-002) | 格挡命令、敏捷与升级数值 |
+| [HS-TOKEN-001 · 气](cards.md#hs-token-001) | 普通抽牌、洗牌与消耗时机 |
 
 打击／防御采用原版基础数值作为工程样例；气的数值来自原设计稿。升级保持费用与关键词不变，只改变对应动态数值。
 

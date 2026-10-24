@@ -7,7 +7,7 @@
 
 - 实现、调试或评审本项目：使用 [sts2-heavysilent-dev](.agents/skills/sts2-heavysilent-dev/SKILL.md)。
 - 人类学习与 Review：[docs/README.md](docs/README.md)。
-- 内容意图：[设计草稿](docs/design/设计草稿v0.1.md)；逐项状态与代码看[设计跟踪](docs/design/implementation-tracker.md)，总览与看板看[README](README.md)，验证证据看[项目状态](docs/development/status.md)。
+- 内容意图与逐项状态：[设计入口](docs/design/README.md)，按特殊机制、卡牌、遗物／事件／药水分别维护；汇总看[设计跟踪](docs/design/implementation-tracker.md)，总览与看板看[README](README.md)，验证证据看[项目状态](docs/development/status.md)。
 - 环境变更：核对[版本基线](docs/development/baseline.json)及本机程序集。
 - Agent 实机测试与可选回归：[测试工作流](.agents/skills/sts2-heavysilent-dev/references/game-testing.md)。
 

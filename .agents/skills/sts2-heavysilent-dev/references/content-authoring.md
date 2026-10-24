@@ -3,6 +3,8 @@
 核验基线：[baseline.json](../../../../docs/development/baseline.json)。
 人类填写设计，Agent 完成代码、本地化、资源与验证。“填充”不要求人类编程，也不表示游戏能直接读取策划 Markdown。
 
+设计按[三类正文](../../../../docs/design/README.md)分别维护：术语及共用规则进入[特殊机制设计](../../../../docs/design/mechanics.md)，所有卡牌进入[卡牌设计](../../../../docs/design/cards.md)，其他内容进入[遗物／事件／药水设计](../../../../docs/design/relics-events-potions.md)。技术教程引用这些规则，不另存副本。
+
 ## 如何判断工作量
 
 | 内容 | 常规填充 | 需要新增程序能力 |
@@ -23,7 +25,7 @@
 5. 在 eng／zhs 的 `cards.json` 增加 `.title`、`.description`，描述使用 `{Cards:diff()}`。
 6. 继承基类上的 Pool 注册，暂用基类的占位图；正式卡图准备好后，为这张卡显式覆盖图片路径。
 7. 执行 `verify`、`package`，并验证足量牌、空牌堆、手牌上限和升级情形。
-8. 更新[设计跟踪](../../../../docs/design/implementation-tracker.md)的状态、模型 ID 和代码链接，同步 README 看板与状态页验证证据，提交可供人类 Review 的行为说明；新增的教学解释另写入样例文档。
+8. 更新[卡牌设计](../../../../docs/design/cards.md)的状态、模型 ID 和代码链接，以及[设计跟踪](../../../../docs/design/implementation-tracker.md)的汇总；同步 README 看板与状态页验证证据，提交可供人类 Review 的行为说明，新增的教学解释另写入样例文档。
 
 改“抽 1／2 张”为其他数值时，主要修改 `CanonicalVars` 的基础值和 `OnUpgrade` 的差值。
 改“抽牌”为“征召”则改变了机制，不能只改描述，也不能直接给普通抽牌命令换个中文名字。
@@ -60,6 +62,8 @@ Agent 查阅 `EventModel`／`CustomEventModel`，实现出现条件、页面文�
 接口要能表达调用者真正需要的信息，例如磨顶是否成功、实际移动的卡牌、后续效果是否应继续；这些字段在语义确定前不提前固定。
 
 首次实现机制时补充有意义的边界测试。普通数值填充以分析器、内容检查和适用的实机验证为主，不为每个常量写一套重复测试。
+
+可见术语还需按[特殊机制设计](../../../../docs/design/mechanics.md#范围与交付)完成双语解释和悬停显示，将结算验证与提示显示验证分别记录。
 
 ## 内容资产与文案
 

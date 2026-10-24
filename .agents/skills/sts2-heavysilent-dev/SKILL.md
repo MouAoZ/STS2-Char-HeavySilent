@@ -16,16 +16,18 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 | 理解代码结构、注册与资源归属 | [工程结构](references/architecture.md) |
 | 解释代码、检查命令与生命周期 | [API 与教学](references/api-primer.md) |
 | 增加卡牌、遗物、药水或事件 | [内容填充](references/content-authoring.md) |
-| 磨顶、征召、气及相关触发链 | [机制语义](references/mechanics.md) |
+| 特殊机制、术语解释与共用规则 | [特殊机制设计](../../../docs/design/mechanics.md) |
+| 初始卡组、角色卡牌、状态牌、诅咒牌与特殊来源卡牌 | [卡牌设计](../../../docs/design/cards.md) |
+| 遗物、事件与药水的玩法 | [遗物／事件／药水设计](../../../docs/design/relics-events-potions.md) |
 | 编译、打包、部署、排错、版本升级 | [构建与调试](references/build-debug.md) |
 | Agent 实机测试、场景构造、截图与可选回归 | [测试工作流](references/game-testing.md) |
 | 查询上游文档 | [来源索引](references/sources.md) |
 
-这些正文同时供人类阅读。仅加载当前任务所需章节；小型文本修正不需要全量阅读。
+设计正文统一在 [docs/design](../../../docs/design/README.md)，本 Skill 仅索引设计与维护技术工作流，不另存玩法规则。上述正文供人类与 Agent 共用；仅加载当前任务所需章节，小型文本修正不需要全量阅读。
 
 ## 落实内容
 
-- 通过[设计跟踪](../../../docs/design/implementation-tracker.md)定位意图、逐项状态、稳定 ID 与代码，通过[项目状态](../../../docs/development/status.md)核对验证证据；[教学样例](../../../docs/design/teaching-samples.md)解释现有结算。
+- 从[设计入口](../../../docs/design/README.md)进入对应类别，读取玩法、逐项状态、稳定 ID 与代码；[设计跟踪](../../../docs/design/implementation-tracker.md)汇总进度，[项目状态](../../../docs/development/status.md)记录验证证据，[教学样例](../../../docs/design/teaching-samples.md)解释现有结算。
 - 将已有命令组合与新增机制分开。只询问影响当前实现的设计歧义；其余条目标记待确认。
 - 保持卡牌效果顺序可读，使用游戏 Command、玩家选择上下文和游戏 RNG。
 - 新机制先核对原版类似实现；必要补丁单独说明目标方法和版本。
@@ -35,7 +37,7 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 
 - 按变更范围运行相关验证。构建、资源包验证、实际游戏验证分别报告。
 - 实机测试由当前改动驱动：先列问题、预期和理由，再构造场景、实际操作、观察和记录。固定回归按相关性选用，不默认重跑整套打击／防御／气。
-- 内容变更更新设计跟踪、README 进度与看板、状态页验证证据；维护步骤见跟踪表。机制变更更新本 Skill 的机制参考；命令或环境变更更新构建参考。
+- 内容变更更新所属设计文档中的条目，再同步设计跟踪、README 看板与状态页验证证据。机制规则直接更新设计目录中的特殊机制正文；Skill 维护索引，命令或环境变更更新构建参考。
 - 同一事实只保留一份正文，其他入口链接它；不要把会话日志写进 Skill。
 - 适用版本看[基线](../../../docs/development/baseline.json)，不是凭 Skill 的更新时间推断兼容。
 - 人类 Review 需要行为变化、关键源码、验证证据和未完成项；沿用[Review 指引](../../../docs/development/review.md)。
