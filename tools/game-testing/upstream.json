@@ -1,0 +1,9 @@
+{
+  "repository": "Gennadiyev/STS2MCP",
+  "commit": "55e064850a68f3b4cde7e5fd525bf9b2dec4e885",
+  "archive_url": "https://api.github.com/repos/Gennadiyev/STS2MCP/zipball/55e064850a68f3b4cde7e5fd525bf9b2dec4e885",
+  "archive_sha256": "c6d4063492515a1cbf328abce64fe4c8977b9ac8738550f7e7e6debed81a72fb",
+  "uv_version": "0.13.5",
+  "uv_wheel_url": "https://files.pythonhosted.org/packages/32/ea/771744a784b16aa21d195cb5d5d5a2878d72fa00fc26f11ea3f9646994fe/uv-0.13.5-py3-none-win_amd64.whl",
+  "uv_wheel_sha256": "1fb29fc46ba12033e2ef95a95ac79d649e71bbb1358419bbbcbd19d86026ef2f"
+}

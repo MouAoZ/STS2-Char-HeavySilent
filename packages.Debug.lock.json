@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net9.0": {
+      "Alchyr.Sts2.BaseLib": {
+        "type": "Direct",
+        "requested": "[3.4.7, 3.4.7]",
+        "resolved": "3.4.7",
+        "contentHash": "tQkAUPXJzaDjMMPT2hXVbYGKPqHcsNe/eDtm0/RGyOUG21Rsiu+JkWiM6BIN8RjFDSfHEPZ/e1D3mujuuo5mYw=="
+      },
+      "Alchyr.Sts2.ModAnalyzers": {
+        "type": "Direct",
+        "requested": "[0.2.1, 0.2.1]",
+        "resolved": "0.2.1",
+        "contentHash": "hiUZueWH2QqAtvrR13aqtlIxpOsByV2mCKmL/wGop2MSrbBxzO7vAJJehkFD6AII0ANE/6XNC+kAywWsiGtwwg=="
+      },
+      "Godot.SourceGenerators": {
+        "type": "Direct",
+        "requested": "[4.5.1, )",
+        "resolved": "4.5.1",
+        "contentHash": "HOHYJQO5A/kzf5CUobeTPOX+JawSvjkDE0v/Fyo4EMYEC2MvCTGUvpJFjqQQmHYLNsiiB7RLVilcnup+jiVfdA=="
+      },
+      "GodotSharp": {
+        "type": "Direct",
+        "requested": "[4.5.1, )",
+        "resolved": "4.5.1",
+        "contentHash": "5CFnEHT+FByv5desNHMipz/209SCrWR9CGWFZjGHnXupl1Rw8U8q4nf65/unqZVL97Rx+3J5hskPMoDGaiZL9g=="
+      },
+      "GodotSharpEditor": {
+        "type": "Direct",
+        "requested": "[4.5.1, )",
+        "resolved": "4.5.1",
+        "contentHash": "8CM49047b0Us3qPJo6L7kdldreOvR7JCoXlKoSHzpA0TQP6+Qnoxz/26GZ1ONg2wW4vV9uzor0AHXSGUFP9XSw==",
+        "dependencies": {
+          "GodotSharp": "4.5.1"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "HEAVYSILENT_STRIKE.title": "打击",
+  "HEAVYSILENT_STRIKE.description": "造成{Damage:diff()}点伤害。",
+  "HEAVYSILENT_DEFEND.title": "防御",
+  "HEAVYSILENT_DEFEND.description": "获得{Block:diff()}点[gold]格挡[/gold]。",
+  "HEAVYSILENT_QI.title": "气",
+  "HEAVYSILENT_QI.description": "抽{Cards:diff()}张牌。"
+}

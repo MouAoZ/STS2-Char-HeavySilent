@@ -1,0 +1,12 @@
+{
+  "id": "HeavySilentTestBridge",
+  "name": "HeavySilent Test Bridge (STS2MCP)",
+  "author": "Gennadiyev; HeavySilent project adaptations",
+  "description": "Development-only test bridge. Active only in a managed HeavySilent test session.",
+  "version": "0.1.0",
+  "has_dll": true,
+  "has_pck": false,
+  "affects_gameplay": true,
+  "min_game_version": "0.111.0",
+  "dependencies": [{ "id": "HeavySilent", "min_version": "0.1.0" }]
+}

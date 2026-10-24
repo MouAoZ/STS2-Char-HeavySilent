@@ -1,0 +1,18 @@
+{
+  "HEAVYSILENT_CHARACTER.title": "Heavy Silent",
+  "HEAVYSILENT_CHARACTER.description": "开发样例：打击、防御与气。\n磨顶、征召和完整卡池尚未实现。",
+  "HEAVYSILENT_CHARACTER.titleObject": "Heavy Silent",
+  "HEAVYSILENT_CHARACTER.pronounSubject": "她",
+  "HEAVYSILENT_CHARACTER.pronounObject": "她",
+  "HEAVYSILENT_CHARACTER.pronounPossessive": "她的",
+  "HEAVYSILENT_CHARACTER.possessiveAdjective": "她的",
+  "HEAVYSILENT_CHARACTER.goldMonologue": "……",
+  "HEAVYSILENT_CHARACTER.eventDeathPrevention": "再深吸一口气。",
+  "HEAVYSILENT_CHARACTER.aromaPrinciple": "……呼吸……",
+  "HEAVYSILENT_CHARACTER.cardsModifierTitle": "Heavy Silent卡牌",
+  "HEAVYSILENT_CHARACTER.cardsModifierDescription": "将Heavy Silent的卡牌加入奖励与商店。",
+  "HEAVYSILENT_CHARACTER.banter.alive.endTurnPing": "……",
+  "HEAVYSILENT_CHARACTER.banter.dead.endTurnPing": "……",
+  "HEAVYSILENT_CHARACTER.bestiaryQuote": "……",
+  "HEAVYSILENT_CHARACTER.unlockText": "开发测试角色，已解锁。"
+}

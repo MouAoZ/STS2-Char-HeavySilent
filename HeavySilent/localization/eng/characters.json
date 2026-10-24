@@ -1,0 +1,18 @@
+{
+  "HEAVYSILENT_CHARACTER.title": "Heavy Silent",
+  "HEAVYSILENT_CHARACTER.description": "Development scaffold: Strike, Defend and Qi.\nMill, Recruit and the full card pool are not implemented.",
+  "HEAVYSILENT_CHARACTER.titleObject": "Heavy Silent",
+  "HEAVYSILENT_CHARACTER.pronounSubject": "she",
+  "HEAVYSILENT_CHARACTER.pronounObject": "her",
+  "HEAVYSILENT_CHARACTER.pronounPossessive": "hers",
+  "HEAVYSILENT_CHARACTER.possessiveAdjective": "her",
+  "HEAVYSILENT_CHARACTER.goldMonologue": "...",
+  "HEAVYSILENT_CHARACTER.eventDeathPrevention": "One more breath.",
+  "HEAVYSILENT_CHARACTER.aromaPrinciple": "...breathe...",
+  "HEAVYSILENT_CHARACTER.cardsModifierTitle": "Heavy Silent Cards",
+  "HEAVYSILENT_CHARACTER.cardsModifierDescription": "Include Heavy Silent cards in rewards and shops.",
+  "HEAVYSILENT_CHARACTER.banter.alive.endTurnPing": "...",
+  "HEAVYSILENT_CHARACTER.banter.dead.endTurnPing": "...",
+  "HEAVYSILENT_CHARACTER.bestiaryQuote": "...",
+  "HEAVYSILENT_CHARACTER.unlockText": "Available for development testing."
+}

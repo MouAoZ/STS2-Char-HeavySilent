@@ -1,0 +1,24 @@
+# Local configuration and upstream inspection caches
+local.props
+.cache/
+.tools/
+
+# Godot / .NET generated files
+.godot/
+**/bin/
+**/obj/
+artifacts/
+.vs/
+.idea/
+*.user
+*.suo
+__pycache__/
+**/.venv/
+.codex/config.toml
+
+# Never commit game assemblies, extracted game assets, saves or credentials.
+*.pck
+*.pdb
+*.dll
+*.nupkg
+*.cs.uid

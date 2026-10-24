@@ -1,0 +1,13 @@
+; Asset project for a mod loaded by STS2. Run the game to play it.
+config_version=5
+
+[application]
+config/name="HeavySilent"
+config/features=PackedStringArray("4.5", "C#", "GL Compatibility")
+config/icon="res://HeavySilent/mod_image.png"
+
+[dotnet]
+project/assembly_name="HeavySilent"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"

@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <!-- Copy this file to local.props. Use absolute paths; do not add quotes. -->
+    <Sts2Path>D:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path>
+    <GodotPath>D:/Studio/GameDev/_Apps/MegaDot/4.5.1-m.14/MegaDot_v4.5.1-stable_mono_win64_console.exe</GodotPath>
+    <BaseLibPath>D:/SteamLibrary/steamapps/workshop/content/2868840/3737335127/BaseLib</BaseLibPath>
+  </PropertyGroup>
+</Project>

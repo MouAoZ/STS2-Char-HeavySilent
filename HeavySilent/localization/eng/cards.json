@@ -1,0 +1,8 @@
+{
+  "HEAVYSILENT_STRIKE.title": "Strike",
+  "HEAVYSILENT_STRIKE.description": "Deal {Damage:diff()} damage.",
+  "HEAVYSILENT_DEFEND.title": "Defend",
+  "HEAVYSILENT_DEFEND.description": "Gain {Block:diff()} [gold]Block[/gold].",
+  "HEAVYSILENT_QI.title": "Qi",
+  "HEAVYSILENT_QI.description": "Draw {Cards:diff()} {Cards:plural:card|cards}."
+}

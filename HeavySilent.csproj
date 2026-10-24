@@ -1,0 +1,27 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GodotDisabledSourceGenerators>GodotPluginsInitializer</GodotDisabledSourceGenerators>
+    <Version>0.1.0</Version>
+    <NuGetLockFilePath>$(MSBuildProjectDirectory)/packages.$(Configuration).lock.json</NuGetLockFilePath>
+    <NoWarn>$(NoWarn);MSB3270</NoWarn>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.cache/**;.tools/**;artifacts/**</DefaultItemExcludes>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="HeavySilentCode/**/*.cs" />
+    <AdditionalFiles Include="HeavySilent/localization/**/*.json" />
+    <Reference Include="sts2">
+      <HintPath>$(Sts2DataDir)/sts2.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <PackageReference Include="Alchyr.Sts2.BaseLib" Version="[$(BaseLibVersion)]" PrivateAssets="all" />
+    <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="[$(ModAnalyzersVersion)]" PrivateAssets="all" />
+  </ItemGroup>
+  <Target Name="CheckGameReference" BeforeTargets="ResolveReferences">
+    <Error Condition="!Exists('$(Sts2DataDir)/sts2.dll')"
+           Text="sts2.dll not found. Copy local.props.example to local.props and set Sts2Path. See README.md." />
+  </Target>
+</Project>

@@ -1,0 +1,10 @@
+<Project>
+  <!-- Paths belong to the machine; versions belong to the repository. -->
+  <Import Project="$(MSBuildThisFileDirectory)local.props" Condition="Exists('$(MSBuildThisFileDirectory)local.props')" />
+  <PropertyGroup>
+    <Sts2DataDir>$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
+    <BaseLibVersion>3.4.7</BaseLibVersion>
+    <ModAnalyzersVersion>0.2.1</ModAnalyzersVersion>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+</Project>

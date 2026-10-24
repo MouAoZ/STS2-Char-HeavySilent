@@ -1,0 +1,4 @@
+interface:
+  display_name: "HeavySilent 开发"
+  short_description: "实现与评审 HeavySilent 角色模组，维护机制、内容、构建和教学文档"
+  default_prompt: "使用 $sts2-heavysilent-dev 实现这项设计，并说明关键代码与验证结果。"
