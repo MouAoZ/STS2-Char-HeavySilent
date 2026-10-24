@@ -2,6 +2,20 @@
 
 核验基线：[baseline.json](../../../../docs/development/baseline.json)。
 
+## 模组源码与开发脚手架
+
+以能否独立产出玩家模组为边界：只复制 [mod/](../../../../mod) 的可提交内容，提供所需工具链和游戏引用，即可由 [build.ps1](../../../../mod/build.ps1) 生成 DLL、PCK 与 manifest。独立构建不读取外层 README、设计、Skill、版本基线、验证脚本或测试桥。
+
+| 范围 | 位置与内容 | 依赖方向 |
+| --- | --- | --- |
+| 模组源码 | `mod/HeavySilentCode/` 的 C#，`mod/HeavySilent/` 的文本、图片和导入设置 | 依赖游戏 API 与 BaseLib |
+| 独立构建输入 | `mod/` 内的 csproj／sln、Directory.Build.props、global.json、NuGet.Config、两份锁文件、project.godot、export_presets.cfg、manifest 和 build.ps1 | 只使用同目录输入、.NET／MegaDot／PowerShell 与外部游戏引用 |
+| 随包许可 | `mod/THIRD_PARTY_NOTICES.md` | 属于必须随玩家包分发的输入，不是开发教学文档 |
+| 开发脚手架 | `docs/`、`.agents/`、AGENTS.md、根 README、`scripts/`、`tools/`、`tests/` 和编辑器配置 | 可以读取源码、调用构建入口；源码构建不反向读取它们 |
+| 本机状态与产物 | `mod/local.props`、`.godot/`、`.cache/`、`artifacts/`、测试环境等 | 按需生成，均不作为可提交源码 |
+
+独立入口默认输出 `mod/artifacts/`；外层 `scripts/dev.ps1` 显式指定根 `artifacts/`，增加验证、完成记录与部署保护。两个入口共用构建实现。复制源码时排除 local.props、缓存与产物；可复制 local.props.example 后填写路径，也可通过参数传入游戏和引擎路径。
+
 ## 三种输入与三个产物
 
 策划 Markdown 是人类与 Agent 的需求约定；C# 是游戏执行的逻辑；本地化 JSON 和图片是游戏显示的资源。
@@ -20,17 +34,18 @@ PCK 以 `res://HeavySilent/` 为资源根，避免覆盖原版同名资源。
 
 | 位置 | 职责 | 常见修改 |
 | --- | --- | --- |
-| [ModEntry](../../../../HeavySilentCode/ModEntry.cs) | 模组常量、入口和日志 | 初始化行为；当前没有玩法补丁 |
-| [角色](../../../../HeavySilentCode/Character/HeavySilentCharacter.cs) | 生命、起始套牌、遗物、外观引用 | 正式起始配置和角色表现 |
-| [内容池](../../../../HeavySilentCode/Character/HeavySilentPools.cs) | 卡牌、遗物、药水归属及颜色 | 新内容归属和池的展示 |
-| [卡牌基类](../../../../HeavySilentCode/Cards/HeavySilentCard.cs) | 共同卡池、占位图片路径 | 为具体卡牌提供独立图片时调整 |
-| [具体卡牌](../../../../HeavySilentCode/Cards) | 费用、动态数值、关键词、效果与升级 | 每张卡的规则 |
-| [资源](../../../../HeavySilent) | eng／zhs 文本、图片与导入设置 | 文案、翻译、美术 |
-| [脚本](../../../../scripts) | 环境核对、构建、包装、部署与检查 | 开发流程 |
+| [ModEntry](../../../../mod/HeavySilentCode/ModEntry.cs) | 模组常量、入口和日志 | 初始化行为；当前没有玩法补丁 |
+| [角色](../../../../mod/HeavySilentCode/Character/HeavySilentCharacter.cs) | 生命、起始套牌、遗物、外观引用 | 正式起始配置和角色表现 |
+| [内容池](../../../../mod/HeavySilentCode/Character/HeavySilentPools.cs) | 卡牌、遗物、药水归属及颜色 | 新内容归属和池的展示 |
+| [卡牌基类](../../../../mod/HeavySilentCode/Cards/HeavySilentCard.cs) | 共同卡池、占位图片路径 | 为具体卡牌提供独立图片时调整 |
+| [具体卡牌](../../../../mod/HeavySilentCode/Cards) | 费用、动态数值、关键词、效果与升级 | 每张卡的规则 |
+| [资源](../../../../mod/HeavySilent) | eng／zhs 文本、图片与导入设置 | 文案、翻译、美术 |
+| [独立构建](../../../../mod/build.ps1) | 从源码生成 DLL 与资源包 | 模组打包输入与命令 |
+| [开发脚本](../../../../scripts) | 环境核对、验证、部署及调用独立构建 | 脚手架流程 |
 
 ## 测试工具与正式模组的分界
 
-主工程 `HeavySilent.csproj` 只编译 `HeavySilentCode/**/*.cs`。下列测试代码有独立入口，不会因为位于仓库内就被编进玩家 DLL：
+主工程 `mod/HeavySilent.csproj` 只编译其目录内的 `HeavySilentCode/**/*.cs`。下列测试代码有独立入口，不会因为位于仓库内就被编进玩家 DLL：
 
 | 位置 | 职责 |
 | --- | --- |
@@ -42,9 +57,11 @@ PCK 以 `res://HeavySilent/` 为资源根，避免覆盖原版同名资源。
 
 需要调整上游桥时修改 `bootstrap.py` 的补丁，不能只编辑 `.tools` 内生成的文件，否则下次准备会丢失修改。新增测试能力优先放本地桥扩展；玩法实现放正式模组，二者不可互相替代。
 
+测试桥显式导入 `mod/Directory.Build.props` 以复用本机游戏路径；bootstrap 在 `mod/` 下执行 dotnet，使用该目录的 SDK 版本和 NuGet.Config。这个依赖只从测试脚手架指向模组构建配置。
+
 ## 新增程序目录
 
-首次新增共用机制时再引入 `Mechanics`，首次新增状态效果时引入 `Powers`，确需补丁时引入 `Patches`。
+在 `mod/HeavySilentCode/` 内，首次新增共用机制时再引入 `Mechanics`，首次新增状态效果时引入 `Powers`，确需补丁时引入 `Patches`。
 普通内容调用共用机制，补丁处理游戏现有入口无法表达的行为；避免每张卡复制一套磨顶代码。
 
 ## 为什么一张卡一个类
@@ -68,9 +85,9 @@ PCK 以 `res://HeavySilent/` 为资源根，避免覆盖原版同名资源。
 
 ## 构建边界
 
-- SDK／NuGet 版本在仓库中固定；机器路径放忽略的 `local.props`。
+- SDK／NuGet 版本在 `mod/` 中固定；机器路径放忽略的 `mod/local.props`。
 - 游戏 DLL 通过本地路径引用，`Private=false`，不进入模组产物。
-- 普通构建输出在 `.godot/mono/temp/bin/`；`package` 使用独立资源工程导出 PCK。
+- 普通构建输出在 `mod/.godot/mono/temp/bin/`；PCK 使用 `mod/.cache/` 下的独立资源工程导出，资源路径仍为 `res://HeavySilent/`。
 - 包信息和哈希在模组目录外的 `package-info.json`；游戏扫描模组 JSON 时不会把它当成另一个 manifest。
 - 部署只复制本模组的已验证文件；BaseLib 由玩家单独安装。
 

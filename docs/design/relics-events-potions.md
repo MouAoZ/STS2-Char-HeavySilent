@@ -10,7 +10,7 @@
 
 ## 遗物
 
-现有四件遗物均未实现。当前[角色配置](../../HeavySilentCode/Character/HeavySilentCharacter.cs)使用蛇之戒作为占位，不代表下列初始遗物已实现。先古给予或升级的卡牌统一放在[先古卡设计](cards.md#先古卡)。
+现有四件遗物均未实现。当前[角色配置](../../mod/HeavySilentCode/Character/HeavySilentCharacter.cs)使用蛇之戒作为占位，不代表下列初始遗物已实现。先古给予或升级的卡牌统一放在[先古卡设计](cards.md#先古卡)。
 
 | 设计编号 | 中文名 | 英文名 | 分类 | 设计效果 | 状态 | 模型 ID／代码 | 依赖／待确认 |
 | --- | --- | --- | --- | --- | --- | --- | --- |

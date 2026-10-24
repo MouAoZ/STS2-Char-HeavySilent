@@ -15,7 +15,7 @@ ILSpy 用于阅读本机已有程序集，不修改原版 DLL。API 不确定时
 
 ## 阅读打击需要的 C# 概念
 
-打开[HeavyStrike.cs](../../../../HeavySilentCode/Cards/HeavyStrike.cs)：
+打开[HeavyStrike.cs](../../../../mod/HeavySilentCode/Cards/HeavyStrike.cs)：
 
 - `class` 定义一种卡牌；每次获得的具体卡牌是该类型的实例。
 - `: HeavySilentCard(...)` 表示继承共用基类，同时把费用、类型、稀有度和目标传给它。
@@ -46,8 +46,8 @@ ILSpy 用于阅读本机已有程序集，不修改原版 DLL。API 不确定时
 代码执行时使用对应动态变量，描述则写 `{Damage:diff()}`。`diff()` 是游戏文本格式化指令，负责表达数值及变化，和代码中的 `Damage` 变量对应。
 角色力量、目标易伤等最终修正仍由游戏伤害管线处理；不要先把预览修正值再送入会重复修正的命令。
 
-[防御](../../../../HeavySilentCode/Cards/HeavyDefend.cs)使用 `BlockVar` 与 `CreatureCmd.GainBlock`；
-[气](../../../../HeavySilentCode/Cards/Qi.cs)使用 `CardsVar` 与 `CardPileCmd.Draw`。
+[防御](../../../../mod/HeavySilentCode/Cards/HeavyDefend.cs)使用 `BlockVar` 与 `CreatureCmd.GainBlock`；
+[气](../../../../mod/HeavySilentCode/Cards/Qi.cs)使用 `CardsVar` 与 `CardPileCmd.Draw`。
 修改基础数值和升级增量后，通常无需改描述中的数字，因为描述没有重复写死它们。
 
 本地化 JSON 也使用 BBCode，例如 `[gold]格挡[/gold]`。格式变量和标签要保持成对，英文与中文应引用相同变量。

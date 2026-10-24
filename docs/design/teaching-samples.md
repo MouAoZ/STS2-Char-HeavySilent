@@ -21,7 +21,7 @@
 
 ## 测试套牌
 
-[角色定义](../../HeavySilentCode/Character/HeavySilentCharacter.cs)使用五张打击、五张防御和两张气。
+[角色定义](../../mod/HeavySilentCode/Character/HeavySilentCharacter.cs)使用五张打击、五张防御和两张气。
 两张气是便于验证的临时替代；正式设计中的“加气防御”和“磨顶后按牌堆差值攻击”尚未实现。
 现阶段也没有普通／罕见／稀有卡牌，奖励池完整性和通关不属于初始化验收。
 

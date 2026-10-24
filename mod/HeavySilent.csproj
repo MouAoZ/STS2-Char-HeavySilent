@@ -22,6 +22,6 @@
   </ItemGroup>
   <Target Name="CheckGameReference" BeforeTargets="ResolveReferences">
     <Error Condition="!Exists('$(Sts2DataDir)/sts2.dll')"
-           Text="sts2.dll not found. Copy local.props.example to local.props and set Sts2Path. See README.md." />
+           Text="sts2.dll not found. Set Sts2Path or copy local.props.example to local.props beside this project." />
   </Target>
 </Project>

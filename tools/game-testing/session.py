@@ -21,7 +21,7 @@ ALLOWED_MODS = {"BaseLib", "HeavySilent", "godotexplorer", "HeavySilentTestBridg
 
 
 def settings(config=None):
-    root = ET.parse(config or ROOT / "local.props").getroot()
+    root = ET.parse(config or ROOT / "mod/local.props").getroot()
     return {name: Path(root.findtext(f".//{name}")) for name in ("Sts2Path", "GodotPath", "BaseLibPath")}
 
 

@@ -12,6 +12,7 @@ from urllib.parse import unquote
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
+MOD_ROOT = ROOT / "mod"
 
 
 def unique_object(pairs):
@@ -196,9 +197,9 @@ def main() -> int:
     parser.add_argument("--pack", type=Path, help="also verify this generated PCK")
     args = parser.parse_args()
     try:
-        errors = check_localization(ROOT) + check_versions(ROOT) + check_markdown_links(ROOT)
+        errors = check_localization(MOD_ROOT) + check_versions(MOD_ROOT) + check_markdown_links(ROOT)
         if args.pack:
-            errors += check_pack(ROOT, args.pack)
+            errors += check_pack(MOD_ROOT, args.pack)
     except (OSError, ValueError, KeyError, ET.ParseError) as error:
         errors = [str(error)]
     for error in errors:

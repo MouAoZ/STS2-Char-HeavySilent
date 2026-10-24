@@ -106,11 +106,11 @@ def main() -> None:
         return
     python = HERE / ".venv/Scripts/python.exe" if args.bridge_only else prepare_python()
     build = ["dotnet", "build", str(HERE / "bridge/HeavySilentTestBridge.csproj"), "-c", "Release",
-             "--configfile", str(ROOT / "NuGet.Config"), "-o", str(ROOT / "artifacts/test-bridge")]
+             "--configfile", str(ROOT / "mod/NuGet.Config"), "-o", str(ROOT / "artifacts/test-bridge")]
     if args.local_config:
         game = ET.parse(args.local_config).getroot().findtext('.//Sts2Path')
         build.append(f"-p:Sts2Path={game}")
-    subprocess.run(build, cwd=ROOT, check=True)
+    subprocess.run(build, cwd=ROOT / "mod", check=True)
     if args.bridge_only:
         return
     # Local machine paths are generated, not placed in the shared template.

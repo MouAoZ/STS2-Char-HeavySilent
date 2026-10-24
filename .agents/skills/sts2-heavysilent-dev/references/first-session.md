@@ -16,7 +16,7 @@
 | 需要确认的事实 | 来源 |
 | --- | --- |
 | 人类想要的玩法 | 当前明确指令与[三类设计正文](../../../../docs/design/README.md)；共用规则直接读[特殊机制设计](../../../../docs/design/mechanics.md)，归档草稿只供历史追溯；冲突或歧义需在相关实现前澄清 |
-| 代码目前实际做什么 | `HeavySilentCode/`、双语资源与本次实机观察；状态页提供定位和历史结论 |
+| 代码目前实际做什么 | `mod/HeavySilentCode/`、`mod/HeavySilent/` 的双语资源与本次实机观察；状态页提供定位和历史结论 |
 | 内容的稳定编号与模型 ID | 所属[设计文档](../../../../docs/design/README.md)与源码 `CustomID`；编号约定见[设计跟踪](../../../../docs/design/implementation-tracker.md)，新增时登记，重命名显示名不换 ID |
 | 哪些 API 能用 | [基线](../../../../docs/development/baseline.json)、本机程序集和已编译实例；网上文档提供方向，具体签名核对本机 |
 | 下一步应做什么 | 用户当前任务和 [README 看板](../../../../README.md#开发看板)；条目依赖见设计跟踪，机制待确认项不是可以自行补全的规则 |
@@ -25,7 +25,7 @@
 
 ## 同一台机器的新会话
 
-先运行 `git status --short`，识别已有改动，避免覆盖其他人的工作。沿用已有 `local.props`、工具缓存和 MCP 配置；不要因为会话是新的就重新初始化工程或清空测试目录。
+先运行 `git status --short`，识别已有改动，避免覆盖其他人的工作。沿用已有 `mod/local.props`、工具缓存和 MCP 配置；不要因为会话是新的就重新初始化工程或清空测试目录。
 
 ```powershell
 & 'C:\Program Files\PowerShell\7\pwsh.exe' -NoProfile -File .\scripts\dev.ps1 doctor
@@ -38,7 +38,7 @@ python scripts/verify.py
 
 ## 全新克隆或换机器
 
-仓库不携带游戏、BaseLib 安装、SDK、引擎、Python 环境或个人存档。按[构建环境](build-debug.md)准备依赖，复制 `local.props.example` 为 `local.props` 后填写本机路径；样例中的路径不能保证在其他机器存在。
+仓库不携带游戏、BaseLib 安装、SDK、引擎、Python 环境或个人存档。按[构建环境](build-debug.md)准备依赖，复制 `mod/local.props.example` 为 `mod/local.props` 后填写本机路径；样例中的路径不能保证在其他机器存在。只需要源码打包时使用该指南的独立入口，无需复制外层脚手架。
 
 先完成 `doctor`、`verify`、`package`。需要实机测试时再部署并启用 BaseLib／HeavySilent，执行 `test-setup` 生成独立测试桥、仓库内 Python 和本机 MCP 配置。项目移动路径后同样需要刷新 MCP 配置。没有游戏安装时只能完成源码／文档检查，明确记录实机未验证。
 
@@ -46,9 +46,9 @@ python scripts/verify.py
 
 | 本机信息 | 如何得到／如何对待 |
 | --- | --- |
-| `local.props` | 从样例创建，保存真实依赖路径 |
+| `mod/local.props` | 从样例创建，保存真实依赖路径 |
 | `.codex/config.toml`、`.tools/`、测试 `.venv/` | `test-setup` 生成；安装依赖首次需要网络 |
-| `.cache/`、`.godot/`、`artifacts/package/` | 按需重新生成；不当作源码来源 |
+| 根及 `mod/` 内的 `.cache/`、`.godot/`、`artifacts/` | 按需重新生成；不当作源码来源 |
 | `artifacts/game-tests/` | 历史日志、截图、个人存档备份及会话记录；新克隆中不会自动出现 |
 | `profile3-owner.json`、`active-session.json` | 位于上述测试目录，标记测试档归属和待清理会话；不能当普通缓存随意删除 |
 

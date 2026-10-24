@@ -16,12 +16,13 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+$modRoot = Join-Path $repoRoot 'mod'
 $artifactRoot = Join-Path $repoRoot 'artifacts'
 $logRoot = Join-Path $artifactRoot 'logs'
 $packageRoot = Join-Path $artifactRoot 'package'
 $packageInfoPath = Join-Path $packageRoot 'package-info.json'
 $utf8 = New-Object System.Text.UTF8Encoding($false)
-if (!$LocalConfig) { $LocalConfig = Join-Path $repoRoot 'local.props' }
+if (!$LocalConfig) { $LocalConfig = Join-Path $modRoot 'local.props' }
 
 function Read-Json([string]$Path) {
     return [IO.File]::ReadAllText($Path, [Text.Encoding]::UTF8) | ConvertFrom-Json
@@ -60,7 +61,7 @@ function Invoke-Logged([string]$Executable, [string[]]$Arguments, [string]$LogNa
 
 function Get-Environment {
     if (!(Test-Path -LiteralPath $LocalConfig)) {
-        throw 'Missing local.props. Copy local.props.example and set the three absolute paths.'
+        throw 'Missing mod/local.props. Copy mod/local.props.example and set the three absolute paths.'
     }
     [xml]$config = [IO.File]::ReadAllText($LocalConfig)
     $settings = @{}
@@ -83,13 +84,17 @@ function Get-Environment {
     $baseline = Read-Json (Join-Path $repoRoot 'docs\development\baseline.json')
     $release = Read-Json (Join-Path $settings.Sts2Path 'release_info.json')
     $baseManifest = Read-Json (Join-Path $settings.BaseLibPath 'BaseLib.json')
-    [xml]$props = Get-Content -LiteralPath (Join-Path $repoRoot 'Directory.Build.props') -Raw
+    [xml]$props = Get-Content -LiteralPath (Join-Path $modRoot 'Directory.Build.props') -Raw
     $expectedBase = $props.Project.PropertyGroup.BaseLibVersion
     if ($baseManifest.version.TrimStart('v') -ne $expectedBase) {
         throw "Installed BaseLib $($baseManifest.version) differs from compile dependency $expectedBase. Align versions and refresh the lock file."
     }
-    $sdk = (& dotnet --version | Out-String).Trim()
-    if ($LASTEXITCODE -ne 0) { throw 'The SDK pinned by global.json is unavailable.' }
+    Push-Location $modRoot
+    try {
+        $sdk = (& dotnet --version | Out-String).Trim()
+        if ($LASTEXITCODE -ne 0) { throw 'The SDK pinned by mod/global.json is unavailable.' }
+    }
+    finally { Pop-Location }
     $engineVersion = (& $settings.GodotPath --version | Out-String).Trim()
     if ($LASTEXITCODE -ne 0 -or $engineVersion -notmatch ('^' + [regex]::Escape($baseline.godot_version) + '\.')) {
         throw "Godot must match $($baseline.godot_version); found '$engineVersion'."
@@ -121,11 +126,12 @@ function Get-Environment {
 }
 
 function Get-SourceFingerprint {
-    $paths = @('HeavySilent.csproj', 'HeavySilent.json', 'Directory.Build.props', 'global.json',
-        'packages.Debug.lock.json', 'packages.Release.lock.json', 'project.godot', 'export_presets.cfg', 'THIRD_PARTY_NOTICES.md')
-    $paths += Get-ChildItem -LiteralPath (Join-Path $repoRoot 'HeavySilentCode') -Recurse -File |
+    $paths = @('HeavySilent.csproj', 'HeavySilent.json', 'Directory.Build.props', 'global.json', 'NuGet.Config',
+        'packages.Debug.lock.json', 'packages.Release.lock.json', 'project.godot', 'export_presets.cfg',
+        'THIRD_PARTY_NOTICES.md', 'build.ps1') | ForEach-Object { 'mod/' + $_ }
+    $paths += Get-ChildItem -LiteralPath (Join-Path $modRoot 'HeavySilentCode') -Recurse -File |
         Where-Object { $_.Extension -eq '.cs' } | ForEach-Object { $_.FullName.Substring($repoRoot.Length + 1) }
-    $paths += Get-ChildItem -LiteralPath (Join-Path $repoRoot 'HeavySilent') -Recurse -File |
+    $paths += Get-ChildItem -LiteralPath (Join-Path $modRoot 'HeavySilent') -Recurse -File |
         ForEach-Object { $_.FullName.Substring($repoRoot.Length + 1) }
     $paths += Get-ChildItem -LiteralPath (Join-Path $repoRoot 'scripts') -File |
         Where-Object { $_.Extension -in @('.ps1', '.py', '.gd') } |
@@ -138,11 +144,10 @@ function Get-SourceFingerprint {
     finally { $hash.Dispose() }
 }
 
-function Build-Mod($Environment) {
-    Invoke-Logged 'dotnet' @('restore', 'HeavySilent.csproj', '--locked-mode', '--configfile', 'NuGet.Config',
-        "-p:Configuration=$Configuration") 'restore.log'
-    Invoke-Logged 'dotnet' @('build', 'HeavySilent.csproj', '--no-restore', '-c', $Configuration,
-        "-p:Sts2Path=$($Environment.Sts2Path)") 'build.log'
+function Build-Mod($Environment, [string]$BuildAction = 'build') {
+    Invoke-Logged $Environment.PowerShellPath @('-NoProfile', '-File', (Join-Path $modRoot 'build.ps1'),
+        '-Action', $BuildAction, '-Configuration', $Configuration, '-Sts2Path', $Environment.Sts2Path,
+        '-GodotPath', $Environment.GodotPath, '-OutputRoot', $artifactRoot) 'mod-build.log'
 }
 
 function Test-PackInEngine($Environment, [string]$PackPath) {
@@ -195,31 +200,14 @@ try {
             $environment = Get-Environment
             & python (Join-Path $PSScriptRoot 'verify.py')
             if ($LASTEXITCODE -ne 0) { throw 'Source verification failed.' }
-            Build-Mod $environment
             $before = Get-SourceFingerprint
-            $stage = Join-Path $repoRoot ('.cache\package-' + [guid]::NewGuid().ToString('N'))
-            [IO.Directory]::CreateDirectory($stage) | Out-Null
-            Copy-Item -LiteralPath (Join-Path $repoRoot 'HeavySilent') -Destination $stage -Recurse
-            Copy-Item -LiteralPath (Join-Path $repoRoot 'export_presets.cfg') -Destination $stage
-            # Asset-only staging avoids Godot publishing a second DLL or modifying the NuGet lock file.
-            Write-Utf8 (Join-Path $stage 'project.godot') "config_version=5`n[application]`nconfig/name=`"HeavySilent assets`"`n[rendering]`nrenderer/rendering_method=`"gl_compatibility`"`n"
-            $stagePack = Join-Path $stage 'HeavySilent.pck'
-            Invoke-Logged $environment.GodotPath @('--headless', '--path', $stage, '--editor', '--import') 'import.log'
-            Invoke-Logged $environment.GodotPath @('--headless', '--path', $stage, '--export-pack', 'ModAssets', $stagePack) 'export.log'
-            & python (Join-Path $PSScriptRoot 'verify.py') --pack $stagePack
-            if ($LASTEXITCODE -ne 0) { throw 'Pack verification failed.' }
-            Test-PackInEngine $environment $stagePack
-            if ((Get-SourceFingerprint) -ne $before) { throw 'Sources changed during packaging; run package again.' }
+            Build-Mod $environment 'package'
             $modOutput = Join-Path $packageRoot 'HeavySilent'
-            [IO.Directory]::CreateDirectory($modOutput) | Out-Null
-            $buildOutput = Join-Path $repoRoot ".godot\mono\temp\bin\$Configuration"
-            Copy-Item -LiteralPath (Join-Path $buildOutput 'HeavySilent.dll') -Destination $modOutput
-            Copy-Item -LiteralPath $stagePack -Destination $modOutput
-            Copy-Item -LiteralPath (Join-Path $repoRoot 'HeavySilent.json') -Destination $modOutput
-            Copy-Item -LiteralPath (Join-Path $repoRoot 'THIRD_PARTY_NOTICES.md') -Destination $modOutput
-            $debugSymbols = Join-Path $modOutput 'HeavySilent.pdb'
-            if ($Configuration -eq 'Debug') { Copy-Item -LiteralPath (Join-Path $buildOutput 'HeavySilent.pdb') -Destination $debugSymbols }
-            elseif (Test-Path -LiteralPath $debugSymbols) { Remove-Item -LiteralPath $debugSymbols }
+            $packPath = Join-Path $modOutput 'HeavySilent.pck'
+            & python (Join-Path $PSScriptRoot 'verify.py') --pack $packPath
+            if ($LASTEXITCODE -ne 0) { throw 'Pack verification failed.' }
+            Test-PackInEngine $environment $packPath
+            if ((Get-SourceFingerprint) -ne $before) { throw 'Sources changed during packaging; run package again.' }
             $files = @{}
             foreach ($file in (Get-ChildItem -LiteralPath $modOutput -File)) { $files[$file.Name] = Get-Sha256 $file.FullName }
             $info = [ordered]@{

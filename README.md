@@ -3,6 +3,26 @@
 《杀戮尖塔 2》独立角色模组，当前交付为**开发骨架与教学样例**。
 人类通过 Markdown 设计玩法并 Review；Agent 负责代码、验证和技术说明。
 
+## 源码与脚手架
+
+**[mod/](mod) 是可独立打包的模组源码目录。** 复制其中的源码、资源和构建文件，准备好 .NET SDK、MegaDot .NET、游戏程序集引用及锁定的 NuGet 依赖，即可产出模组。它不读取仓库外层的文档、设计、开发脚本或测试工具。
+
+| 范围 | 位置 | 用途 |
+| --- | --- | --- |
+| 模组源码与构建输入 | `mod/HeavySilentCode/`、`mod/HeavySilent/`、工程／依赖／导出配置、manifest、随包许可、`mod/build.ps1` | 构建玩家安装的 DLL、PCK、manifest；构建入口随源码保留 |
+| 开发脚手架 | `docs/`、`.agents/`、`AGENTS.md`、本 README、`scripts/`、`tools/`、`tests/` | 策划、教学、进度、检查、部署及实机测试；不属于独立打包输入 |
+| 本机配置与生成产物 | `mod/local.props`、各级 `.godot/`、`.cache/`、`artifacts/`、测试环境 | 按需生成且不提交，不作为源码分发 |
+
+只打包源码时，在仓库根目录运行：
+
+```powershell
+Copy-Item .\mod\local.props.example .\mod\local.props
+# 填写 mod/local.props 的本机路径后：
+.\mod\build.ps1 -Action package -Configuration Release
+```
+
+独立入口默认输出 `mod/artifacts/package/HeavySilent/`，不需要 Python。开发流程继续使用 `scripts/dev.ps1`，它复用同一构建入口并增加静态检查、包验证和部署保护，输出仍在根目录 `artifacts/`。完整边界与文件职责见[工程结构](.agents/skills/sts2-heavysilent-dev/references/architecture.md)。
+
 ## 项目进度
 
 更新日期：2026-10-25。当前已打通角色注册、内容样例、构建部署与 Agent 实机测试，下一阶段是确认共用机制并实现正式起始内容。完整角色爬塔、平衡、联机和发布尚未验收。
@@ -10,7 +30,7 @@
 | 范围 | 当前进度 | 剩余工作／依据 |
 | --- | --- | --- |
 | 工程与测试工具 | 已具备开发能力 | 版本基线、双语本地化、打包部署、场景构造与证据记录；见[验证记录](docs/development/status.md) |
-| 角色与起始配置 | 开发占位 | 当前五打五防两张气、70生命、99金币、蛇之戒及静默外观；见[角色代码](HeavySilentCode/Character/HeavySilentCharacter.cs) |
+| 角色与起始配置 | 开发占位 | 当前五打五防两张气、70生命、99金币、蛇之戒及静默外观；见[角色代码](mod/HeavySilentCode/Character/HeavySilentCharacter.cs) |
 | 卡牌设计落地 | **3／77 已实现，0 进行中，74 未实现** | 三张为打击、防御、气；待实现包括两张特殊初始牌、70张攻击／技能／能力牌和两张先古相关卡；见[逐项跟踪](docs/design/implementation-tracker.md#内容统计) |
 | 磨顶／征召 | **0／2 已实现** | 共用规则待确认，结算与术语悬停解释均待实现；见[机制条目](docs/design/mechanics.md#术语与实现状态) |
 | 遗物 | **0／4 已实现** | 初始、初始升级及两件专属遗物；见[遗物条目](docs/design/relics-events-potions.md#遗物) |
@@ -51,7 +71,7 @@
 SDK 版本与目标框架不同：本工程用 SDK 10 编译游戏使用的 `net9.0`。
 依赖与游戏版本见[版本基线](docs/development/baseline.json)；更新测试版后按[升级流程](.agents/skills/sts2-heavysilent-dev/references/build-debug.md)重新验证。
 
-1. 将 `local.props.example` 复制为 `local.props`，填写游戏、引擎和已安装 BaseLib 的绝对路径。
+1. 将 `mod/local.props.example` 复制为 `mod/local.props`，填写游戏、引擎和已安装 BaseLib 的绝对路径；已有本机配置沿用即可。
 2. 在仓库根目录打开 PowerShell 7，依次执行：
 
 ```powershell
@@ -102,4 +122,4 @@ python -m unittest discover -s tests -v
 Markdown 是设计输入，运行时效果由 C# 与本地化 JSON 提供。
 新增机制前先处理[机制待澄清项](docs/design/mechanics.md)。
 
-模板与占位图来源及许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+玩家包中的模板／占位资源许可见 [mod/THIRD_PARTY_NOTICES.md](mod/THIRD_PARTY_NOTICES.md)，测试工具等脚手架许可见[根目录第三方说明](THIRD_PARTY_NOTICES.md)。

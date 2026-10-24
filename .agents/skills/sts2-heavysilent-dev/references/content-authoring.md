@@ -19,7 +19,7 @@
 ## 填充一张卡：以气为例
 
 1. 在[卡牌模板](../../../../docs/design/templates/card.md)填写：0 费、状态、无目标、抽一张、消耗，升级后抽两张。
-2. Agent 分配 `HS-TOKEN-001` 与稳定 ID `HEAVYSILENT_QI`，建立[Qi](../../../../HeavySilentCode/Cards/Qi.cs)。
+2. Agent 分配 `HS-TOKEN-001` 与稳定 ID `HEAVYSILENT_QI`，建立[Qi](../../../../mod/HeavySilentCode/Cards/Qi.cs)。
 3. 从 `HeavySilentCard` 继承；费用和类型由构造参数给出，抽牌量由 `CardsVar` 给出，消耗由关键词给出。
 4. `OnPlay` 等待原版抽牌命令；`OnUpgrade` 增加抽牌量。
 5. 在 eng／zhs 的 `cards.json` 增加 `.title`、`.description`，描述使用 `{Cards:diff()}`。

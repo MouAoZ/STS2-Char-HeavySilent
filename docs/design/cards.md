@@ -14,12 +14,12 @@
 
 ## 初始卡组
 
-设计配置为五张打击、五张防御和下列两张特殊初始牌各一张。当前[角色代码](../../HeavySilentCode/Character/HeavySilentCharacter.cs)仍以两张气替代两张特殊初始牌；正式起始配置尚未接入。这四种初始牌不进入常规卡牌奖励，起始遗物见[遗物设计](relics-events-potions.md#hs-relic-001)。
+设计配置为五张打击、五张防御和下列两张特殊初始牌各一张。当前[角色代码](../../mod/HeavySilentCode/Character/HeavySilentCharacter.cs)仍以两张气替代两张特殊初始牌；正式起始配置尚未接入。这四种初始牌不进入常规卡牌奖励，起始遗物见[遗物设计](relics-events-potions.md#hs-relic-001)。
 
 | 设计编号 | 中文名 | 英文名 | 费用 | 设计效果 | 状态 | 模型 ID／代码 | 依赖／待确认 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| <a id="hs-base-001"></a>HS-BASE-001 | 打击 | Strike | 1 | 基础攻击，造成6（9）点伤害；打击标签。 | 已实现 | `HEAVYSILENT_STRIKE`<br>[HeavyStrike](../../HeavySilentCode/Cards/HeavyStrike.cs) | 起始5张；数值沿用教学样例，非草稿新增约定。 |
-| <a id="hs-base-002"></a>HS-BASE-002 | 防御 | Defend | 1 | 基础技能，获得5（8）点格挡；防御标签。 | 已实现 | `HEAVYSILENT_DEFEND`<br>[HeavyDefend](../../HeavySilentCode/Cards/HeavyDefend.cs) | 起始5张；数值沿用教学样例，非草稿新增约定。 |
+| <a id="hs-base-001"></a>HS-BASE-001 | 打击 | Strike | 1 | 基础攻击，造成6（9）点伤害；打击标签。 | 已实现 | `HEAVYSILENT_STRIKE`<br>[HeavyStrike](../../mod/HeavySilentCode/Cards/HeavyStrike.cs) | 起始5张；数值沿用教学样例，非草稿新增约定。 |
+| <a id="hs-base-002"></a>HS-BASE-002 | 防御 | Defend | 1 | 基础技能，获得5（8）点格挡；防御标签。 | 已实现 | `HEAVYSILENT_DEFEND`<br>[HeavyDefend](../../mod/HeavySilentCode/Cards/HeavyDefend.cs) | 起始5张；数值沿用教学样例，非草稿新增约定。 |
 | <a id="hs-start-001"></a>HS-START-001 | 凝息 | Gather Breath | 1（0） | 技能 获得5点格挡，将一张气加入抽牌堆 | 未实现 | — | [Q3](mechanics.md#q3)：气插入抽牌堆的位置。 |
 | <a id="hs-start-002"></a>HS-START-002 | 偏锋 | Oblique Strike | 1（0） | 攻击 磨顶1 造成伤害，数值等于你抽牌堆与弃牌堆牌数之差的绝对值。 | 未实现 | — | 磨顶；[Q1](mechanics.md#q1)。 |
 
@@ -149,7 +149,7 @@
 
 | 设计编号 | 中文名 | 英文名 | 费用 | 设计效果 | 状态 | 模型 ID／代码 | 依赖／待确认 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| <a id="hs-token-001"></a>HS-TOKEN-001 | 气 | Qi | 0 | 状态牌，抽1（2）张牌，消耗。 | 已实现 | `HEAVYSILENT_QI`<br>[Qi](../../HeavySilentCode/Cards/Qi.cs) | 普通抽牌允许洗牌；[结算与验收例子](teaching-samples.md)。 |
+| <a id="hs-token-001"></a>HS-TOKEN-001 | 气 | Qi | 0 | 状态牌，抽1（2）张牌，消耗。 | 已实现 | `HEAVYSILENT_QI`<br>[Qi](../../mod/HeavySilentCode/Cards/Qi.cs) | 普通抽牌允许洗牌；[结算与验收例子](teaching-samples.md)。 |
 
 气使用普通抽牌，允许游戏洗牌；详细结算与验收例子见[教学样例](teaching-samples.md)。当前气的基础效果已实现，生成气、转化为气等卡牌联动尚未实现。临时加入战斗与永久加入牌组的范围需要在相关卡牌实现前明确。
 

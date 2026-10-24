@@ -3,6 +3,8 @@
 这是 STS2 的独立角色模组；目标分支是最新 public-beta。
 人类负责策划与 Review，Agent 负责实现、验证和让人类读懂代码。
 
+`mod/` 是可独立构建打包的模组源码边界；文档、设计、Skill、开发脚本和测试工具属于外层脚手架。新增构建依赖不得让 `mod/` 反向依赖这些脚手架；本机路径配置为 `mod/local.props`。
+
 ## 按任务查阅
 
 - 实现、调试或评审本项目：使用 [sts2-heavysilent-dev](.agents/skills/sts2-heavysilent-dev/SKILL.md)。
