@@ -1,7 +1,7 @@
 # 项目机制：已知语义与待确认项
 
-设计来源：[卡牌设计 v0.1](../../../../docs/design/卡牌设计v0.1.md)。
-实现状态：[status.md](../../../../docs/development/status.md)。
+设计来源：[设计草稿 v0.1](../../../../docs/design/设计草稿v0.1.md)。
+实现状态与依赖：[设计跟踪](../../../../docs/design/implementation-tracker.md)；验证证据：[status.md](../../../../docs/development/status.md)。
 
 ## 气：已实现基础版本
 

@@ -6,7 +6,7 @@
 
 ## 建议阅读顺序
 
-1. [项目状态](development/status.md)：哪些内容真的实现、哪些验证仍待完成。
+1. [项目总览与看板](../README.md#项目进度) → [设计到实现跟踪](design/implementation-tracker.md) → [验证记录](development/status.md)：先看开发阶段，再看每项设计的状态、代码与实机证据。
 2. [工程结构](../.agents/skills/sts2-heavysilent-dev/references/architecture.md)：每种改动应放在哪里。
 3. [程序原理与第一张卡](../.agents/skills/sts2-heavysilent-dev/references/api-primer.md)：继承、生命周期、数值和结算。
 4. [内容填充教程](../.agents/skills/sts2-heavysilent-dev/references/content-authoring.md)：卡牌、遗物、药水、事件如何设计与落地。
@@ -17,8 +17,10 @@
 
 | 任务 | 入口 |
 | --- | --- |
+| 跟踪整体进度与下一项工作 | [README 看板](../README.md#开发看板) |
+| 查设计、实现状态和代码位置 | [完整跟踪表](design/implementation-tracker.md)；策划原文为[设计草稿 v0.1](design/设计草稿v0.1.md) |
 | 新增内容 | [策划模板](design/templates/README.md) |
-| 理解现有卡牌 | [样例设计及代码对应](design/teaching-samples.md) |
+| 理解现有卡牌结算 | [教学样例](design/teaching-samples.md) |
 | 设计磨顶／征召 | [机制定义与待澄清项](../.agents/skills/sts2-heavysilent-dev/references/mechanics.md) |
 | Review 一次改动 | [Review 指引](development/review.md) |
 | 在游戏里验证 | [实机清单](development/smoke-test.md) |

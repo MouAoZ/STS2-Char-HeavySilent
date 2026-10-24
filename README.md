@@ -3,15 +3,44 @@
 《杀戮尖塔 2》独立角色模组，当前交付为**开发骨架与教学样例**。
 人类通过 Markdown 设计玩法并 Review；Agent 负责代码、验证和技术说明。
 
-已实现：角色注册、静默占位表现、打击（6／9 伤害）、防御（5／8 格挡）、气（0 费状态牌，抽 1／2 张，消耗）。
-测试套牌是五打击、五防御、两张气，70 生命、99 金币及蛇之戒。
-磨顶、征召、两张正式特殊初始牌和完整奖励卡池尚未实现；这不是完整可跑塔的角色版本。
+## 项目进度
+
+更新日期：2026-10-25。当前已打通角色注册、内容样例、构建部署与 Agent 实机测试，下一阶段是确认共用机制并实现正式起始内容。完整角色爬塔、平衡、联机和发布尚未验收。
+
+| 范围 | 当前进度 | 剩余工作／依据 |
+| --- | --- | --- |
+| 工程与测试工具 | 已具备开发能力 | 版本基线、双语本地化、打包部署、场景构造与证据记录；见[验证记录](docs/development/status.md) |
+| 角色与起始配置 | 开发占位 | 当前五打五防两张气、70生命、99金币、蛇之戒及静默外观；见[角色代码](HeavySilentCode/Character/HeavySilentCharacter.cs) |
+| 卡牌设计落地 | **3／77 已实现，0 进行中，74 未实现** | 三张为打击、防御、气；待实现包括两张特殊初始牌、70张奖励卡和两张先古相关卡；见[逐项跟踪](docs/design/implementation-tracker.md#内容统计) |
+| 磨顶／征召 | **0／2 已实现** | 共用规则待确认，再实现触发链；见[机制条目](docs/design/implementation-tracker.md#共用机制) |
+| 遗物 | **0／4 已实现** | 初始、初始升级及两件专属遗物；见[遗物条目](docs/design/implementation-tracker.md#遗物) |
+| 美术与其他内容 | 未完成／未定范围 | 正式角色与卡图仍缺；药水、事件尚无具体设计，不计入内容分母 |
+| 发布验收 | 未开展 | 完整奖励池、爬塔、平衡、联机与 Steam Workshop 发布 |
+
+卡牌按不同设计计数，升级和起始重复张数不另计；3／77 不是整个项目的完成率。详细状态以[设计到实现跟踪](docs/design/implementation-tracker.md)为准，构建、历史实机和未测范围分别记录在[项目状态](docs/development/status.md)。
+
+## 开发看板
+
+待办按建议依赖顺序排列；“待确认”是阻塞原因，不等于正在开发。实际开工后才移入进行中，任务完成须写回设计条目和验证证据。
+
+| 待办 | 进行中 | 已完成 |
+| --- | --- | --- |
+| **T01 · 共用规则确认**：先处理[磨顶／征召 Q1、Q2](docs/design/implementation-tracker.md#待澄清索引)，其他疑问随对应内容处理 | —（当前无已开工的玩法任务） | 工程骨架、独立角色与内容池 |
+| **T02 · 磨顶与征召**：依赖T01，实现[两项机制](docs/design/implementation-tracker.md#共用机制)，验收不足牌、满手牌、顺序和触发边界 | — | 打击／防御／气及升级、双语文本；有基础实机记录 |
+| **T03 · 正式起始内容**：分步实现[两张特殊初始牌](docs/design/implementation-tracker.md#基础牌气与特殊初始牌)和[初始遗物](docs/design/implementation-tracker.md#hs-relic-001)，接入角色并验收；磨顶相关部分依赖T02 | — | 构建、打包、部署与版本核对 |
+| **T04 · 奖励卡池**：把[70张奖励卡](docs/design/implementation-tracker.md#攻击牌)按机制分批实现，先选依赖清楚的组合，再处理自动出牌、保留、费用和奖励干预；每批单独验收 | — | Agent 实机工具、场景构造、截图与 Review 记录 |
+| **T05 · 遗物与先古内容**：[其余三件遗物](docs/design/implementation-tracker.md#遗物)、[两张先古卡](docs/design/implementation-tracker.md#先古相关卡)，明确获取、替换和存档范围 | — | 设计草稿到代码的跟踪表与进度看板 |
+| **T06 · 正式资源与内容定稿**：命名、双语文案、角色／卡牌／遗物美术、起始数值；药水和事件待有设计后再建条目 | — | — |
+| **T07 · 发布验收**：奖励池、爬塔和平衡、保存续玩、联机、兼容与 Workshop 发布 | — | — |
+
+看板维护方式见[日常维护](docs/design/implementation-tracker.md#日常维护)。完成一个大任务的部分内容时，拆出有编号范围的小任务，避免整批误标完成。
 
 ## 从这里开始
 
 - 策划与 Review：[开发手册与学习路线](docs/README.md)
-- 当前实现和验证结果：[项目状态](docs/development/status.md)
-- 原始玩法：[卡牌设计 v0.1](docs/design/卡牌设计v0.1.md)
+- 设计状态与源码：[设计到实现跟踪](docs/design/implementation-tracker.md)
+- 验证结果与未测范围：[项目状态](docs/development/status.md)
+- 策划原文：[设计草稿 v0.1](docs/design/设计草稿v0.1.md)
 - Agent 工作入口：[AGENTS.md](AGENTS.md)
 - 无历史上下文接手：[首次接手指南](.agents/skills/sts2-heavysilent-dev/references/first-session.md)
 
@@ -68,7 +97,7 @@ python -m unittest discover -s tests -v
 
 ## 填充下一项内容
 
-复制[对应的策划模板](docs/design/templates/README.md)，填写效果顺序、升级、边界和验收例子，然后让 Agent 实现。
+从[跟踪表](docs/design/implementation-tracker.md)选取条目，使用[对应的策划模板](docs/design/templates/README.md)补齐效果顺序、升级、边界和验收例子，然后让 Agent 实现；新设计先登记编号。
 Markdown 是设计输入，运行时效果由 C# 与本地化 JSON 提供。
 新增机制前先处理[机制待澄清项](.agents/skills/sts2-heavysilent-dev/references/mechanics.md)。
 

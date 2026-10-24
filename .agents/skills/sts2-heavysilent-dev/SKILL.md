@@ -25,7 +25,7 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 
 ## 落实内容
 
-- 通过[设计与样例](../../../docs/design/teaching-samples.md)定位意图和稳定 ID，通过[项目状态](../../../docs/development/status.md)判断实际能力。
+- 通过[设计跟踪](../../../docs/design/implementation-tracker.md)定位意图、逐项状态、稳定 ID 与代码，通过[项目状态](../../../docs/development/status.md)核对验证证据；[教学样例](../../../docs/design/teaching-samples.md)解释现有结算。
 - 将已有命令组合与新增机制分开。只询问影响当前实现的设计歧义；其余条目标记待确认。
 - 保持卡牌效果顺序可读，使用游戏 Command、玩家选择上下文和游戏 RNG。
 - 新机制先核对原版类似实现；必要补丁单独说明目标方法和版本。
@@ -35,7 +35,7 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 
 - 按变更范围运行相关验证。构建、资源包验证、实际游戏验证分别报告。
 - 实机测试由当前改动驱动：先列问题、预期和理由，再构造场景、实际操作、观察和记录。固定回归按相关性选用，不默认重跑整套打击／防御／气。
-- 内容变更更新设计对应表与状态；机制变更更新本 Skill 的机制参考；命令或环境变更更新构建参考。
+- 内容变更更新设计跟踪、README 进度与看板、状态页验证证据；维护步骤见跟踪表。机制变更更新本 Skill 的机制参考；命令或环境变更更新构建参考。
 - 同一事实只保留一份正文，其他入口链接它；不要把会话日志写进 Skill。
 - 适用版本看[基线](../../../docs/development/baseline.json)，不是凭 Skill 的更新时间推断兼容。
 - 人类 Review 需要行为变化、关键源码、验证证据和未完成项；沿用[Review 指引](../../../docs/development/review.md)。

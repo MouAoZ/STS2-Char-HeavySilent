@@ -23,7 +23,7 @@
 5. 在 eng／zhs 的 `cards.json` 增加 `.title`、`.description`，描述使用 `{Cards:diff()}`。
 6. 继承基类上的 Pool 注册，暂用基类的占位图；正式卡图准备好后，为这张卡显式覆盖图片路径。
 7. 执行 `verify`、`package`，并验证足量牌、空牌堆、手牌上限和升级情形。
-8. 更新[样例对应表](../../../../docs/design/teaching-samples.md)或新增内容目录，提交可供人类 Review 的行为说明。
+8. 更新[设计跟踪](../../../../docs/design/implementation-tracker.md)的状态、模型 ID 和代码链接，同步 README 看板与状态页验证证据，提交可供人类 Review 的行为说明；新增的教学解释另写入样例文档。
 
 改“抽 1／2 张”为其他数值时，主要修改 `CanonicalVars` 的基础值和 `OnUpgrade` 的差值。
 改“抽牌”为“征召”则改变了机制，不能只改描述，也不能直接给普通抽牌命令换个中文名字。
