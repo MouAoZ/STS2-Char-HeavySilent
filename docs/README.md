@@ -3,6 +3,7 @@
 本手册的读者是策划、Reviewer 和接手实现的 Agent。无需先学完整 C#；先看一张卡如何从设计进入游戏，再沿需要补充原理。
 玩法正文按[三类设计文档](design/README.md)维护；技术工作流放在项目 Skill 的 `references` 中，Skill 直接索引设计正文。人与 Agent 读取同一份事实，避免两套说明逐渐分叉。
 这些文档都属于开发脚手架。可独立打包的源码集中在 [mod/](../mod)，源码与脚手架的依赖边界见[工程结构](../.agents/skills/sts2-heavysilent-dev/references/architecture.md#模组源码与开发脚手架)。
+需要回答问题或提供 Review 意见时，直接到[协作问答](collaboration.md#如何回答)填写 A 栏；尚未在 CLI 中解决的沟通事项统一放在那里，Agent 负责处理与同步正式文档。
 没有历史会话的 Agent 从[首次接手指南](../.agents/skills/sts2-heavysilent-dev/references/first-session.md)开始；它区分同机新会话、全新克隆以及需要补充核对的内容。
 
 ## 建议阅读顺序
@@ -19,13 +20,14 @@
 | 任务 | 入口 |
 | --- | --- |
 | 跟踪整体进度与下一项工作 | [README 看板](../README.md#开发看板) |
+| 查看人类待办、回答问题或给出 Review 意见 | [协作任务与 Q&A](collaboration.md#协作任务)；[README 人类看板](../README.md#人类协作看板) |
 | 查设计、实现状态和代码位置 | [设计入口](design/README.md)；汇总见[设计跟踪](design/implementation-tracker.md) |
 | 新增内容 | [策划模板](design/templates/README.md) |
 | 理解现有卡牌结算 | [教学样例](design/teaching-samples.md) |
 | 设计术语与共用机制 | [特殊机制设计](design/mechanics.md) |
 | 设计各类卡牌与初始卡组 | [卡牌设计](design/cards.md) |
 | 设计遗物、事件与药水 | [遗物／事件／药水设计](design/relics-events-potions.md) |
-| Review 一次改动 | [Review 指引](development/review.md) |
+| Review 一次改动 | [Review 指引](development/review.md)说明方法；具体请求与结论写在[协作文档](collaboration.md) |
 | 在游戏里验证 | [实机清单](development/smoke-test.md) |
 | 查 API 来源 | [上游资料索引](../.agents/skills/sts2-heavysilent-dev/references/sources.md) |
 

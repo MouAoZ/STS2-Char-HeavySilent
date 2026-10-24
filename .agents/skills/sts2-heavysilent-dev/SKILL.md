@@ -14,6 +14,7 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 
 | 当前任务 | 参考 |
 | --- | --- |
+| 接手新回答、未解决问题与人类 Review | [协作任务与 Q&A](../../../docs/collaboration.md)；[Review 方法](../../../docs/development/review.md) |
 | 理解代码结构、注册与资源归属 | [工程结构](references/architecture.md) |
 | 解释代码、检查命令与生命周期 | [API 与教学](references/api-primer.md) |
 | 增加卡牌、遗物、药水或事件 | [内容填充](references/content-authoring.md) |
@@ -29,7 +30,8 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 ## 落实内容
 
 - 从[设计入口](../../../docs/design/README.md)进入对应类别，读取玩法、逐项状态、稳定 ID 与代码；[设计跟踪](../../../docs/design/implementation-tracker.md)汇总进度，[项目状态](../../../docs/development/status.md)记录验证证据，[教学样例](../../../docs/design/teaching-samples.md)解释现有结算。
-- 将已有命令组合与新增机制分开。只询问影响当前实现的设计歧义；其余条目标记待确认。
+- 将已有命令组合与新增机制分开。未在 CLI 解决的问题集中登记到[协作页](../../../docs/collaboration.md)，不限于玩法；设计条目只留编号链接。只追问影响当前工作的事项，其他工作继续推进。
+- 接手时检查协作页的新回答和当前对话，已有明确答案直接记录来源并处理；技术事实先自行查证。确认后的玩法写回设计，工程约定写回技术参考，再同步协作状态和人类看板，不以测试通过代替人类 Review。
 - 保持卡牌效果顺序可读，使用游戏 Command、玩家选择上下文和游戏 RNG。
 - 新机制先核对原版类似实现；必要补丁单独说明目标方法和版本。
 - 教学解释连接策划语句、源码和可观察行为，不只描述语法。

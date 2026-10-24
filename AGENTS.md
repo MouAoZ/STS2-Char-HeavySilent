@@ -9,6 +9,7 @@
 
 - 实现、调试或评审本项目：使用 [sts2-heavysilent-dev](.agents/skills/sts2-heavysilent-dev/SKILL.md)。
 - 人类学习与 Review：[docs/README.md](docs/README.md)。
+- 人类待办、未解决的问题与 Review 意见：[协作文档](docs/collaboration.md)。接手时检查新回答，并将结论写回正式文档。
 - 内容意图与逐项状态：[设计入口](docs/design/README.md)，按特殊机制、卡牌、遗物／事件／药水分别维护；汇总看[设计跟踪](docs/design/implementation-tracker.md)，总览与看板看[README](README.md)，验证证据看[项目状态](docs/development/status.md)。
 - 环境变更：核对[版本基线](docs/development/baseline.json)及本机程序集。
 - Agent 实机测试与可选回归：[测试工作流](.agents/skills/sts2-heavysilent-dev/references/game-testing.md)。
@@ -25,7 +26,7 @@
 ## 项目约定
 
 - 说明和教学用中文，代码标识符用英文；内容 ID 一旦进入存档就保持稳定。
-- 设计歧义写入待澄清项，只询问影响当前实现的规则，不静默决定玩法。
+- 设计歧义及其他未解决沟通集中写入协作文档，设计和看板只作索引；只追问影响当前工作的事项，不静默决定玩法。已有明确回答直接记录并处理，不重复求确认。
 - 效果通过游戏 Command／Hook 实现；随机和玩家选择沿用游戏上下文。
 - 初始套牌与角色素材目前是开发占位，磨顶与征召尚未实现。
 - 构建仅写工作区产物；部署仅操作本模组及独立测试桥目录，不覆盖原版程序集。

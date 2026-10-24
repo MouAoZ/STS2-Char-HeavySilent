@@ -14,10 +14,10 @@
 
 | 设计编号 | 中文名 | 英文名 | 分类 | 设计效果 | 状态 | 模型 ID／代码 | 依赖／待确认 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| <a id="hs-relic-001"></a>HS-RELIC-001 | 砥石 | Whetstone | 初始 | 每回合首次磨顶时，获得2点格挡。 | 未实现 | — | 磨顶与每回合首次计数；[Q1](mechanics.md#q1)。 |
-| <a id="hs-relic-002"></a>HS-RELIC-002 | 玉砥 | Jade Whetstone | 初始升级／欧罗巴斯 | 你每回合首次磨顶时，获得两倍于磨顶数量的格挡。 | 未实现 | — | 磨顶计数、升级替换入口；[Q1](mechanics.md#q1)、[Q5](mechanics.md#q5)。 |
-| <a id="hs-relic-003"></a>HS-RELIC-003 | 息壶 | Breath Vessel | 稀有 | 战斗开始时，将2张气+加入抽牌堆。 | 未实现 | — | 生成气、插入顺序；[Q3](mechanics.md#q3)。 |
-| <a id="hs-relic-004"></a>HS-RELIC-004 | 护息符 | Breath Charm | 罕见 | 每回合首次打出气时，获得4点格挡。 | 未实现 | — | 每回合首次打出气；[Q3](mechanics.md#q3)、[Q6](mechanics.md#q6)。 |
+| <a id="hs-relic-001"></a>HS-RELIC-001 | 砥石 | Whetstone | 初始 | 每回合首次磨顶时，获得2点格挡。 | 未实现 | — | 磨顶与每回合首次计数；[Q1](../collaboration.md#q1)。 |
+| <a id="hs-relic-002"></a>HS-RELIC-002 | 玉砥 | Jade Whetstone | 初始升级／欧罗巴斯 | 你每回合首次磨顶时，获得两倍于磨顶数量的格挡。 | 未实现 | — | 磨顶计数、升级替换入口；[Q1](../collaboration.md#q1)、[Q5](../collaboration.md#q5)。 |
+| <a id="hs-relic-003"></a>HS-RELIC-003 | 息壶 | Breath Vessel | 稀有 | 战斗开始时，将2张气+加入抽牌堆。 | 未实现 | — | 生成气、插入顺序；[Q3](../collaboration.md#q3)。 |
+| <a id="hs-relic-004"></a>HS-RELIC-004 | 护息符 | Breath Charm | 罕见 | 每回合首次打出气时，获得4点格挡。 | 未实现 | — | 每回合首次打出气；[Q3](../collaboration.md#q3)、[Q6](../collaboration.md#q6)。 |
 
 ## 事件
 
@@ -39,4 +39,4 @@
 
 ## 维护约定
 
-每项内容记录设计编号、状态、实际模型 ID／源码与验收结果。共用疑问引用机制文档的 Q 编号，遗物特有的触发次数、获取或替换规则写在对应条目；遗物详情使用[遗物模板](templates/relic.md)。规则没有确认时保留待澄清标记，模型 ID 和源码只在实际实现后登记。
+每项内容记录设计编号、状态、实际模型 ID／源码与验收结果。未解决的问题和回答统一写入[协作文档](../collaboration.md)，这里只留 Q 编号链接；确认后的共用规则写回机制文档，遗物特有的触发次数、获取或替换规则写回对应条目。遗物详情使用[遗物模板](templates/relic.md)，模型 ID 和源码只在实际实现后登记。

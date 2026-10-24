@@ -39,25 +39,37 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 卡牌按不同设计计数，升级和起始重复张数不另计；3／77 不是整个项目的完成率。详细状态以[设计到实现跟踪](docs/design/implementation-tracker.md)为准，构建、历史实机和未测范围分别记录在[项目状态](docs/development/status.md)。
 
+## 人类协作看板
+
+待回答的问题与待 Review 的交付统一在[协作文档](docs/collaboration.md#协作任务)维护。点击编号填写 A 栏，也可在 CLI 按编号回答；Agent 负责整理结论并同步正式文档。这里仅列入口，具体状态和处理记录以协作文档为准。
+
+| 待回答 | 待 Review | 待 Agent 跟进 |
+| --- | --- | --- |
+| **T01 · 共用规则确认**：[Q1 磨顶](docs/collaboration.md#q1)、[Q2 征召](docs/collaboration.md#q2)，建议优先处理 | [R1 源码与脚手架拆分](docs/collaboration.md#r1) | 暂无已回答待处理项 |
+| [Q3 生成／复制／转化](docs/collaboration.md#q3)，正式初始牌实现前按需处理 | — | — |
+| [Q4～Q8](docs/collaboration.md#协作任务)，随对应内容实现前处理 | — | — |
+
+设计问题关闭表示规则已明确；实现完成和人类 Review 结论分别记录。没有收到回答只影响依赖该答案的任务。
+
 ## 开发看板
 
 待办按建议依赖顺序排列；“待确认”是阻塞原因，不等于正在开发。实际开工后才移入进行中，任务完成须写回设计条目和验证证据。
 
 | 待办 | 进行中 | 已完成 |
 | --- | --- | --- |
-| **T01 · 共用规则确认**：先处理[磨顶／征召 Q1、Q2](docs/design/implementation-tracker.md#待澄清索引)，其他疑问随对应内容处理 | —（当前无已开工的玩法任务） | 工程骨架、独立角色与内容池 |
-| **T02 · 磨顶与征召**：依赖T01，实现[两项机制](docs/design/mechanics.md#术语与实现状态)，验收不足牌、满手牌、顺序、触发边界及术语悬停解释 | — | 打击／防御／气及升级、双语文本；有基础实机记录 |
-| **T03 · 正式起始内容**：分步实现[两张特殊初始牌](docs/design/cards.md#初始卡组)和[初始遗物](docs/design/relics-events-potions.md#hs-relic-001)，接入角色并验收；磨顶相关部分依赖T02 | — | 构建、打包、部署与版本核对 |
-| **T04 · 卡池填充**：把[70张攻击／技能／能力牌](docs/design/cards.md#攻击牌)按机制分批实现，先选依赖清楚的组合，再处理自动出牌、保留、费用和奖励干预；每批单独验收 | — | Agent 实机工具、场景构造、截图与 Review 记录 |
-| **T05 · 遗物与先古内容**：[其余三件遗物](docs/design/relics-events-potions.md#遗物)、[两张先古卡](docs/design/cards.md#先古卡)，明确获取、替换和存档范围 | — | 设计草稿到代码的跟踪表与进度看板 |
-| **T06 · 正式资源与内容定稿**：命名、双语文案、角色／卡牌／遗物美术、起始数值；药水和事件待有设计后再建条目 | — | — |
-| **T07 · 发布验收**：奖励池、爬塔和平衡、保存续玩、联机、兼容与 Workshop 发布 | — | — |
+| **T02 · 磨顶与征召**：依赖[人类任务 T01](#人类协作看板)，实现[两项机制](docs/design/mechanics.md#术语与实现状态)，验收不足牌、满手牌、顺序、触发边界及术语悬停解释 | —（当前无已开工的玩法任务） | 工程骨架、独立角色与内容池 |
+| **T03 · 正式起始内容**：分步实现[两张特殊初始牌](docs/design/cards.md#初始卡组)和[初始遗物](docs/design/relics-events-potions.md#hs-relic-001)，接入角色并验收；磨顶相关部分依赖T02 | — | 打击／防御／气及升级、双语文本；有基础实机记录 |
+| **T04 · 卡池填充**：把[70张攻击／技能／能力牌](docs/design/cards.md#攻击牌)按机制分批实现，先选依赖清楚的组合，再处理自动出牌、保留、费用和奖励干预；每批单独验收 | — | 构建、打包、部署与版本核对 |
+| **T05 · 遗物与先古内容**：[其余三件遗物](docs/design/relics-events-potions.md#遗物)、[两张先古卡](docs/design/cards.md#先古卡)，明确获取、替换和存档范围 | — | Agent 实机工具、场景构造、截图与 Review 记录 |
+| **T06 · 正式资源与内容定稿**：命名、双语文案、角色／卡牌／遗物美术、起始数值；药水和事件待有设计后再建条目 | — | 设计草稿到代码的跟踪表与进度看板 |
+| **T07 · 发布验收**：奖励池、爬塔和平衡、保存续玩、联机、兼容与 Workshop 发布 | — | 模组源码与脚手架拆分、独立打包 |
 
 看板维护方式见[日常维护](docs/design/implementation-tracker.md#日常维护)。完成一个大任务的部分内容时，拆出有编号范围的小任务，避免整批误标完成。
 
 ## 从这里开始
 
 - 策划与 Review：[开发手册与学习路线](docs/README.md)
+- 回答问题与提交评审意见：[协作问答与任务](docs/collaboration.md)
 - 分类设计与源码：[特殊机制](docs/design/mechanics.md) · [卡牌](docs/design/cards.md) · [遗物／事件／药水](docs/design/relics-events-potions.md)
 - 实现进度汇总：[设计到实现跟踪](docs/design/implementation-tracker.md)
 - 验证结果与未测范围：[项目状态](docs/development/status.md)
@@ -120,6 +132,6 @@ python -m unittest discover -s tests -v
 
 从[所属设计文档](docs/design/README.md)选取条目，使用[对应的策划模板](docs/design/templates/README.md)补齐效果顺序、升级、边界和验收例子，然后让 Agent 实现；新设计先登记编号。
 Markdown 是设计输入，运行时效果由 C# 与本地化 JSON 提供。
-新增机制前先处理[机制待澄清项](docs/design/mechanics.md)。
+新增机制前先处理[相关协作问题](docs/collaboration.md#协作任务)，确认后的规则由 Agent 写回机制设计。
 
 玩家包中的模板／占位资源许可见 [mod/THIRD_PARTY_NOTICES.md](mod/THIRD_PARTY_NOTICES.md)，测试工具等脚手架许可见[根目录第三方说明](THIRD_PARTY_NOTICES.md)。
