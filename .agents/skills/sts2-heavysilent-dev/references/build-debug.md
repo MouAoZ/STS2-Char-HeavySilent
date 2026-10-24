@@ -28,7 +28,11 @@ Agent 和不支持 MSIX 版本的命令行优先使用这个绝对路径，避�
 
 ## VS Code 的 GDScript 语言服务器
 
-Godot Tools 需要运行中的 Godot 编辑器实例提供语言服务；只配置可执行文件路径不会自动启动该实例。若主要在 VS Code 中编辑，在本机 `.vscode/settings.json` 中将 `godotTools.editorPath.godot4` 设为 `local.props` 的 `GodotPath`，并添加 `"godotTools.lsp.headless": true`。这会让插件启动无窗口的 MegaDot 编辑器；修改后执行 `Developer: Reload Window`。
+Godot Tools 需要运行中的 Godot 编辑器实例提供语言服务；只配置可执行文件路径不会自动启动该实例。若希望所有 Godot 项目都自动启动后台语言服务，通过 `Preferences: Open User Settings (JSON)` 在 VS Code 用户设置中添加 `"godotTools.lsp.headless": true`，并将 `godotTools.editorPath.godot4` 设为常用 Godot 主程序。本机通用默认版本为已安装的 Godot 4.6.2 .NET。
+
+本项目在本机 `.vscode/settings.json` 中单独将 `godotTools.editorPath.godot4` 覆盖为 `D:/Studio/GameDev/_Apps/MegaDot/4.5.1-m.14/MegaDot_v4.5.1-stable_mono_win64.exe`，不重复设置 Headless 开关，继承用户配置。工作区同名设置优先于用户设置，打开本项目时仍使用匹配游戏的 MegaDot。换机器时调整实际路径；若该机器未配置用户级 Headless，也可仅在工作区启用。
+
+这些配置由 VS Code 和 Godot Tools 自行读取，不依赖 Agent 或 Codex。VS Code 不读取 `local.props`；构建脚本的 `GodotPath` 继续使用同版本 `_console.exe`，便于命令行日志和退出状态处理，VS Code 使用主程序。修改设置后执行 `Developer: Reload Window`。
 
 本机 Godot Tools 2.7.1 在 Headless 模式下会自动分配空闲端口，无需固定 `serverPort`。如果关闭 Headless 模式，则需要先用 MegaDot 打开本项目，再连接编辑器的 LSP 端口（Godot 4 默认 `6005`）。`输出 → Godot LSP` 可查看连接日志；只看到反复尝试 `6005`／`6008` 且没有引擎进程时，应先检查服务是否启动。
 
