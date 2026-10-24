@@ -26,6 +26,14 @@ Agent 和不支持 MSIX 版本的命令行优先使用这个绝对路径，避�
 
 使用 `cmd.exe` 时去掉开头的 `&`，并用双引号包住可执行文件路径。`doctor` 会显示实际运行脚本的 PowerShell 路径和版本，打包记录也保存该版本。
 
+## VS Code 的 GDScript 语言服务器
+
+Godot Tools 需要运行中的 Godot 编辑器实例提供语言服务；只配置可执行文件路径不会自动启动该实例。若主要在 VS Code 中编辑，在本机 `.vscode/settings.json` 中将 `godotTools.editorPath.godot4` 设为 `local.props` 的 `GodotPath`，并添加 `"godotTools.lsp.headless": true`。这会让插件启动无窗口的 MegaDot 编辑器；修改后执行 `Developer: Reload Window`。
+
+本机 Godot Tools 2.7.1 在 Headless 模式下会自动分配空闲端口，无需固定 `serverPort`。如果关闭 Headless 模式，则需要先用 MegaDot 打开本项目，再连接编辑器的 LSP 端口（Godot 4 默认 `6005`）。`输出 → Godot LSP` 可查看连接日志；只看到反复尝试 `6005`／`6008` 且没有引擎进程时，应先检查服务是否启动。
+
+该配置用于 `.gd` 脚本；C# 代码补全由 C# 扩展提供。官方说明见 [Godot Tools 配置](https://github.com/godotengine/godot-vscode-plugin#configuration)与 [Godot 4.5 外部编辑器](https://docs.godotengine.org/en/4.5/tutorials/editor/external_editor.html#lsp-dap-support)。
+
 ## 命令的区别
 
 | 命令 | 作用 | 是否修改游戏目录 |
