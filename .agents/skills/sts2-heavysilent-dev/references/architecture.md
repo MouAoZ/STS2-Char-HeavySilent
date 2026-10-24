@@ -28,6 +28,22 @@ PCK 以 `res://HeavySilent/` 为资源根，避免覆盖原版同名资源。
 | [资源](../../../../HeavySilent) | eng／zhs 文本、图片与导入设置 | 文案、翻译、美术 |
 | [脚本](../../../../scripts) | 环境核对、构建、包装、部署与检查 | 开发流程 |
 
+## 测试工具与正式模组的分界
+
+主工程 `HeavySilent.csproj` 只编译 `HeavySilentCode/**/*.cs`。下列测试代码有独立入口，不会因为位于仓库内就被编进玩家 DLL：
+
+| 位置 | 职责 |
+| --- | --- |
+| [session.py](../../../../tools/game-testing/session.py) | 构建部署、进程与专用档管理、备份和退出恢复 |
+| [mcp_server.py](../../../../tools/game-testing/mcp_server.py)、[client.py](../../../../tools/game-testing/client.py) | Agent 工具入口、通信、等待状态与截图 |
+| [测试桥](../../../../tools/game-testing/bridge/HeavySilentTestBridge.csproj) | 独立 C# 工程；HsControl 管会话／快照，HsScenarios 构造通用场景，HsFixtures 保留固定夹具 |
+| [tasks.py](../../../../tools/game-testing/tasks.py)、[runner.py](../../../../tools/game-testing/runner.py) | 前者记录 Agent 的测试与判断；后者执行显式选择的固定回归 |
+| [bootstrap.py](../../../../tools/game-testing/bootstrap.py)、[upstream.json](../../../../tools/game-testing/upstream.json) | 固定上游下载和版本适配；下载源码在忽略的 `.tools/sts2mcp/src` |
+
+需要调整上游桥时修改 `bootstrap.py` 的补丁，不能只编辑 `.tools` 内生成的文件，否则下次准备会丢失修改。新增测试能力优先放本地桥扩展；玩法实现放正式模组，二者不可互相替代。
+
+## 新增程序目录
+
 首次新增共用机制时再引入 `Mechanics`，首次新增状态效果时引入 `Powers`，确需补丁时引入 `Patches`。
 普通内容调用共用机制，补丁处理游戏现有入口无法表达的行为；避免每张卡复制一套磨顶代码。
 

@@ -7,6 +7,7 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 
 服务于这个仓库的 STS2 角色模组。人类给出策划与 Review，Agent 完成程序实现、验证和解释。
 优先复用本机目标版本的游戏接口与 BaseLib；网上示例需要核对签名和行为。
+首次接手且没有会话上下文时，先看[首次接手指南](references/first-session.md)，再按本次任务读取下表中的正文。
 
 ## 按任务读取
 

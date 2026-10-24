@@ -13,6 +13,7 @@
 - 当前实现和验证结果：[项目状态](docs/development/status.md)
 - 原始玩法：[卡牌设计 v0.1](docs/design/卡牌设计v0.1.md)
 - Agent 工作入口：[AGENTS.md](AGENTS.md)
+- 无历史上下文接手：[首次接手指南](.agents/skills/sts2-heavysilent-dev/references/first-session.md)
 
 ## 本机启动
 

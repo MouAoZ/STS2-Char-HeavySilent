@@ -40,6 +40,7 @@ Agent 和不支持 MSIX 版本的命令行优先使用这个绝对路径，避�
 | `test-setup`／`test-start`／`test`／`test-stop` | 准备与运行可见游戏自动测试，见[测试工作流](game-testing.md) | 安装本模组及独立测试桥，使用专用第 3 档 |
 
 加 `-Configuration Release` 可构建发布配置；默认 Debug 包含 PDB 用于调试。
+只检查源码与文档、不依赖游戏安装时可运行 `python scripts/verify.py`；它不等于上述包含 C# 编译的 `dev.ps1 verify`。
 `packages.Debug.lock.json` 与 `packages.Release.lock.json` 分别锁定两种配置。Godot SDK 只在 Debug 引用编辑器程序集，因此不能共用一个依赖锁文件。
 `package` 生成的完整记录在 `artifacts/package/package-info.json`。部署时检查源文件指纹和游戏／BaseLib 哈希，防止把更新前或改代码前的旧包装入游戏。
 打包失败会移除完成记录；历史文件即使仍在输出目录也不能被当成新包部署。
@@ -71,9 +72,25 @@ PCK 在 `.cache` 下的独立资源工程导出，避免 Godot 再次发布一�
 
 ## MCP 与额外工具
 
-编译与打包只需文件工具、终端和 `ilspycmd`。游戏自动测试已提供项目级 MCP，CLI 与 MCP 共用实现，见[测试工作流](game-testing.md)；没有修改个人 Codex 全局配置。
+编译与打包使用前述 SDK、引擎、Python 和终端；`ilspycmd` 仅用于查询原版 API，不是构建前置。游戏自动测试已提供项目级 MCP，CLI 与 MCP 共用实现，见[测试工作流](game-testing.md)；没有修改个人 Codex 全局配置。
 OpenAI Docs MCP 可辅助查询 Codex 配置；GitHub 工具在需要 PR／Issue 协作时再接入；Godot 编辑器 MCP 在有实际场景自动化需求时再评估。
 本机反编译与资源提取结果只放忽略的 `.cache`，不提交完整游戏源码或资源。
+
+## 查询一个不确定的 API
+
+先读本项目类似内容，再读原版同类效果及其调用的 Command／Hook。不要只凭方法名判断它是否触发抽牌、弃牌或保存流程。
+本机 `ilspycmd --version` 为 10.0.1.8346；以下 PowerShell 命令已实际读取当前基线的 `StrikeSilent`：
+
+```powershell
+[xml]$apiConfig = Get-Content local.props -Raw
+$gameAssembly = Join-Path $apiConfig.Project.PropertyGroup.Sts2Path 'data_sts2_windows_x86_64/sts2.dll'
+New-Item -ItemType Directory -Force .cache/game-api | Out-Null
+ilspycmd -t MegaCrit.Sts2.Core.Models.Cards.StrikeSilent $gameAssembly > .cache/game-api/StrikeSilent.cs
+```
+
+更换 `-t` 后可查询 `MegaCrit.Sts2.Core.Commands.CardPileCmd` 等完整类型名。不知道完整名称时，用 `ilspycmd -l c $gameAssembly` 列出类再用 `rg` 筛选。查询 BaseLib 时改为 `local.props` 中 `BaseLibPath` 下的 `BaseLib.dll`。
+如果新机器没有该工具，可按需执行 `dotnet tool install --tool-path .tools/ilspy ilspycmd --version 10.0.1`，之后使用 `.tools/ilspy/ilspycmd.exe`；安装需要网络及相应 .NET 运行时。
+只保存本次需要的类型，核对参数、异步时序和调用者，再以项目编译和实机行为确认。把必要的原理与签名解释写回技术参考，不把反编译缓存当成需提交的源码。
 
 ## 验证边界与回退
 

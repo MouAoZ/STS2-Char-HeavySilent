@@ -69,7 +69,57 @@
 
 通用场景接口会在变更前检查模型 ID、牌堆容量和字段。若以后机制需要额外可观察数据（如待结算队列、标记来源），在桥中增加只读快照；只有普通工具无法安排必要前提时才增加夹具能力。不要让夹具代替正在验证的机制结算。重复出现且预期稳定的调查，再沉淀到可选回归。
 
-工具代码分别在 [mcp_server.py](../../../../tools/game-testing/mcp_server.py) 与 [client.py](../../../../tools/game-testing/client.py)。动作获得 HTTP 成功响应只表示受理；客户端等待多次状态观察，出牌验收还会确认牌离开手牌、离开执行区并进入正确牌堆。超时保留证据，不自动重发出牌，以免重复操作。
+工具代码分别在 [mcp_server.py](../../../../tools/game-testing/mcp_server.py) 与 [client.py](../../../../tools/game-testing/client.py)。动作获得 HTTP 成功响应只表示受理；客户端等待多次状态观察，固定出牌用例进一步确认牌离开手牌、离开执行区并进入正确牌堆。Agent 自由测试也需按本次预期检查效果，不能把等待结束当作自动验收通过。超时保留证据，不自动重发出牌，以免重复操作。
+
+## 工具参数与可观察状态
+
+MCP 请求使用工具参数对象。比如手牌下标 0 的无目标卡：
+
+```json
+{"action":"play_card","arguments":{"card_index":0}}
+```
+
+需要敌方目标时，在 `arguments` 加 `target`，值取自本次状态的 `ui.battle.enemies[].entity_id`。所有手牌下标从 0 开始；每次出牌或抽牌后重新读手牌，不能沿用已经变化的下标。夹具 `enemies[].index` 是数组下标，与出牌用的实体 ID 不是同一字段。
+
+| 工具组 | 关键约定 |
+| --- | --- |
+| `start_session`／`stop_session` | 前者构建部署并启动游戏，后者退出并恢复设置；不是连接任意手动开启的游戏 |
+| `get_state`／`list_models` | 前者读取现场；后者以 `kind=cards|powers` 和 ID 子串查询注册模型，最多返回100项，不能把默认结果当完整目录 |
+| `start_combat`／`prepare_scenario` | 前者进入战斗；后者在可出牌阶段安排条件。构造过程也会调用游戏 Command，出现运行时错误时重新读现场，不假设自动回滚 |
+| `perform_action` | `action` 与 `arguments` 分开；菜单为 `menu_select`＋`option`，选地图／事件选项使用 `index`；参数以当前状态与上游 `McpMod.Actions.cs` 为准 |
+| `inspect_card`／`capture_screenshot` | 放大查看后调用 `inspect_card(close=true)` 再继续操作；截图 `name` 使用唯一字母／数字／下划线／连字符，避免覆盖证据 |
+| `begin_test_task`／`add_test_check` | 每项包含 `id/question/expected/reason`；同一会话的上一任务需结束后才能创建下一任务 |
+| `record_observation`／`finish_test_task`／`get_report` | 观察需实际行为、判断理由及可选证据路径；路径相对当前会话目录或为其内部绝对路径。未执行检查不会自动变成通过 |
+| `prepare_case`／`run_suite` | 可选固定夹具／套件；与自由操作共用控制锁，不要同时写入游戏 |
+
+状态的 `busy=false` 表示当前未观察到桥准备、Action 执行或切场等活动，并不自动证明本次效果正确。`play_phase` 确认可出牌阶段，`piles` 是真实战斗牌堆，`visible_hand_count` 是手牌界面节点数量；数值、去向和必要的界面表现应分别检查。
+卡牌 `instance_id` 仅供同一进程内短期比对，保存续玩时应比较稳定 `id`、升级状态等，而非运行时对象哈希。`ui` 提供原版菜单／战斗／选牌状态，出现等待玩家选择时应先处理选择，不要反复发送出牌或重建场景。
+
+## 会话缺失与故障处理
+
+| 现象 | 下一步 |
+| --- | --- |
+| 工具列表没有 `heavysilent_game` | 执行 `test-setup` 生成本机配置，再重新加载项目；不要把尚未加载 MCP 当成游戏桥失败 |
+| `get_state` 找不到 `active-session.json` | 尚无受管会话；确认没有其他游戏后调用 `start_session`。仅有工具连接不表示游戏已启动 |
+| 新克隆的 `get_report` 找不到 `latest.json` | 尚无本机报告；开始新的测试任务，旧状态页中的日志路径不会随 Git 下载 |
+| 已有游戏，`start_session` 拒绝启动 | 有活动记录时读取现有会话；无记录时它可能是用户手动游戏，应先正常关闭，不能直接接管或杀进程 |
+| 有活动记录，但游戏已退出 | 执行 `test-stop` 完成档位／设置恢复与存档核对，再开新会话；不要先删除记录 |
+| 游戏仍在，但桥无响应 | 保留日志和记录，核对记录中的 PID。当前 `test-stop` 依赖桥正常退出，没有无条件强杀兜底；确认是受管进程后正常关窗，再执行 `test-stop` |
+| 第3档包含未登记数据 | 检查是否换了工作区或丢失归属记录；仅在能证明是本项目测试档时恢复原记录。不能凭档位编号覆盖已有数据；无法证明时需人类指定如何保留／迁移 |
+| 动作或场景构造报错 | 读取状态、日志并截图，判断是否已部分执行；不自动重发。未知模型 ID 会在变更前拒绝，运行时 Hook 错误不承诺事务回滚 |
+
+MCP 尚未加载时，启动／退出可用 `dev.ps1 test-start/test-stop`；进程内操作可用仓库测试 Python 调用 `client.GameClient`，接口实现与 MCP 相同。它只附着已有受管会话，仍须遵守控制锁：
+
+```python
+# 保存为仓库根目录下的临时脚本后，用 tools/game-testing/.venv/Scripts/python.exe 执行。
+import sys
+sys.path.insert(0, "tools/game-testing")
+from client import GameClient, control_lock
+client = GameClient()
+state = client.state()
+print(state["profile"], state["in_combat"])
+# 写操作才持有锁；按实际测试问题选择动作，不在此默认出牌。
+```
 
 ## 保存隔离与测试边界
 

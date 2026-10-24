@@ -2,6 +2,7 @@
 
 本手册的读者是策划、Reviewer 和接手实现的 Agent。无需先学完整 C#；先看一张卡如何从设计进入游戏，再沿需要补充原理。
 详细技术正文放在项目 Skill 的 `references` 中，人与 Agent 读取同一份事实，避免两套说明逐渐分叉。
+没有历史会话的 Agent 从[首次接手指南](../.agents/skills/sts2-heavysilent-dev/references/first-session.md)开始；它区分同机新会话、全新克隆以及需要补充核对的内容。
 
 ## 建议阅读顺序
 
@@ -10,7 +11,7 @@
 3. [程序原理与第一张卡](../.agents/skills/sts2-heavysilent-dev/references/api-primer.md)：继承、生命周期、数值和结算。
 4. [内容填充教程](../.agents/skills/sts2-heavysilent-dev/references/content-authoring.md)：卡牌、遗物、药水、事件如何设计与落地。
 5. [构建、调试与升级](../.agents/skills/sts2-heavysilent-dev/references/build-debug.md)：从命令到游戏，如何定位错误。
-6. [游戏自动测试](../.agents/skills/sts2-heavysilent-dev/references/game-testing.md)：Agent 操作游戏、固定回归、专用档位与证据。
+6. [Agent 实机测试](../.agents/skills/sts2-heavysilent-dev/references/game-testing.md)：按改动构造场景、操作与观察，以及可选回归、专用档位和证据。
 
 ## 日常工作入口
 
