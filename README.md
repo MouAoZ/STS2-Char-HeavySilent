@@ -11,7 +11,7 @@
 | --- | --- | --- |
 | 工程与测试工具 | 已具备开发能力 | 版本基线、双语本地化、打包部署、场景构造与证据记录；见[验证记录](docs/development/status.md) |
 | 角色与起始配置 | 开发占位 | 当前五打五防两张气、70生命、99金币、蛇之戒及静默外观；见[角色代码](HeavySilentCode/Character/HeavySilentCharacter.cs) |
-| 卡牌设计落地 | **3／77 已实现，0 进行中，74 未实现** | 三张为打击、防御、气；待实现包括两张特殊初始牌、70张奖励卡和两张先古相关卡；见[逐项跟踪](docs/design/implementation-tracker.md#内容统计) |
+| 卡牌设计落地 | **3／77 已实现，0 进行中，74 未实现** | 三张为打击、防御、气；待实现包括两张特殊初始牌、70张攻击／技能／能力牌和两张先古相关卡；见[逐项跟踪](docs/design/implementation-tracker.md#内容统计) |
 | 磨顶／征召 | **0／2 已实现** | 共用规则待确认，再实现触发链；见[机制条目](docs/design/implementation-tracker.md#共用机制) |
 | 遗物 | **0／4 已实现** | 初始、初始升级及两件专属遗物；见[遗物条目](docs/design/implementation-tracker.md#遗物) |
 | 美术与其他内容 | 未完成／未定范围 | 正式角色与卡图仍缺；药水、事件尚无具体设计，不计入内容分母 |
@@ -28,7 +28,7 @@
 | **T01 · 共用规则确认**：先处理[磨顶／征召 Q1、Q2](docs/design/implementation-tracker.md#待澄清索引)，其他疑问随对应内容处理 | —（当前无已开工的玩法任务） | 工程骨架、独立角色与内容池 |
 | **T02 · 磨顶与征召**：依赖T01，实现[两项机制](docs/design/implementation-tracker.md#共用机制)，验收不足牌、满手牌、顺序和触发边界 | — | 打击／防御／气及升级、双语文本；有基础实机记录 |
 | **T03 · 正式起始内容**：分步实现[两张特殊初始牌](docs/design/implementation-tracker.md#基础牌气与特殊初始牌)和[初始遗物](docs/design/implementation-tracker.md#hs-relic-001)，接入角色并验收；磨顶相关部分依赖T02 | — | 构建、打包、部署与版本核对 |
-| **T04 · 奖励卡池**：把[70张奖励卡](docs/design/implementation-tracker.md#攻击牌)按机制分批实现，先选依赖清楚的组合，再处理自动出牌、保留、费用和奖励干预；每批单独验收 | — | Agent 实机工具、场景构造、截图与 Review 记录 |
+| **T04 · 卡池填充**：把[70张攻击／技能／能力牌](docs/design/implementation-tracker.md#攻击牌)按机制分批实现，先选依赖清楚的组合，再处理自动出牌、保留、费用和奖励干预；每批单独验收 | — | Agent 实机工具、场景构造、截图与 Review 记录 |
 | **T05 · 遗物与先古内容**：[其余三件遗物](docs/design/implementation-tracker.md#遗物)、[两张先古卡](docs/design/implementation-tracker.md#先古相关卡)，明确获取、替换和存档范围 | — | 设计草稿到代码的跟踪表与进度看板 |
 | **T06 · 正式资源与内容定稿**：命名、双语文案、角色／卡牌／遗物美术、起始数值；药水和事件待有设计后再建条目 | — | — |
 | **T07 · 发布验收**：奖励池、爬塔和平衡、保存续玩、联机、兼容与 Workshop 发布 | — | — |
