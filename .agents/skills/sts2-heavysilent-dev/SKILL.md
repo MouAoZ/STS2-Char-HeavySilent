@@ -5,7 +5,7 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 
 # HeavySilent 开发
 
-遵守仓库 [AGENTS.md](../../../AGENTS.md)。首次接手读[接手指南](references/first-session.md)；开始修改或续做目标读[执行流程](../../../docs/development/workflow.md)，其中维护 worktree／直接 main、按需委派、技术验收与功能批次 PR 的约定。
+遵守仓库 [AGENTS.md](../../../AGENTS.md)。首次接手读[接手指南](references/first-session.md)；开始修改或续做目标读[执行流程](../../../docs/development/workflow.md)，其中维护一个 goal 一个 PR、Agent 内部 Review、worktree／直接 main 与按需委派的约定。
 
 只加载当前任务需要的资料。玩法与逐项状态以[设计正文](../../../docs/design/README.md)为准，技术参考不另存玩法或进度副本。
 

@@ -41,7 +41,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 ## 人类协作看板
 
-问题与工作用 local Issue 跟踪，功能批次用 local PR 评审，统一从主目录 main 的[协作入口](docs/collaboration/README.md)进入，无需切换分支。日常技术 Review 由主 Agent 完成；你在 Timeline 或 CLI 回复，Agent 同步状态与归档。
+问题与工作用 local Issue 跟踪；一个 `/goal` 只交付一个 local PR，统一从主目录 main 的[协作入口](docs/collaboration/README.md)进入，无需切换分支。goal 内所有更细粒度 Review 由主 Agent 完成；你在 Timeline 或 CLI 回复，Agent 同步状态与归档。
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
@@ -66,7 +66,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 ## 从这里开始
 
-- 新会话可输入 `/goal 实现 implementation-tracker.md 中的未实现项`；Agent 按[执行流程](docs/development/workflow.md)在 worktree 推进，完成技术验收后按功能批次交付 local PR。你也可明确说“本次直接在 main 工作，不走 PR”。
+- 新会话可输入 `/goal 实现 implementation-tracker.md 中的未实现项`；Agent 按[执行流程](docs/development/workflow.md)自主推进，在整个 goal 完成、硬阻塞或你明确暂停时交付唯一一条 PR。你也可明确说“本次直接在 main 工作，不走 PR”。
 - 策划与 Review：[开发手册与学习路线](docs/README.md)
 - 讨论问题与评审改动：[local Issues / Pull requests](docs/collaboration/README.md)
 - 查原版参考牌与复用入口：[原版效果参考](.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md)

@@ -113,7 +113,7 @@
 
 ## Skill 与 worktree 执行流程（2026-10-26）
 
-[local PR #55](../collaboration/pull-requests/55.md)获人类批准后，连同本轮明确要求的文档修订合入 main（`f87e2d3`）。执行规则集中于[目标执行与 worktree](workflow.md)：主 Agent 技术验收、人类按功能批次 Review，允许明确指定直接 main，协作记录统一在 main 可见。Skill 与交接／Review 入口删去重复流程、易过时的进度陈述；已有技术和存档边界保留。
+[local PR #55](../collaboration/pull-requests/55.md)获人类批准后，连同当轮明确要求的文档修订合入 main（`f87e2d3`）。当时约定主 Agent 技术验收、人类按功能批次 Review；后续人类已明确改为 goal 级交付，以[当前执行流程](workflow.md)为准。直接 main 的例外与协作入口同步继续保留。Skill 与交接／Review 入口删去重复流程、易过时的进度陈述；已有技术和存档边界保留。
 
 | 检查 | 结果／范围 |
 | --- | --- |
@@ -125,3 +125,9 @@
 | 未测范围 | 未重新构建、打包、部署或启动游戏；本次新增的 worktree 实机启动链尚未游戏内验收，模组源码无变更 |
 
 初次交付的校验记录保存在主目录忽略路径 `.cache/workflow-review-20261026/audit.json`，可在任务 worktree 清理后保留。测试会话、测试档归属及证据为全仓库 worktree 共用，配置与来源核对见[测试工作流](../../.agents/skills/sts2-heavysilent-dev/references/game-testing.md#worktree-中的实机测试)。
+
+## goal 交付边界确认（2026-10-26）
+
+人类明确要求一个 `/goal` 仅交付一个 PR，时机为整个目标完成、硬阻塞或用户明确暂停；goal 内所有更细粒度的 Review 和任务管理由主 Agent 负责。已将这一协作意愿直接写回 main 的执行流程、Skill 路由、入口及 PR 模板，不另发规则确认 PR。部分交付仍保留目标未完成状态，批准后清理该目标所属的废弃分支／worktree。
+
+本次仅修改文档；静态检查、Skill 校验与差异检查通过，未重新运行构建或实机测试。

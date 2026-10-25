@@ -31,7 +31,7 @@
 - **Issue：** 描述问题或任务及完成条件；可填写 Assignees、Labels、关联提交或 PR。决定得到落实后 Closed (Completed)，明确不再开展时 Closed (Not planned) 并说明原因。设计决策完成与游戏内容实现分别跟踪。
 - **Sub-issue：** 作为一个 Issue 分配自己的整数编号，通过 Parent issue 和父项的 Sub-issues 列表关联；独立记录状态和评论。普通追问追加在原 Timeline 中。
 - **Comments：** 记录作者、日期和内容；调查、回复、修正继续追加。需要继续处理已关闭目标时 Reopen 原 Issue，保留之前的关闭记录；新的独立目标另建 Issue。
-- **PR：** 提出一组待整合改动，记录 base／head 分支及提交、关联 Issue、diff、Checks 和 Review。修订后更新 head 和验证证据，在同一 PR 内继续评审。Approve 与 Merged 分别记录；实际整合后记 Merged 和结果提交，放弃时记 Closed 及原因。
+- **PR：** 一个 `/goal` 仅一条 PR，整个目标完成、硬阻塞或用户明确暂停时提交；goal 内 Review 由主 Agent 自主完成。记录目标与交付原因、base／head 提交、关联 Issue、diff、Checks 和 Review；修订沿用同一 PR。Approve 与 Merged 分别记录，部分成果获批不代表 goal 完成；完整规则见[执行流程](../development/workflow.md)。
 - **Archive：** 同次交付中将已关闭 Issue、Merged／Closed PR 从活动列表移入归档索引；正文文件保持原位置。Reopen 后恢复活动索引。同一记录只有一份正文。
 - **维护：** 收到评论后落实到正式设计或技术文档，再同步状态、关联条目和 README 看板。目标拆分、worktree、按需委派、Review 后整合与清理见[执行流程](../development/workflow.md)。
 
