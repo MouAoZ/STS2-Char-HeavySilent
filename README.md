@@ -45,10 +45,11 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
-| [Q4：已消耗状态牌是否再次计数](docs/collaboration.md#q4-followup) | [R1 源码与脚手架拆分](docs/collaboration.md#r1) | **T01 · 共用规则确认**：[Q1](docs/collaboration.md#q1)、[Q2](docs/collaboration.md#q2) 已写回设计 |
-| [Q5：合流替换哪张初始牌](docs/collaboration.md#q5-followup) | — | [Q3](docs/collaboration.md#q3) 生成／复制／转化，已核对原版 |
-| [Q6：伏笔何时读取费用](docs/collaboration.md#q6-followup) | — | [Q8](docs/collaboration.md#q8) 四张卡的升级与可打出性已明确 |
-| [Q7：孤注与易脉支付叠加](docs/collaboration.md#q7-followup) | — | Q4～Q7 已回答部分均已落实；击晕与完美契合已查证 |
+| 暂无（现有 Q1～Q8 已关闭） | [R1 源码与脚手架拆分](docs/collaboration.md#r1) | **T01 · 共用规则确认**：[Q1](docs/collaboration.md#q1)、[Q2](docs/collaboration.md#q2) 已写回设计 |
+| — | — | [Q3](docs/collaboration.md#q3) 生成／复制／转化，已核对原版 |
+| — | — | [Q4](docs/collaboration.md#q4-followup)、[Q5](docs/collaboration.md#q5-followup) 补充回答已写回牌堆范围与先古替换映射 |
+| — | — | [Q6](docs/collaboration.md#q6-followup)、[Q7](docs/collaboration.md#q7-followup) 补充回答已写回费用采样与支付优先级 |
+| — | — | [Q8](docs/collaboration.md#q8) 四张卡的升级与可打出性已明确 |
 
 设计问题关闭表示规则已明确；实现完成和人类 Review 结论分别记录。没有收到回答只影响依赖该答案的任务。
 
@@ -61,7 +62,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 | **T02 · 磨顶与征召**：[T01](#人类协作看板) 已完成；按[已确认规则](docs/design/mechanics.md#术语与实现状态)实现两项机制，验收不足牌、满手牌、插入结算、触发边界及术语悬停解释 | —（当前无已开工的玩法任务） | 工程骨架、独立角色与内容池 |
 | **T03 · 正式起始内容**：分步实现[两张特殊初始牌](docs/design/cards.md#初始卡组)和[初始遗物](docs/design/relics-events-potions.md#hs-relic-001)，接入角色并验收；磨顶相关部分依赖T02 | — | 打击／防御／气及升级、双语文本；有基础实机记录 |
 | **T04 · 卡池填充**：把[70张攻击／技能／能力牌](docs/design/cards.md#攻击牌)按机制分批实现，先选依赖清楚的组合，再处理自动出牌、保留、费用和奖励干预；每批单独验收 | — | 构建、打包、部署与版本核对 |
-| **T05 · 遗物与先古内容**：[其余三件遗物](docs/design/relics-events-potions.md#遗物)、[两张先古卡](docs/design/cards.md#先古卡)，明确获取、替换和存档范围 | — | Agent 实机工具、场景构造、截图与 Review 记录 |
+| **T05 · 遗物与先古内容**：实现[其余三件遗物](docs/design/relics-events-potions.md#遗物)、[两张先古卡](docs/design/cards.md#先古卡)，按已确认规则接入获取与替换，并验证保存续玩 | — | Agent 实机工具、场景构造、截图与 Review 记录 |
 | **T06 · 正式资源与内容定稿**：命名、双语文案、角色／卡牌／遗物美术、起始数值；药水和事件待有设计后再建条目 | — | 设计草稿到代码的跟踪表与进度看板 |
 | **T07 · 发布验收**：奖励池、爬塔和平衡、保存续玩、联机、兼容与 Workshop 发布 | — | 模组源码与脚手架拆分、独立打包 |
 

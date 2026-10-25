@@ -54,7 +54,7 @@
 | --- | --- |
 | Q1、Q2：磨顶与征召基础规则已确认 | [Q1](../collaboration.md#q1) · [Q2](../collaboration.md#q2)；实现仍未开始 |
 | Q3：生成、复制与转化已确认 | [Q3](../collaboration.md#q3)；原版参考已核对 |
-| Q4～Q7：已回答部分写回，剩余各一项具体分歧 | [消耗堆再次计数](../collaboration.md#q4-followup) · [先古替换对象](../collaboration.md#q5-followup) · [伏笔费用采样](../collaboration.md#q6-followup) · [支付叠加](../collaboration.md#q7-followup) |
+| Q4～Q7：补充回答已写回并关闭，相关内容仍未实现 | [状态牌范围](../collaboration.md#q4-followup) · [先古替换对象](../collaboration.md#q5-followup) · [伏笔费用采样](../collaboration.md#q6-followup) · [支付优先级](../collaboration.md#q7-followup) |
 | Q8：卡牌升级与可打出性已确认 | [Q8](../collaboration.md#q8)；对应四张卡仍未实现 |
 
 ## 日常维护

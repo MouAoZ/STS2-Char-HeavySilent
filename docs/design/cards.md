@@ -21,7 +21,7 @@
 | <a id="hs-base-001"></a>HS-BASE-001 | 打击 | Strike | 1 | 基础攻击，造成6（9）点伤害；打击标签。 | 已实现 | `HEAVYSILENT_STRIKE`<br>[HeavyStrike](../../mod/HeavySilentCode/Cards/HeavyStrike.cs) | 起始5张；数值沿用教学样例，非草稿新增约定。 |
 | <a id="hs-base-002"></a>HS-BASE-002 | 防御 | Defend | 1 | 基础技能，获得5（8）点格挡；防御标签。 | 已实现 | `HEAVYSILENT_DEFEND`<br>[HeavyDefend](../../mod/HeavySilentCode/Cards/HeavyDefend.cs) | 起始5张；数值沿用教学样例，非草稿新增约定。 |
 | <a id="hs-start-001"></a>HS-START-001 | 凝息 | Gather Breath | 1（0） | 技能 获得5点格挡，将一张气加入抽牌堆 | 未实现 | — | [Q3](../collaboration.md#q3)：气插入抽牌堆的位置。 |
-| <a id="hs-start-002"></a>HS-START-002 | 偏锋 | Oblique Strike | 1（0） | 攻击 磨顶1 造成伤害，数值等于你抽牌堆与弃牌堆牌数之差的绝对值。 | 未实现 | — | 磨顶；[Q1](../collaboration.md#q1)。 |
+| <a id="hs-start-002"></a>HS-START-002 | 偏锋 | Oblique Strike | 1（0） | 攻击 磨顶1 造成伤害，数值等于你抽牌堆与弃牌堆牌数之差的绝对值。 | 未实现 | — | 磨顶；[Q1](../collaboration.md#q1)。欧罗巴斯转化为[合流](#hs-ancient-001)。 |
 
 ## 角色卡牌
 
@@ -70,7 +70,7 @@
 | <a id="hs-atk-025"></a>HS-ATK-025 | 轮斩 | Blade Cycle | 2 | 对所有敌人造成6（7）点伤害 磨顶2 将这张牌再打出一次。 | 未实现 | — | 磨顶、自动重打；[Q1](../collaboration.md#q1)：终止与目标死亡。 |
 | <a id="hs-atk-026"></a>HS-ATK-026 | 掠影 | Fleeting Edge | 0 | 造成5（6）点伤害，抽2（3）张牌. 每当你磨顶时，将这张牌从抽牌堆加入手牌。 | 未实现 | — | 磨顶监听、普通抽牌；[Q1](../collaboration.md#q1)：触发顺序。 |
 | <a id="hs-atk-027"></a>HS-ATK-027 | 寸劲 | One Inch | 5（4） | 造成66点伤害。本回合每打出过一张气，这张牌的耗能便减1. | 未实现 | — | 打出气计数；[Q6](../collaboration.md#q6)；本稿没有保留关键词。 |
-| <a id="hs-atk-028"></a>HS-ATK-028 | 涤尘 | Purge | 2 | 消耗战斗牌堆中的所有状态牌。每消耗一张状态牌，对同一名敌人造成7（9）点伤害。 | 未实现 | — | 战斗范围已确认；消耗堆中的状态牌是否再次计入消耗与伤害见[Q4.5 后续确认](../collaboration.md#q4-followup)。 |
+| <a id="hs-atk-028"></a>HS-ATK-028 | 涤尘 | Purge | 2 | 消耗战斗牌堆中除消耗堆以外的所有状态牌。每消耗一张状态牌，对同一名敌人造成7（9）点伤害。 | 未实现 | — | 沿用散射炮的牌堆范围；已消耗状态牌不再计数，见[伤害与牌堆规则](mechanics.md#伤害斩杀与目标)。 |
 | <a id="hs-atk-029"></a>HS-ATK-029 | 回光 | Afterglow | 1 | 造成40点伤害 磨顶5（7） 令这名敌人恢复40点生命。 | 未实现 | — | 磨顶；[Q1](../collaboration.md#q1)、[Q4](../collaboration.md#q4)：失败、斩杀与治疗时机。 |
 
 ### 技能牌
@@ -103,7 +103,7 @@
 | <a id="hs-skl-017"></a>HS-SKL-017 | 拾遗 | Reclaim | 1 | 磨顶3（4），将这些牌从弃牌堆加入你的手牌。 | 未实现 | — | 磨顶结果追踪；[Q1](../collaboration.md#q1)、[Q3](../collaboration.md#q3)。 |
 | <a id="hs-skl-018"></a>HS-SKL-018 | 燃息 | Burn Breath | 0 | （保留）选择消耗手牌中任意多张气，获得等同于它们总抽牌数的费用。 | 未实现 | — | 升级添加保留，已按[Q8](../collaboration.md#q8)确认；多选消耗与气计数见[共用规则](mechanics.md#共用交互)。 |
 | <a id="hs-skl-019"></a>HS-SKL-019 | 暗涌 | Undercurrent | 2 | 获得2（3）费。若此牌因磨顶而进入弃牌堆，将其打出。 | 未实现 | — | 磨顶、自动出牌；[Q1](../collaboration.md#q1)。 |
-| <a id="hs-skl-020"></a>HS-SKL-020 | 伏笔 | Foresight | X | 消耗 选择手牌中X（+1）张牌，使它们本回合获得保留。下回合开始时，获得等于它们总费用的费用。 | 未实现 | — | 返费复用侧步的延迟能量状态；所选牌费用采样时点见[Q6.3 后续确认](../collaboration.md#q6-followup)。 |
+| <a id="hs-skl-020"></a>HS-SKL-020 | 伏笔 | Foresight | X | 消耗 选择手牌中X（+1）张牌，使它们本回合获得保留。选牌完成时记录它们的当前总费用；下回合开始时，获得等于记录金额的费用。 | 未实现 | — | 返费复用侧步的延迟能量状态，在下个己方回合能量重置后发放；见[费用与回合规则](mechanics.md#计数费用保留与回合)。 |
 | <a id="hs-skl-021"></a>HS-SKL-021 | 留招 | Reserve | 1 | 获得7（9）点格挡，为手牌中的一张牌添加保留。 | 未实现 | — | 选牌；[Q6](../collaboration.md#q6)：保留持续范围。 |
 
 #### 技能牌 · 金卡
@@ -113,7 +113,7 @@
 | <a id="hs-skl-022"></a>HS-SKL-022 | 重影 | Double Vision | 0 | （固有） 保留 消耗 复制你的整个抽牌堆。 | 未实现 | — | 批量复制；[Q3](../collaboration.md#q3)：顺序与实例。 |
 | <a id="hs-skl-023"></a>HS-SKL-023 | 止水 | Still Water | 1 | （保留） 消耗 当你的抽牌堆牌数与弃牌堆牌数相等时才能打出，击晕所有敌人。 | 未实现 | — | 打出条件、群体击晕；[Q7](../collaboration.md#q7)。 |
 | <a id="hs-skl-024"></a>HS-SKL-024 | 空山 | Empty Mountain | 1（0） | 磨顶整个抽牌堆。将1张气加入手牌。 | 未实现 | — | 磨顶、生成气；[Q1](../collaboration.md#q1)、[Q3](../collaboration.md#q3)。 |
-| <a id="hs-skl-025"></a>HS-SKL-025 | 孤注 | All In | 8（6） | 本回合你的手牌耗能变为0. 打出此牌时，不足的费用可以以磨顶4倍数量的牌代替。 | 未实现 | — | 自带磨顶支付；与易脉的2倍支付同时存在时的选择见[Q7 后续确认](../collaboration.md#q7-followup)。 |
+| <a id="hs-skl-025"></a>HS-SKL-025 | 孤注 | All In | 8（6） | 本回合你的手牌耗能变为0. 打出此牌时，不足的费用可以以磨顶4倍数量的牌代替。 | 未实现 | — | 自带磨顶支付；易脉生效时优先使用2倍磨顶，见[替代支付规则](mechanics.md#替代支付修正与原版术语)。 |
 | <a id="hs-skl-026"></a>HS-SKL-026 | 归气 | Return to Qi | 2 | 消耗 将你的手牌变化为气。每因此变化一张牌，获得5（7）点格挡。 | 未实现 | — | 批量转化；[Q3](../collaboration.md#q3)。 |
 | <a id="hs-skl-027"></a>HS-SKL-027 | 回环 | Recurrence | 0 | 征召2（3）。若回合结束时这张牌在弃牌堆，将其置于牌堆顶。 | 未实现 | — | 征召、回合末移动；[Q2](../collaboration.md#q2)、[Q6](../collaboration.md#q6)。 |
 | <a id="hs-skl-028"></a>HS-SKL-028 | 赠印 | Parting Mark | 0 | 不可被打出。不可升级。此牌出现在卡牌奖励时，同组的其他牌永久获得固有和保留。 | 未实现 | — | 在奖励出现阶段处理；不可打出与不可升级已按[Q8](../collaboration.md#q8)定案，草稿问号已移除。 |
@@ -159,11 +159,11 @@
 
 ## 先古卡
 
-HS-ANCIENT-001 沿用欧罗巴斯 ArchaicTooth 的永久初始牌转化流程，保留原牌升级与已有附魔；具体替换哪张初始牌见[Q5.4 后续确认](../collaboration.md#q5-followup)。HS-ANCIENT-002 沿用达弗 DustyTome 流程，给予升级版并加入永久牌组。它们在原始草稿中位于“遗物一览”，现统一归入本节；欧罗巴斯的遗物升级另见[遗物设计](relics-events-potions.md#hs-relic-002)。原版流程与现有扩展接口见[效果参考](../../.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md#先古内容沿用原版流程)。
+HS-ANCIENT-001 沿用欧罗巴斯 ArchaicTooth 的永久初始牌转化流程，由[偏锋 HS-START-002](#hs-start-002)转化为合流，保留原牌升级与已有附魔；确认来源见[Q5.4 补充回答](../collaboration.md#q5-followup)。HS-ANCIENT-002 沿用达弗 DustyTome 流程，给予升级版并加入永久牌组。它们在原始草稿中位于“遗物一览”，现统一归入本节；欧罗巴斯的遗物升级另见[遗物设计](relics-events-potions.md#hs-relic-002)。原版流程与现有扩展接口见[效果参考](../../.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md#先古内容沿用原版流程)。
 
 | 设计编号 | 中文名 | 英文名 | 费用 | 设计效果 | 状态 | 模型 ID／代码 | 依赖／规则与问题 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| <a id="hs-ancient-001"></a>HS-ANCIENT-001 | 合流 | Confluence | 1（0） | 完美契合 造成伤害，等于你抽牌堆与弃牌堆的牌数之和。 | 未实现 | — | 完美契合采用原版 PerfectFit 附魔语义；替换对象见[Q5](../collaboration.md#q5-followup)。 |
+| <a id="hs-ancient-001"></a>HS-ANCIENT-001 | 合流 | Confluence | 1（0） | 完美契合 造成伤害，等于你抽牌堆与弃牌堆的牌数之和。 | 未实现 | — | 完美契合采用原版 PerfectFit 附魔语义；替换[偏锋](#hs-start-002)，沿用[先古获取与保存规则](mechanics.md#奖励先古获取与保存)。 |
 | <a id="hs-ancient-002"></a>HS-ANCIENT-002 | 易脉 | Shifting Meridians | 1 | （固有） 费用不足时，你可以磨顶2以代替支付1费。气的抽牌改为征召。 | 未实现 | — | 能力牌；达弗给予升级版；支付与X值锁定见[共用规则](mechanics.md#替代支付修正与原版术语)。 |
 
 ## 其他特殊奖励卡
@@ -176,4 +176,4 @@ HS-ANCIENT-001 沿用欧罗巴斯 ArchaicTooth 的永久初始牌转化流程，
 
 <a id="q8"></a>
 
-升级与可打出性已按[协作 Q8](../collaboration.md#q8)写回回澜、燃息、赠印和温故；仍均未实现。原 Q8 锚点保留供旧链接定位；剩余分歧见[协作任务](../collaboration.md#协作任务)。
+升级与可打出性已按[协作 Q8](../collaboration.md#q8)写回回澜、燃息、赠印和温故；仍均未实现。原 Q8 锚点保留供旧链接定位；当前 Q1～Q8 均已确认，后续问题仍在[协作任务](../collaboration.md#协作任务)登记。
