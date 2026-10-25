@@ -113,14 +113,14 @@
 
 ## Skill 与 worktree 执行流程（2026-10-26）
 
-[local PR #55](../collaboration/pull-requests/55.md)在 `agent/workflow` 分支交付，等待人类 Review。执行规则集中于[目标执行与 worktree](workflow.md)，Skill 与交接／Review 入口删去重复流程、易过时的进度陈述；已有技术和存档边界保留。
+[local PR #55](../collaboration/pull-requests/55.md)最初在 `agent/workflow` 分支交付；人类已批准 `d8a86ce` 并要求补充功能批次 Review、直接 main 的例外和协作入口同步。执行规则集中于[目标执行与 worktree](workflow.md)，Skill 与交接／Review 入口删去重复流程、易过时的进度陈述；已有技术和存档边界保留。
 
 | 检查 | 结果／范围 |
 | --- | --- |
-| 文档压缩 | 按 UTF-8 解码后的字符数，Skill 从2563降至1562（约39%）；AGENTS、Skill、接手和 Review 四份入口加新增执行流程后，合计从9366降至8520（约9%） |
+| 初次交付的文档压缩 | `d8a86ce` 按解码后字符数计，Skill 从2563降至1562（约39%）；AGENTS、Skill、接手和 Review 四份入口加新增执行流程后，从9366降至8520（约9%）；后续按人类意见修订，以正文为准 |
 | 文档与 Skill | `python scripts/verify.py`、`quick_validate.py`、`git diff --check` 通过；页内跳转另作核对 |
 | 测试脚手架 | 24项无游戏脚本测试通过；新增真实 Git worktree 测试证明共用控制锁、移除任务 worktree 后证据保留；另覆盖无 Git 副本、Git 查询失败及来源字段 |
 | 当前 worktree | 客户端源码根位于任务 worktree，测试状态解析为主目录的 `artifacts/game-tests/`；Python 语法检查通过 |
 | 未测范围 | 未重新构建、打包、部署或启动游戏；本次新增的 worktree 实机启动链尚未游戏内验收，模组源码无变更 |
 
-校验记录位于任务 worktree 的忽略目录 `.cache/workflow-review/audit.json`。测试会话、测试档归属及证据改为全仓库 worktree 共用，配置与来源核对见[测试工作流](../../.agents/skills/sts2-heavysilent-dev/references/game-testing.md#worktree-中的实机测试)。
+初次交付的校验记录保存在主目录忽略路径 `.cache/workflow-review-20261026/audit.json`，可在任务 worktree 清理后保留。测试会话、测试档归属及证据为全仓库 worktree 共用，配置与来源核对见[测试工作流](../../.agents/skills/sts2-heavysilent-dev/references/game-testing.md#worktree-中的实机测试)。

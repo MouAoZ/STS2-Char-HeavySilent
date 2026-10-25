@@ -7,7 +7,7 @@
 1. 根目录 [AGENTS.md](../../../../AGENTS.md) → [Skill](../SKILL.md) → [执行流程](../../../../docs/development/workflow.md)。
 2. `git status --short`、`git worktree list --porcelain`：定位当前分支、已有改动及可续做的任务 worktree；修改前进入正确 worktree。
 3. [README 看板](../../../../README.md#项目进度)与[设计跟踪](../../../../docs/design/implementation-tracker.md)：选择范围，读取所属设计条目及代码，不从历史草稿推断当前规则。
-4. 检查 [local Issue／PR](../../../../docs/collaboration/README.md)的相关 Timeline；若主目录尚未合入该任务，在已登记 worktree 的协作入口查找。处理新回答和 Request changes，再核对[验证证据](../../../../docs/development/status.md)及剩余工作。
+4. 检查主工作目录 main 的 [local Issue／PR](../../../../docs/collaboration/README.md)及相关 Timeline，按 PR 的 Worktree／Head 定位实现。处理新回答和 Request changes，再核对[验证证据](../../../../docs/development/status.md)及剩余工作；任务目录中的协作副本可能滞后。
 5. 用[工程结构](architecture.md)定位源码，其余资料由 Skill 按任务路由；不必先读完整个目录。
 
 玩法以当前明确指令及设计正文为准，实际行为以源码和本次观察为准；历史报告只能提供线索。跨会话进度保存在 Issue／PR、设计条目与提交中，不依赖旧聊天。
