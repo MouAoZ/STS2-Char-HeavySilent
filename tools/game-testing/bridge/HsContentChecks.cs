@@ -56,8 +56,9 @@ public static partial class McpMod
                 return HsContentModels(player, query);
             case "reward":
             {
-                HsContentFields(args, "op", "cards");
+                HsContentFields(args, "op", "cards", "no_hook_upgrades");
                 HsContentCanMutate();
+                bool noHookUpgrades = args.TryGetProperty("no_hook_upgrades", out var noUpgrade) && noUpgrade.GetBoolean();
                 JsonElement cards = args.GetProperty("cards");
                 if (cards.GetArrayLength() is < 1 or > 6) throw new ArgumentException("Offer 1 to 6 reward cards.");
                 var specs = new List<(CardModel Canonical, bool Upgraded)>();
@@ -70,18 +71,45 @@ public static partial class McpMod
                     if (upgraded && model.MaxUpgradeLevel == 0) throw new ArgumentException($"{id} cannot be upgraded.");
                     specs.Add((model, upgraded));
                 }
+                CardCreationOptions? generatedOptions = null;
+                if (noHookUpgrades)
+                {
+                    // The manual-candidates constructor has its own fixed Options. Use
+                    // the native factory constructor so NoHookUpgrades reaches reward hooks.
+                    // Asking for the whole filtered pool yields these distinct candidates
+                    // in native RNG order; upgrades happen only when cards enter Deck.
+                    var ids = specs.Select(spec => spec.Canonical.Id).ToHashSet();
+                    if (specs.Any(spec => spec.Upgraded) || ids.Count != specs.Count)
+                        throw new ArgumentException("no_hook_upgrades requires distinct, unupgraded candidates.");
+                    generatedOptions = CardCreationOptions.ForNonCombatWithUniformOdds(
+                        [player.Character.CardPool], card => ids.Contains(card.Id))
+                        .WithFlags(CardCreationFlags.NoHookUpgrades);
+                    int eligible = generatedOptions.GetPossibleCards(player)
+                        .Where(card => card.Rarity is not CardRarity.Basic and not CardRarity.Ancient)
+                        .Select(card => card.Id).Distinct().Count();
+                    if (eligible != specs.Count)
+                        throw new ArgumentException("no_hook_upgrades candidates must be available in the player's native reward pool.");
+                }
                 // Validate the complete request before creating even the first run card.
                 return HsStartContentOperation(op, async () =>
                 {
-                    var offered = new List<CardModel>();
-                    foreach (var spec in specs)
+                    CardReward reward;
+                    if (generatedOptions != null)
                     {
-                        CardModel card = player.RunState.CreateCard(spec.Canonical, player);
-                        if (spec.Upgraded) CardCmd.Upgrade(card);
-                        offered.Add(card);
+                        reward = new CardReward(generatedOptions, specs.Count, player);
                     }
-                    var options = new CardCreationOptions([player.Character.CardPool], CardCreationSource.Other, CardRarityOddsType.Uniform);
-                    var reward = new CardReward(offered, CardCreationSource.Other, player, options);
+                    else
+                    {
+                        var offered = new List<CardModel>();
+                        foreach (var spec in specs)
+                        {
+                            CardModel card = player.RunState.CreateCard(spec.Canonical, player);
+                            if (spec.Upgraded) CardCmd.Upgrade(card);
+                            offered.Add(card);
+                        }
+                        var options = new CardCreationOptions([player.Character.CardPool], CardCreationSource.Other, CardRarityOddsType.Uniform);
+                        reward = new CardReward(offered, CardCreationSource.Other, player, options);
+                    }
                     // This shows the actual rewards screen. Its normal selection routes
                     // through RewardsSetSynchronizer -> Reward.SelectUnsynchronized ->
                     // CardReward.OnSelect; the bridge never chooses or grants candidates.
@@ -231,7 +259,10 @@ public static partial class McpMod
             unlocked_pool_cards = unlocked.Select(c => c.Id.Entry).ToArray(),
             regular_rarity_candidates = unlocked.Where(c => c.Rarity is CardRarity.Common or CardRarity.Uncommon or CardRarity.Rare).Select(c => c.Id.Entry).ToArray(),
             relic_pool = player.Character.RelicPool.AllRelics.Select(r => new { id = r.Id.Entry, rarity = r.Rarity.ToString() }).ToArray(),
+            // wasPicked is a field; explicitly project it because the HTTP serializer
+            // serializes properties only (unlike the game's save serializer).
             card_choice_history = player.RunState.CurrentMapPointHistoryEntry?.GetEntry(player.NetId).CardChoices
+                .Select(entry => new { card = entry.Card.ToSerializable(), was_picked = entry.wasPicked }).ToArray()
         };
     }
 

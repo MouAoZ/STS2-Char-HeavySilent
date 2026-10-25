@@ -30,7 +30,9 @@ public sealed class MillTurnState
             card.InvokeEnergyCostChanged();
     }
 
-    [HarmonyPatch(typeof(Hook), nameof(Hook.AfterSideTurnStart))]
+    // BeforeSideTurnStart precedes start-of-turn effects and the initial hand draw;
+    // AfterSideTurnStart runs after both and would erase their counters.
+    [HarmonyPatch(typeof(Hook), nameof(Hook.BeforeSideTurnStart))]
     private static class TurnStarted
     {
         private static void Prefix(IReadOnlyList<Creature> participants)

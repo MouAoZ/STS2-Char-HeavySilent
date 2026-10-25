@@ -9,7 +9,7 @@ using MegaCrit.Sts2.Core.Models.Relics;
 
 namespace HeavySilent.Character;
 
-/// <summary>独立角色。表现借用静默，数值和套牌仅用于验证工程。</summary>
+/// <summary>独立角色，使用正式初始套牌；角色表现暂借用静默。</summary>
 [CustomID("HEAVYSILENT_CHARACTER")]
 public sealed class HeavySilentCharacter : PlaceholderCharacterModel
 {

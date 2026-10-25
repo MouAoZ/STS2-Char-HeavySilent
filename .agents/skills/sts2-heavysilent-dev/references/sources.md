@@ -14,7 +14,7 @@
 | [Common Commands Cookbook](https://github.com/Alchyr/ModTemplate-StS2/wiki/Common-Commands-Cookbook) | 查常见效果的实现方向，不直接假设所有片段在当前版本可编译 |
 | [Testing and Debugging](https://github.com/Alchyr/ModTemplate-StS2/wiki/Testing-and-Debugging) | 控制台、日志、调试器和后续联机测试 |
 | [MegaDot](https://megadot.megacrit.com/) | Mega Crit 的引擎发行入口 |
-| [官方模组上传器](https://github.com/megacrit/sts2-mod-uploader) | 后续 Workshop 发布流程，初始化未发布 |
+| [官方模组上传器](https://github.com/megacrit/sts2-mod-uploader) | 后续 Workshop 发布流程，当前尚未发布 |
 | [OpenAI 指令与 Skill 建议](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra) | 精简 AGENTS、明确触发条件和按需加载参考 |
 | [AGENTS 文档](https://learn.chatgpt.com/docs/agent-configuration/agents-md) | 仓库指令的发现与作用域 |
 | [Skill 文档](https://learn.chatgpt.com/docs/build-skills) | `.agents/skills`、渐进加载和元数据 |

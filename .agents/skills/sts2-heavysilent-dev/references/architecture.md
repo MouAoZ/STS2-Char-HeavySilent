@@ -34,11 +34,14 @@ PCK 以 `res://HeavySilent/` 为资源根，避免覆盖原版同名资源。
 
 | 位置 | 职责 | 常见修改 |
 | --- | --- | --- |
-| [ModEntry](../../../../mod/HeavySilentCode/ModEntry.cs) | 模组常量、入口和日志 | 初始化行为；当前没有玩法补丁 |
+| [ModEntry](../../../../mod/HeavySilentCode/ModEntry.cs) | 模组常量、入口和日志 | 通过 Harmony 注册当前程序集的机制与奖励补丁 |
 | [角色](../../../../mod/HeavySilentCode/Character/HeavySilentCharacter.cs) | 生命、起始套牌、遗物、外观引用 | 正式起始配置和角色表现 |
 | [内容池](../../../../mod/HeavySilentCode/Character/HeavySilentPools.cs) | 卡牌、遗物、药水归属及颜色 | 新内容归属和池的展示 |
 | [卡牌基类](../../../../mod/HeavySilentCode/Cards/HeavySilentCard.cs) | 共同卡池、占位图片路径 | 为具体卡牌提供独立图片时调整 |
-| [具体卡牌](../../../../mod/HeavySilentCode/Cards) | 费用、动态数值、关键词、效果与升级 | 每张卡的规则 |
+| [具体卡牌](../../../../mod/HeavySilentCode/Cards) | 费用、动态数值、关键词、效果与升级 | 起始／先古卡及 Attacks、Skills、Powers 子目录 |
+| [共用机制](../../../../mod/HeavySilentCode/Mechanics) | 磨顶／征召、计数、支付、奖励作用域及永久关键词 | 普通卡牌复用的内部接口与必要补丁 |
+| [状态](../../../../mod/HeavySilentCode/Powers)／[遗物](../../../../mod/HeavySilentCode/Relics) | 原版 Hook 与磨顶监听、状态堆叠、遗物归属 | 能力持续效果与遗物触发 |
+| [奖励补丁](../../../../mod/HeavySilentCode/Patches/RewardPatches.cs) | 原版奖励显示／选择／入组的窄入口 | 连接奖励生命周期与 `RewardContent`；目标方法见[接入参考](vanilla-effects.md#当前补丁边界) |
 | [资源](../../../../mod/HeavySilent) | eng／zhs 文本、图片与导入设置 | 文案、翻译、美术 |
 | [独立构建](../../../../mod/build.ps1) | 从源码生成 DLL 与资源包 | 模组打包输入与命令 |
 | [开发脚本](../../../../scripts) | 环境核对、验证、部署及调用独立构建 | 脚手架流程 |
@@ -59,10 +62,11 @@ PCK 以 `res://HeavySilent/` 为资源根，避免覆盖原版同名资源。
 
 测试桥显式导入 `mod/Directory.Build.props` 以复用本机游戏路径；bootstrap 在 `mod/` 下执行 dotnet，使用该目录的 SDK 版本和 NuGet.Config。这个依赖只从测试脚手架指向模组构建配置。
 
-## 新增程序目录
+## 共用机制与补丁
 
-在 `mod/HeavySilentCode/` 内，首次新增共用机制时再引入 `Mechanics`，首次新增状态效果时引入 `Powers`，确需补丁时引入 `Patches`。
-普通内容调用共用机制，补丁处理游戏现有入口无法表达的行为；避免每张卡复制一套磨顶代码。
+`Mechanics` 已提供 `MillCmd`、`RecruitCmd`、`MillTurnState`、`MillPayment`、`PermanentKeywords` 和 `RewardContent`。普通内容调用这些入口，具体伤害、格挡、生成、选择与出牌继续走原版 Command／Hook。`MillVar` 负责磨顶卡面修正预览，`MechanicHoverTips` 提供双语术语。
+
+`MillTurnState` 和 `MillPayment` 的窄补丁与所属机制放在同一文件；奖励入口位于 `Patches/RewardPatches.cs`。新增补丁前核对原版入口不足之处，并更新[补丁目标与版本](vanilla-effects.md#当前补丁边界)，不为每张卡复制通用流程。
 
 ## 为什么一张卡一个类
 
@@ -81,7 +85,7 @@ PCK 以 `res://HeavySilent/` 为资源根，避免覆盖原版同名资源。
 角色通过 `CardPool`、`RelicPool`、`PotionPool` 属性暴露这些池。
 
 “在池里”不等于“会作为普通奖励出现”：基础牌和状态牌有不同稀有度筛选。
-初始化只有基础牌和气，因此没有完整奖励卡池。不要在缺乏设计时把气改成普通稀有度来填补奖励。
+当前角色池包含70张普通／罕见／稀有角色牌；4种初始牌、气、2张先古卡按自身稀有度排除常规奖励。微调的2个 Token 模型仅用于选择界面，隐藏于卡库且不能在战斗中随机生成，不计为新增设计卡。遗物通过 `HeavySilentRelic` 关联角色遗物池；砥石为 Starter、玉砥为 Ancient，其余两件按稀有度获取。
 
 ## 构建边界
 
@@ -91,4 +95,4 @@ PCK 以 `res://HeavySilent/` 为资源根，避免覆盖原版同名资源。
 - 包信息和哈希在模组目录外的 `package-info.json`；游戏扫描模组 JSON 时不会把它当成另一个 manifest。
 - 部署只复制本模组的已验证文件；BaseLib 由玩家单独安装。
 
-当前未引入对外公共 API。未来共用机制属于本模组内部接口，语义明确后再决定参数、返回结果与事件。
+当前共用机制均为本模组内部接口，不承诺对外 API 稳定性；玩法规则仍以设计正文为准。

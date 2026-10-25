@@ -21,7 +21,7 @@ public sealed class Qi() : HeavySilentCard(0, CardType.Status, CardRarity.Status
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 气是普通抽牌：牌堆耗尽时允许游戏洗牌。它不是“征召”。
+        // 默认普通抽牌允许洗牌；易脉在实际打出时改为征召。
         if (Owner.Creature.HasPower<ShiftingMeridiansPower>())
             await RecruitCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
         else

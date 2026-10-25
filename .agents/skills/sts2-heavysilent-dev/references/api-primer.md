@@ -9,7 +9,7 @@
 1. **游戏自带模组入口**：manifest、程序集加载及 `ModInitializer`。
 2. **游戏模型与命令**：位于 `MegaCrit.Sts2.Core.*`，例如 `CardModel`、`ModelDb`、`DamageCmd`。这些是可引用的游戏代码，不意味着官方承诺它们跨版本不变。
 3. **BaseLib 扩展**：例如 `CustomCardModel`、`PlaceholderCharacterModel`、`Pool` 和 `CustomID`，减少注册与表现上的重复工作。
-4. **本项目代码**：角色、卡牌及未来的磨顶／征召封装。
+4. **本项目代码**：角色、内容、磨顶／征召封装，以及原版入口不足处的支付、计数与奖励适配。
 
 ILSpy 用于阅读本机已有程序集，不修改原版 DLL。API 不确定时，先找原版类似效果，核对它怎样处理生命周期，再调用合适接口。
 已核对的参考牌、底层入口与边界见[原版效果参考](vanilla-effects.md)。优先直接调用或组合游戏现有实现，只有明确缺少能力时才补本项目逻辑。
@@ -48,11 +48,15 @@ ILSpy 用于阅读本机已有程序集，不修改原版 DLL。API 不确定时
 角色力量、目标易伤等最终修正仍由游戏伤害管线处理；不要先把预览修正值再送入会重复修正的命令。
 
 [防御](../../../../mod/HeavySilentCode/Cards/HeavyDefend.cs)使用 `BlockVar` 与 `CreatureCmd.GainBlock`；
-[气](../../../../mod/HeavySilentCode/Cards/Qi.cs)使用 `CardsVar` 与 `CardPileCmd.Draw`。
+[气](../../../../mod/HeavySilentCode/Cards/Qi.cs)使用 `CardsVar`，通常调用 `CardPileCmd.Draw`，易脉生效时改用 `RecruitCmd.Draw`。
 修改基础数值和升级增量后，通常无需改描述中的数字，因为描述没有重复写死它们。
 
 本地化 JSON 也使用 BBCode，例如 `[gold]格挡[/gold]`。格式变量和标签要保持成对，英文与中文应引用相同变量。
 ModAnalyzers 检查内容需要的本地化项，项目验证脚本补充双语键和变量一致性检查。
+
+固定磨顶数使用 [MillVar](../../../../mod/HeavySilentCode/Mechanics/MillVar.cs)：卡面预览显示修正后的数量，结算仍把基值交给 `MillCmd` 修正一次，避免重复加减。能力牌的 `HoverTipFactory.FromPower<T>(amount)` 应传实际 `PowerVar` 数值，默认规范状态的 Amount 为0，不能拿它显示将要施加的层数。
+
+原版放大界面的 `MutableClone` 没有牌堆，因而 `CombatState` 为空；此类预览显示基础磨顶数，手牌中的实际实例才读取战斗修正。核对预览时先区分实例作用域。
 
 ## 气为何能作为状态牌打出
 
@@ -60,20 +64,27 @@ ModAnalyzers 检查内容需要的本地化项，项目验证脚本补充双语�
 `CardRarity.Status` 避免它成为普通稀有度奖励。
 
 `CanonicalKeywords` 中的 `Exhaust` 告诉原版流程：这次出牌结束后应消耗它。
-`OnPlay` 中只负责抽牌；若再次手动调用消耗命令，就可能重复触发效果或改变时序。
-原版会把关键词加入卡牌显示，所以气的本地化只写抽牌句子，不再手写一次“消耗”。
+`OnPlay` 中只负责抽牌或征召；若再次手动调用消耗命令，就可能重复触发效果或改变时序。
+原版会把关键词加入卡牌显示，所以气的本地化只写抽牌／征召句子，不再手写一次“消耗”。`AddExtraArgsToDescription` 将易脉状态交给文案条件，同时切换征召悬停提示。
 
-普通 `CardPileCmd.Draw` 会在必要时洗牌。这正好符合气，但无法直接保证征召“不洗牌”的语义。
-直接将抽牌堆中的对象移入手牌也未必等同于抽牌，因为可能漏掉抽牌 Hook；征召需要单独设计和验证。
+普通 `CardPileCmd.Draw` 会在必要时洗牌。`RecruitCmd.Draw` 每次检查当前抽牌堆非空，再调用原版单张 Draw；等待插入效果完成后重新检查，避免请求空堆抽牌。直接把牌移入手牌会漏掉抽牌 Hook，不能代替征召。
+
+## 磨顶：结算结果与监听
+
+卡牌调用 `await MillCmd.Execute(choiceContext, this, baseAmount)`，失败时结束本卡剩余效果。返回的 `MillResult` 同时携带是否成功、最终修正数值、本次实际移动的牌和本回合操作序号。卡牌后续选牌、取回或自动打出应使用这个结果，不能用整个弃牌堆代替。
+
+`IMillModifier` 修改数量，`IMillListener` 接收磨顶前后触发，`IMilledCard` 处理每张牌被磨入弃牌堆后的插入效果。顺序和失败边界见[机制正文](../../../../docs/design/mechanics.md)，状态读取与重置集中在 `MillTurnState`。原版的弃牌、抽牌和回合 Hook 仍各自独立。
 
 ## 模型定义与可变实例
 
 `ModelDb.Card<T>()` 等方法取得规范模型，相当于“这个内容的标准定义”。它不是某位玩家手中的那张牌。
 游戏为玩家套牌和战斗创建可变实例，实例保存所属玩家、升级、临时费用和所在牌堆。
 
-不要把本回合计数写到静态字段或直接修改规范模型，否则不同玩家、复制卡或下一场战斗可能共用脏状态。
+不要把本回合计数写到无归属的静态字段或直接修改规范模型，否则不同玩家、复制卡或下一场战斗可能共用脏状态。`MillTurnState` 用 `ConditionalWeakTable<PlayerCombatState, ...>` 绑定本场战斗和玩家，并随己方回合重置。
 生成卡牌时使用目标版本的 `ICardScope.CreateCard<T>(owner)` 实例创建流程，再通过牌堆命令放入战斗。`RunState`／`CombatState` 实现此接口；`CardScope` 本身是作用域枚举，不是创建卡牌的静态工具类。
 永久牌组 `Deck`、战斗抽牌堆 `Draw`、弃牌堆 `Discard`、消耗堆 `Exhaust` 是不同范围，设计中必须说清楚。
+
+普通 `CardCmd.ApplyKeyword` 只改当前实例。铭刻和赠印的永久授予使用 [PermanentKeywords](../../../../mod/HeavySilentCode/Mechanics/PermanentKeywords.cs)，由 BaseLib `CardModifier` 保存并在载入、升级和降级后恢复；它不占用附魔槽。当前只支持设计需要的 Retain／Innate，不把普通战斗内保留写入永久 Deck。可变预览牌也可能没有 Owner，读取角色状态时必须处理这个边界。
 
 ## 常用接口地图
 
@@ -81,10 +92,12 @@ ModAnalyzers 检查内容需要的本地化项，项目验证脚本补充双语�
 | --- | --- | --- |
 | 攻击／格挡 | `DamageCmd.Attack`、`CreatureCmd.GainBlock` | 来源、目标、修正和结算结果 |
 | 抽牌／牌堆移动 | `CardPileCmd.Draw`、`CardPileCmd.Add` | 移动不一定触发抽牌或弃牌效果 |
+| 磨顶／征召 | `MillCmd.Execute`、`RecruitCmd.Draw` | 失败截断、插入结算、实际结果与禁止主动洗牌 |
 | 生成卡牌 | `ICardScope.CreateCard`、`AddGeneratedCardToCombat` | 在对应 RunState／CombatState 创建可变实例并指定 Owner |
 | 丢弃／消耗／自动打出 | `CardCmd.Discard`、`Exhaust`、`AutoPlay` | 触发时序、自动目标、X 费与终止条件 |
 | Buff／Debuff | `PowerModel`、`PowerCmd.Apply` | 堆叠、持续时间、回调与移除 |
 | 选择卡牌 | `CardSelectCmd`、`PlayerChoiceContext` | 等待选择、可取消、归属和同步 |
+| 奖励与永久改牌 | `RewardContent`、`PermanentKeywords` | 出现与实际选择分阶段处理，修改最终入 Deck 实例 |
 | 回合／战斗触发 | 目标版本 Model 上的 Hook | 触发对象、顺序、计数与重置 |
 | 遗物／药水／事件 | 对应 Model 与 BaseLib 扩展 | 登记、使用流程、页面和保存 |
 

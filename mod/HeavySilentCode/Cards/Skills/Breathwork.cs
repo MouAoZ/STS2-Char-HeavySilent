@@ -28,7 +28,8 @@ public sealed class Breathwork() : HeavySilentCard(1, CardType.Skill, CardRarity
         if (!result.Success) return;
         foreach (CardModel card in result.Cards)
         {
-            if (card is Qi && card.Pile?.Type == PileType.Discard)
+            // 前一张气的普通抽牌可能洗牌；按本次磨到的实例继续打出，不要求仍在弃牌堆。
+            if (card is Qi && !card.HasBeenRemovedFromState && card.Pile is { IsCombatPile: true })
                 await CardCmd.AutoPlay(choiceContext, card, null);
         }
     }

@@ -23,6 +23,8 @@ public sealed class FineTuning() : HeavySilentCard(1, CardType.Power, CardRarity
             ModelDb.Card<FineTuningIncrease>().ToMutable(),
             ModelDb.Card<FineTuningDecrease>().ToMutable()
         ];
+        // 原版选择界面从候选牌读取 Owner 来初始化战斗牌堆视图。
+        foreach (CardModel choice in choices) choice.Owner = Owner;
         var selected = await CardSelectCmd.FromChooseACardScreen(choiceContext, choices, Owner);
         if (selected == null) return;
         await PowerCmd.Apply<FineTuningPower>(choiceContext, Owner.Creature,

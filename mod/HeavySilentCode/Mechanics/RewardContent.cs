@@ -26,6 +26,7 @@ public static class RewardContent
         internal bool GrantingExtras { get; set; }
         internal bool Closed { get; set; }
         internal int PendingAdds { get; set; }
+        internal HashSet<CardModel> SelectedOptions { get; } = new(ReferenceEqualityComparer.Instance);
     }
 
     public sealed class SelectionTicket(SelectionScope scope, CardModel offered)
@@ -90,6 +91,7 @@ public static class RewardContent
         {
             CardPileAddResult result = await original;
             if (!result.success) return result;
+            ticket.Scope.SelectedOptions.Add(ticket.Offered);
             TransferMark(ticket.Offered, result.cardAdded);
             if (ticket.Offered is Windfall) ticket.Scope.HasSelectedWindfall = true;
             if (ticket.Offered is Severance severance) await severance.OnRewardSelected();
@@ -106,6 +108,7 @@ public static class RewardContent
         try
         {
             bool completed = await original;
+            RemoveSelectedOriginalsFromHistory(scope, completed);
             if (scope.HasSelectedWindfall)
             {
                 // 等原版多选、UI 清理与历史记录完成，再获得尚未选中的实例。
@@ -115,7 +118,7 @@ public static class RewardContent
                 scope.GrantingExtras = true;
                 try
                 {
-                    await GrantRemaining(scope.Reward, completed);
+                    await GrantRemaining(scope, completed);
                 }
                 finally
                 {
@@ -131,15 +134,37 @@ public static class RewardContent
         }
     }
 
-    private static async Task GrantRemaining(CardReward reward, bool completed)
+    private static void RemoveSelectedOriginalsFromHistory(SelectionScope scope, bool completed)
     {
+        CardReward reward = scope.Reward;
         CardModel[] remaining = reward.Cards.ToArray();
         var history = reward.Player.RunState.CurrentMapPointHistoryEntry?.GetEntry(reward.Player.NetId).CardChoices;
+        int historyStart = FindUnpickedHistoryTail(history, remaining, completed);
+        if (historyStart < 0 || history == null) return;
+
+        // 原版按最终入组实例移除候选；蛋类遗物克隆升级时，已选原件会残留并被记作未选。
+        // 原版已为最终实例记录了选中历史，仅删除这些原件的多余未选项。
+        for (int i = remaining.Length - 1; i >= 0; i--)
+            if (scope.SelectedOptions.Contains(remaining[i])) history.RemoveAt(historyStart + i);
+    }
+
+    private static int FindUnpickedHistoryTail(IReadOnlyList<CardChoiceHistoryEntry>? history,
+        IReadOnlyList<CardModel> remaining, bool completed)
+    {
         // CardReward.OnSelect 最后按当前候选顺序追加未选历史；按位置关联，不能仅按模型 ID 匹配重复牌。
-        int historyStart = completed && history != null ? history.Count - remaining.Length : -1;
-        bool hasNativeUnpickedTail = historyStart >= 0 && history != null &&
+        int historyStart = completed && history != null ? history.Count - remaining.Count : -1;
+        return historyStart >= 0 && history != null &&
             remaining.Select((card, i) => !history[historyStart + i].wasPicked &&
-                history[historyStart + i].Card.Id == card.Id).All(matches => matches);
+                history[historyStart + i].Card.Id == card.Id).All(matches => matches) ? historyStart : -1;
+    }
+
+    private static async Task GrantRemaining(SelectionScope scope, bool completed)
+    {
+        CardReward reward = scope.Reward;
+        // 原版入组 Hook 可以替换实例，不能仅凭旧候选当前是否在 Deck 判定它是否被选择过。
+        CardModel[] remaining = reward.Cards.Where(card => !scope.SelectedOptions.Contains(card)).ToArray();
+        var history = reward.Player.RunState.CurrentMapPointHistoryEntry?.GetEntry(reward.Player.NetId).CardChoices;
+        int historyStart = FindUnpickedHistoryTail(history, remaining, completed);
 
         for (int i = 0; i < remaining.Length; i++)
         {
@@ -150,7 +175,7 @@ public static class RewardContent
             TransferMark(offered, result.cardAdded);
             if (history == null) continue;
             CardChoiceHistoryEntry entry = new(result.cardAdded, wasPicked: true);
-            if (hasNativeUnpickedTail) history[historyStart + i] = entry;
+            if (historyStart >= 0) history[historyStart + i] = entry;
             else history.Add(entry);
         }
     }

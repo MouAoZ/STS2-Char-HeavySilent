@@ -4,7 +4,7 @@
 
 ## 日常使用
 
-主工作流是 Agent 针对当前改动制定测试、操作游戏并调查结果。固定回归是可选积累，不是每次提交的默认仪式。打击等样例用于首次验证控制链或在相关公共逻辑变化时复查；实现磨顶后应围绕牌堆顺序、触发链、空堆和界面表现选择新场景。
+主工作流是 Agent 针对当前改动制定测试、操作游戏并调查结果。固定回归是可选积累，不是每次提交的默认仪式。打击等样例用于首次验证控制链或在相关公共逻辑变化时复查；磨顶／征召及依赖内容需要围绕牌堆顺序、插入触发、空堆、支付与界面表现选择相应场景。
 
 先关闭已有游戏实例，确保启用 BaseLib、HeavySilent。本机 GodotExplorer 可以保留；其他模组会触发环境检查。首次运行需要联网下载固定版本工具和源码：
 
@@ -91,6 +91,7 @@ MCP 请求使用工具参数对象。比如手牌下标 0 的无目标卡：
 | --- | --- |
 | `start_session`／`stop_session` | 前者构建部署并启动游戏，后者退出并恢复设置；不是连接任意手动开启的游戏 |
 | `get_state`／`list_models` | 前者读取现场；后者以 `kind=cards|powers` 和 ID 子串查询注册模型，最多返回100项，不能把默认结果当完整目录 |
+| `content_check` | `models` 读取全部匹配卡的基础／升级模型，`snapshot` 读取永久套牌／遗物／奖励池／选择历史；其余操作只允许受管单人 HeavySilent 局、战斗外且无覆盖界面时执行 |
 | `start_combat`／`prepare_scenario` | 前者进入战斗；后者在可出牌阶段安排条件。构造过程也会调用游戏 Command，出现运行时错误时重新读现场，不假设自动回滚 |
 | `perform_action` | `action` 与 `arguments` 分开；菜单为 `menu_select`＋`option`，选地图／事件选项使用 `index`；参数以当前状态与上游 `McpMod.Actions.cs` 为准 |
 | `inspect_card`／`capture_screenshot` | 放大查看后调用 `inspect_card(close=true)` 再继续操作；截图 `name` 使用唯一字母／数字／下划线／连字符，避免覆盖证据 |
@@ -100,6 +101,14 @@ MCP 请求使用工具参数对象。比如手牌下标 0 的无目标卡：
 
 状态的 `busy=false` 表示当前未观察到桥准备、Action 执行或切场等活动，并不自动证明本次效果正确。`play_phase` 确认可出牌阶段，`piles` 是真实战斗牌堆，`visible_hand_count` 是手牌界面节点数量；数值、去向和必要的界面表现应分别检查。
 卡牌 `instance_id` 仅供同一进程内短期比对，保存续玩时应比较稳定 `id`、升级状态等，而非运行时对象哈希。`ui` 提供原版菜单／战斗／选牌状态，出现等待玩家选择时应先处理选择，不要反复发送出牌或重建场景。
+
+### 奖励、先古与持久化
+
+[HsContentChecks.cs](../../../../tools/game-testing/bridge/HsContentChecks.cs) 提供战斗外前提安排，仍由原版 UI／Command 执行效果。`content_check({"op":"reward","cards":[{"id":"HEAVYSILENT_WINDFALL"},{"id":"HEAVYSILENT_PARTING_MARK"}]})` 创建真实奖励；随后用 `claim_reward(index)`、`select_card_reward(card_index)` 或 `skip_card_reward` 选择。`relic` 加 `id` 通过 `RelicCmd.Obtain` 获得遗物；三项先古遗物先调用原版 `SetupForPlayer`。`upgrade_deck` 加 `indices` 通过 `CardCmd.Upgrade` 设置替换前提，桥不直接写入期待的替换结果。
+
+这些操作返回 `operation_id` 和 `pending/completed/failed` 状态。等待选牌时用原版选择动作继续，并以 `{"op":"status","operation_id":"原句柄"}` 查询完成；禁止因超时重复创建奖励或获得遗物。未完成内容操作阻止重建场景与保存退出，普通 UI 选择仍可操作。地图可能覆盖尚未卸载的战斗奖励界面；此时前提检查会拒绝，应进入正常的非战斗房间再测试。
+
+`reward` 的可选 `no_hook_upgrades:true` 用原版 `CardCreationFlags.NoHookUpgrades` 保留未升级奖励预览，用于检查蛋类遗物在入组时克隆升级的路径。此模式要求互异、未升级、属于当前奖励池的候选，显示顺序由原版 RNG 决定，选择前按 ID 重新找下标。保存验证需先正常进入下一房间，让原版写入房间检查点，再返回菜单续玩，比较永久 ID、升级和关键词；夹具自身不会制造任意时刻存档。
 
 ## 会话缺失与故障处理
 

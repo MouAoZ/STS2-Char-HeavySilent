@@ -26,10 +26,13 @@ public sealed class ChosenEdge() : HeavySilentCard(0, CardType.Skill, CardRarity
     {
         MillResult result = await MillCmd.Execute(choiceContext, this, DynamicVars["Mill"].IntValue);
         if (!result.Success) return;
-        CardModel[] candidates = result.Cards.Where(c => c.Pile?.Type == PileType.Discard).ToArray();
+        // 磨出牌的即时效果可能抽牌、洗牌；候选仍是本次磨到且尚在战斗中的原实例。
+        CardModel[] candidates = result.Cards
+            .Where(c => !c.HasBeenRemovedFromState && c.Pile is { IsCombatPile: true }).ToArray();
         CardModel? selected = (await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, 1))).FirstOrDefault();
-        if (selected != null) await CardCmd.AutoPlay(choiceContext, selected, null);
+        if (selected is { HasBeenRemovedFromState: false, Pile.IsCombatPile: true })
+            await CardCmd.AutoPlay(choiceContext, selected, null);
     }
     protected override void OnUpgrade() => DynamicVars["Mill"].UpgradeValueBy(1);
 }

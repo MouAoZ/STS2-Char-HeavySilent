@@ -127,4 +127,4 @@ ilspycmd -t MegaCrit.Sts2.Core.Models.Cards.StrikeSilent $gameAssembly > .cache/
 
 自动构建、资源验证不能证明玩家实际交互正确。实机步骤见[清单](../../../../docs/development/smoke-test.md)，结果写入[状态](../../../../docs/development/status.md)。
 回退本模组时，在游戏关闭状态部署先前已验证的包，或在游戏模组设置中禁用 HeavySilent；无需恢复或修改原版 DLL。
-发布到 Workshop 不是本次初始化内容，未来使用 Mega Crit 的官方上传工具并单独整理发布信息。
+Workshop 发布尚未开展；发布时使用 Mega Crit 的官方上传工具并单独整理发布信息。

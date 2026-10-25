@@ -10,14 +10,14 @@
 
 ## 遗物
 
-现有四件遗物均未实现。当前[角色配置](../../mod/HeavySilentCode/Character/HeavySilentCharacter.cs)使用蛇之戒作为占位，不代表下列初始遗物已实现。先古给予或升级的卡牌统一放在[先古卡设计](cards.md#先古卡)。
+现有四件遗物的效果、注册和双语本地化均已落地，源码与构建检查通过；[角色配置](../../mod/HeavySilentCode/Character/HeavySilentCharacter.cs)使用砥石作为初始遗物。实机证据与未测边界见[项目状态](../development/status.md)。先古给予或升级的卡牌统一放在[先古卡设计](cards.md#先古卡)。
 
 | 设计编号 | 中文名 | 英文名 | 分类 | 设计效果 | 状态 | 模型 ID／代码 | 依赖／规则与问题 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| <a id="hs-relic-001"></a>HS-RELIC-001 | 砥石 | Whetstone | 初始 | 每回合首次磨顶时，获得2点格挡。 | 进行中 | `HEAVYSILENT_WHETSTONE`<br>[Whetstone](../../mod/HeavySilentCode/Relics/Whetstone.cs) | 磨顶与每回合首次计数；[local #1](../collaboration/issues/1.md)。 |
-| <a id="hs-relic-002"></a>HS-RELIC-002 | 玉砥 | Jade Whetstone | 初始升级／欧罗巴斯 | 你每回合首次磨顶时，获得两倍于磨顶数量的格挡。 | 进行中 | `HEAVYSILENT_JADE_WHETSTONE`<br>[JadeWhetstone](../../mod/HeavySilentCode/Relics/JadeWhetstone.cs) | 原版 TouchOfOrobas 流程将砥石永久替换为玉砥；通过既有 BaseLib 的 GetUpgradeReplacement 接入；[决策 local #5](../collaboration/issues/5.md)。 |
-| <a id="hs-relic-003"></a>HS-RELIC-003 | 息壶 | Breath Vessel | 稀有 | 战斗开始时，将2张气+随机加入抽牌堆。 | 进行中 | `HEAVYSILENT_BREATH_VESSEL`<br>[BreathVessel](../../mod/HeavySilentCode/Relics/BreathVessel.cs) | 生成气只影响本场战斗；随机插入沿用原版灵魂生成流程；[规则](mechanics.md#生成复制与转化)。 |
-| <a id="hs-relic-004"></a>HS-RELIC-004 | 护息符 | Breath Charm | 罕见 | 每回合首次打出气时，获得4点格挡。 | 进行中 | `HEAVYSILENT_BREATH_CHARM`<br>[BreathCharm](../../mod/HeavySilentCode/Relics/BreathCharm.cs) | 每回合首次打出气；[local #3](../collaboration/issues/3.md)、[local #6](../collaboration/issues/6.md)。 |
+| <a id="hs-relic-001"></a>HS-RELIC-001 | 砥石 | Whetstone | 初始 | 每回合首次磨顶时，获得2点格挡。 | 已实现 | `HEAVYSILENT_WHETSTONE`<br>[Whetstone](../../mod/HeavySilentCode/Relics/Whetstone.cs) | 磨顶与每回合首次计数；[local #1](../collaboration/issues/1.md)。 |
+| <a id="hs-relic-002"></a>HS-RELIC-002 | 玉砥 | Jade Whetstone | 初始升级／欧罗巴斯 | 你每回合首次磨顶时，获得两倍于磨顶数量的格挡。 | 已实现 | `HEAVYSILENT_JADE_WHETSTONE`<br>[JadeWhetstone](../../mod/HeavySilentCode/Relics/JadeWhetstone.cs) | 原版 TouchOfOrobas 流程将砥石永久替换为玉砥；通过既有 BaseLib 的 GetUpgradeReplacement 接入；[决策 local #5](../collaboration/issues/5.md)。 |
+| <a id="hs-relic-003"></a>HS-RELIC-003 | 息壶 | Breath Vessel | 稀有 | 战斗开始时，将2张气+随机加入抽牌堆。 | 已实现 | `HEAVYSILENT_BREATH_VESSEL`<br>[BreathVessel](../../mod/HeavySilentCode/Relics/BreathVessel.cs) | 生成气只影响本场战斗；随机插入沿用原版灵魂生成流程；[规则](mechanics.md#生成复制与转化)。 |
+| <a id="hs-relic-004"></a>HS-RELIC-004 | 护息符 | Breath Charm | 罕见 | 每回合首次打出气时，获得4点格挡。 | 已实现 | `HEAVYSILENT_BREATH_CHARM`<br>[BreathCharm](../../mod/HeavySilentCode/Relics/BreathCharm.cs) | 每回合首次打出气；[local #3](../collaboration/issues/3.md)、[local #6](../collaboration/issues/6.md)。 |
 
 ## 事件
 
