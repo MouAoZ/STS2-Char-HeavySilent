@@ -10,7 +10,6 @@
 
 | Number | Title | State | Assignees |
 | --- | --- | --- | --- |
-| [local #58](issues/58.md) | 替代支付在插入效果后失败 | Open | 人类 |
 | [local #56](issues/56.md) | 完整实现现有设计范围 | Open | Agent |
 | [local #54](issues/54.md) | 评审模组源码与脚手架边界 | Open | 人类 |
 
@@ -20,7 +19,7 @@
 
 ## Archive
 
-54个 Closed Issue，1个 Merged PR。完整记录见[归档索引](archive.md)。
+55个 Closed Issue，1个 Merged PR。完整记录见[归档索引](archive.md)。
 
 ## 参与讨论
 
