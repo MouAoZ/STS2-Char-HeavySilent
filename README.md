@@ -45,13 +45,15 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
-| 暂无；Agent 正在推进 [local #56](docs/collaboration/issues/56.md) | [local #54 · 评审模组源码与脚手架边界](docs/collaboration/issues/54.md) | **T01 · 共用规则确认**完成；55个设计 Issue 已关闭；[local PR #55](docs/collaboration/pull-requests/55.md) 已合入，见[Archive](docs/collaboration/archive.md) |
+| 暂无 | **[local PR #59 · 完整实现83条设计](docs/collaboration/pull-requests/59.md)**，head `7f484fe`；既有[local #54 · 源码边界评审](docs/collaboration/issues/54.md)保留 | [local #56](docs/collaboration/issues/56.md)完整目标已交付，代码待Review合入；55个设计问题已关闭；[local PR #55](docs/collaboration/pull-requests/55.md)已合入 |
 
 设计问题关闭表示规则已明确；实现完成和人类 Review 结论分别记录。没有收到回答只影响依赖该答案的任务。
 
 ## 开发看板
 
 待办按建议依赖顺序排列；“待确认”是阻塞原因，不等于正在开发。实际开工后才移入进行中，任务完成须写回设计条目和验证证据。
+
+T02–T05 已在 `agent/complete-design` 完成并交付[local PR #59](docs/collaboration/pull-requests/59.md)，等待整个goal Review。下表仍表示main当前已合入内容；源码、设计状态和验证记录随该PR整合后更新。
 
 | 待办 | 进行中 | 已完成 |
 | --- | --- | --- |
