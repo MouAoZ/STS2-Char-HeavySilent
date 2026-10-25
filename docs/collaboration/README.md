@@ -14,13 +14,11 @@
 
 ## Pull requests
 
-| Number | Title | State | Reviewers |
-| --- | --- | --- | --- |
-| [local #55](pull-requests/55.md) | 精简 Skill 并接入 worktree 目标执行流程 | Open | 人类 |
+当前没有 Open PR。
 
 ## Archive
 
-53个 Closed Issue，0个已终结 PR。完整记录见[归档索引](archive.md)。
+53个 Closed Issue，1个 Merged PR。完整记录见[归档索引](archive.md)。
 
 ## 参与讨论
 

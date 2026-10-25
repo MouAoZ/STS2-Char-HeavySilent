@@ -1,6 +1,6 @@
 # local Issue / PR Archive
 
-已关闭的记录保留在各自文件中；本页作为归档索引。当前53个 Issue 为 Closed (Completed)，其中8个父 Issue、45个 sub-issue；没有已终结的 PR。
+已关闭的记录保留在各自文件中；本页作为归档索引。当前53个 Issue 为 Closed (Completed)，其中8个父 Issue、45个 sub-issue；1个 PR 为 Merged。
 
 [Open Issues / Pull requests](README.md)
 
@@ -59,3 +59,4 @@
 | [local #51](issues/51.md) | 赠印的升级限制 | Closed (Completed) | [local #8](issues/8.md) |
 | [local #52](issues/52.md) | 温故升级效果 | Closed (Completed) | [local #8](issues/8.md) |
 | [local #53](issues/53.md) | 赠印的可打出性 | Closed (Completed) | [local #8](issues/8.md) |
+| [local #55](pull-requests/55.md) | 精简 Skill 并接入 worktree 目标执行流程 | Merged | — |
