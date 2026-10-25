@@ -3,7 +3,7 @@
 本手册的读者是策划、Reviewer 和接手实现的 Agent。无需先学完整 C#；先看一张卡如何从设计进入游戏，再沿需要补充原理。
 玩法正文按[三类设计文档](design/README.md)维护；技术工作流放在项目 Skill 的 `references` 中，Skill 直接索引设计正文。人与 Agent 读取同一份事实，避免两套说明逐渐分叉。
 这些文档都属于开发脚手架。可独立打包的源码集中在 [mod/](../mod)，源码与脚手架的依赖边界见[工程结构](../.agents/skills/sts2-heavysilent-dev/references/architecture.md#模组源码与开发脚手架)。
-需要回答问题或提供 Review 意见时，直接到[协作问答](collaboration.md#如何回答)填写 A 栏；尚未在 CLI 中解决的沟通事项统一放在那里，Agent 负责处理与同步正式文档。
+需要回答问题或提供 Review 意见时，直接到[协作 Issue](collaboration.md#如何回答)填写 A 栏；尚未在 CLI 中解决的沟通事项统一放在那里，Agent 负责处理与同步正式文档。已解决的事项关闭并移入[归档](collaboration.md#已关闭-issue-归档)，原问题、回答和处理记录均可追溯。
 没有历史会话的 Agent 从[首次接手指南](../.agents/skills/sts2-heavysilent-dev/references/first-session.md)开始；它区分同机新会话、全新克隆以及需要补充核对的内容。
 
 ## 建议阅读顺序

@@ -41,15 +41,11 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 ## 人类协作看板
 
-待回答的问题与待 Review 的交付统一在[协作文档](docs/collaboration.md#协作任务)维护。点击编号填写 A 栏，也可在 CLI 按编号回答；Agent 负责整理结论并同步正式文档。这里仅列入口，具体状态和处理记录以协作文档为准。
+待回答的问题与待 Review 的交付作为 Issue 统一在[协作文档](docs/collaboration.md#协作任务)维护。点击编号填写 A 栏，也可在 CLI 按编号回答；Agent 负责整理结论、同步正式文档，并关闭和归档已解决事项。这里仅列入口，具体状态和处理记录以协作文档及其归档为准。
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
-| 暂无（现有 Q1～Q8 已关闭） | [R1 源码与脚手架拆分](docs/collaboration.md#r1) | **T01 · 共用规则确认**：[Q1](docs/collaboration.md#q1)、[Q2](docs/collaboration.md#q2) 已写回设计 |
-| — | — | [Q3](docs/collaboration.md#q3) 生成／复制／转化，已核对原版 |
-| — | — | [Q4](docs/collaboration.md#q4-followup)、[Q5](docs/collaboration.md#q5-followup) 补充回答已写回牌堆范围与先古替换映射 |
-| — | — | [Q6](docs/collaboration.md#q6-followup)、[Q7](docs/collaboration.md#q7-followup) 补充回答已写回费用采样与支付优先级 |
-| — | — | [Q8](docs/collaboration.md#q8) 四张卡的升级与可打出性已明确 |
+| 暂无 | [R1 源码与脚手架拆分](docs/collaboration.md#r1) | **T01 · 共用规则确认**及 Q1～Q8 设计 Issue 均已处理；原回答与补充回答已写回设计，见[已关闭 Issue 归档](docs/collaboration.md#已关闭-issue-归档) |
 
 设计问题关闭表示规则已明确；实现完成和人类 Review 结论分别记录。没有收到回答只影响依赖该答案的任务。
 
