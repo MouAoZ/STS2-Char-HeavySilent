@@ -4,11 +4,11 @@
 
 ## 在哪里提出与回答
 
-一组待整合改动使用本地 PR 记录，沿用 R 编号并在[协作入口](../collaboration.md)登记，注明关联 Issue、base／head 提交、diff 和验证证据。人类按 GitHub 的 Comment／Approve／Request changes 给出意见，也可在 CLI 按编号回复。评论、修改和复审持续追加到同一 PR，每轮标明所评 head；无需为每条意见新建 Issue 或 R 编号。格式与流转见[协作约定](../collaboration.md#状态与维护)。
+一组待整合改动使用 local PR，在[协作入口](../collaboration.md)登记，注明 Linked issues、Base／Head、Files changed 和 Checks。Issue 与 PR 共用递增的 `local #编号`。人类提交 Comment／Approve／Request changes，也可在 CLI 按编号回复；评论、修改和复审追加到同一 Timeline，注明所评 head。模板与流转见[工作流](../collaboration.md#工作流)。
 
-Issue 跟踪问题和工作，设计问题沿用 Q 编号；sub-issue 独立记录状态并关联父项。PR 展示如何通过具体改动解决这些问题，Review 是对 PR 或指定提交的反馈。两类入口都进入 [README 人类看板](../../README.md#人类协作看板)，确认后的规则写回设计。Approve 不等于已合并，自动检查通过也不等于人类批准；新 head 的评审覆盖范围需要重新核对。执行已授权的实现、验证和本地提交继续推进，实际整合按会话授权与仓库约定处理。
+local Issue 跟踪问题和工作，sub-issue 通过 Parent issue 与父项关联。local PR 展示具体改动。两类入口都进入 [README 人类看板](../../README.md#人类协作看板)，确认后的规则写回设计。Review 结论、Checks 与实际 Merged 状态分别记录；新 head 的评审覆盖范围需要核对。执行已授权的实现、验证和本地提交继续推进，实际整合按会话授权处理。
 
-PR 按实际结果记录 Merged 或 Closed（未合并），终结后连同评论归档。没有 PR、仅评审已提交改动时明确标为“历史提交 Review”；R1 属于这种情况，不能补造合并前的批准或 PR 状态。若旧 Issue 需要继续处理，重开同一条目；只有新的独立目标才新建 Issue。归档保留评论与生命周期记录，支持继续回复和重开。
+PR 按实际结果记录 Merged 或 Closed，终结后进入 Archive。对已提交内容的评审任务也可以由 Issue 跟踪，例如 [local #54](../collaboration/issues/54.md)。关闭或 Reopen 时同步活动与归档索引，正文和完整 Timeline 留在原文件。
 
 ## 一次交付应说明
 
@@ -16,7 +16,7 @@ PR 按实际结果记录 Merged 或 Closed（未合并），终结后连同评�
 2. 参考了哪些原版卡牌与实际调用链，复用了哪些游戏命令；新增机制说明原版能力缺少或不符合设计的具体部分，避免为已有能力引入外部代码。已查证入口见[原版效果参考](../../.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md)。
 3. 哪些源码入口值得阅读，以及关键语句的中文解释。
 4. 验证了哪些情形，结果是什么；编译与实机分开报告。
-5. 尚未确定的规则、临时占位、可能影响旧存档的变动；需要继续沟通的内容链接对应 Q／R 条目。
+5. 尚未确定的规则、临时占位、可能影响旧存档的变动；需要继续沟通的内容链接对应 local Issue／PR。
 
 ## 看卡牌时重点检查
 

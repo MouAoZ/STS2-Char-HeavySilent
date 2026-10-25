@@ -14,10 +14,10 @@
 
 | 设计编号 | 中文名 | 英文名 | 分类 | 设计效果 | 状态 | 模型 ID／代码 | 依赖／规则与问题 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| <a id="hs-relic-001"></a>HS-RELIC-001 | 砥石 | Whetstone | 初始 | 每回合首次磨顶时，获得2点格挡。 | 未实现 | — | 磨顶与每回合首次计数；[Q1](../collaboration.md#q1)。 |
-| <a id="hs-relic-002"></a>HS-RELIC-002 | 玉砥 | Jade Whetstone | 初始升级／欧罗巴斯 | 你每回合首次磨顶时，获得两倍于磨顶数量的格挡。 | 未实现 | — | 原版 TouchOfOrobas 流程将砥石永久替换为玉砥；通过既有 BaseLib 的 GetUpgradeReplacement 接入；[决策 Q5](../collaboration.md#q5)。 |
+| <a id="hs-relic-001"></a>HS-RELIC-001 | 砥石 | Whetstone | 初始 | 每回合首次磨顶时，获得2点格挡。 | 未实现 | — | 磨顶与每回合首次计数；[local #1](../collaboration/issues/1.md)。 |
+| <a id="hs-relic-002"></a>HS-RELIC-002 | 玉砥 | Jade Whetstone | 初始升级／欧罗巴斯 | 你每回合首次磨顶时，获得两倍于磨顶数量的格挡。 | 未实现 | — | 原版 TouchOfOrobas 流程将砥石永久替换为玉砥；通过既有 BaseLib 的 GetUpgradeReplacement 接入；[决策 local #5](../collaboration/issues/5.md)。 |
 | <a id="hs-relic-003"></a>HS-RELIC-003 | 息壶 | Breath Vessel | 稀有 | 战斗开始时，将2张气+随机加入抽牌堆。 | 未实现 | — | 生成气只影响本场战斗；随机插入沿用原版灵魂生成流程；[规则](mechanics.md#生成复制与转化)。 |
-| <a id="hs-relic-004"></a>HS-RELIC-004 | 护息符 | Breath Charm | 罕见 | 每回合首次打出气时，获得4点格挡。 | 未实现 | — | 每回合首次打出气；[Q3](../collaboration.md#q3)、[Q6](../collaboration.md#q6)。 |
+| <a id="hs-relic-004"></a>HS-RELIC-004 | 护息符 | Breath Charm | 罕见 | 每回合首次打出气时，获得4点格挡。 | 未实现 | — | 每回合首次打出气；[local #3](../collaboration/issues/3.md)、[local #6](../collaboration/issues/6.md)。 |
 
 ## 事件
 
@@ -39,4 +39,4 @@
 
 ## 维护约定
 
-每项内容记录设计编号、状态、实际模型 ID／源码与验收结果。未解决的问题和回答统一写入[协作文档](../collaboration.md)，这里只留 Q 编号链接；确认后的共用规则写回机制文档，遗物特有的触发次数、获取或替换规则写回对应条目。遗物详情使用[遗物模板](templates/relic.md)，模型 ID 和源码只在实际实现后登记。
+每项内容记录设计编号、状态、实际模型 ID／源码与验收结果。未解决的问题和回答统一写入[协作文档](../collaboration.md)，这里只留 local Issue 编号链接；确认后的共用规则写回机制文档，遗物特有的触发次数、获取或替换规则写回对应条目。遗物详情使用[遗物模板](templates/relic.md)，模型 ID 和源码只在实际实现后登记。

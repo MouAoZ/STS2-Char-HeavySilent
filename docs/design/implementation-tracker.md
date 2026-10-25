@@ -46,18 +46,16 @@
 
 角色美术、工具链、发布和未提供设计的药水／事件不纳入上述分母。77 张卡是当前设计范围，不能把 3／77 当作整个项目的完成率。
 
-<a id="待澄清索引"></a>
+## local Issue 引用
 
-## 协作 Issue 索引
+问题与讨论统一从 [local Issues / Pull requests](../collaboration.md) 进入，设计文档保留当前规则。下方父 Issue 及其 sub-issues 均已关闭，完整记录见 [Archive](../collaboration/archive.md)。
 
-问题、回答和处理记录统一从[协作文档](../collaboration.md#协作任务)进入，设计文档保留当前规则。下方 Q1～Q8 均已关闭，完整记录已归档，原编号链接仍有效。本节仅作索引，Review 与其他沟通事项也从协作页进入。
-
-| 问题 | 问答位置 |
+| 主题 | Issue |
 | --- | --- |
-| Q1、Q2：磨顶与征召基础规则已确认 | [Q1](../collaboration.md#q1) · [Q2](../collaboration.md#q2)；实现仍未开始 |
-| Q3：生成、复制与转化已确认 | [Q3](../collaboration.md#q3)；原版参考已核对 |
-| Q4～Q7：多轮讨论已完成，原 Issue 及子项已关闭；相关内容仍未实现 | [Q4.5 评论](../collaboration.md#q4-followup) · [Q5.4 评论](../collaboration.md#q5-followup) · [Q6.3 评论](../collaboration.md#q6-followup) · [Q7 评论](../collaboration.md#q7-followup) |
-| Q8：卡牌升级与可打出性已确认 | [Q8](../collaboration.md#q8)；对应四张卡仍未实现 |
+| local #1、local #2：磨顶与征召基础规则已确认 | [local #1](../collaboration/issues/1.md) · [local #2](../collaboration/issues/2.md)；实现仍未开始 |
+| local #3：生成、复制与转化已确认 | [local #3](../collaboration/issues/3.md)；原版参考已核对 |
+| local #4–#7：多轮讨论已完成，原 Issue 及子项已关闭；相关内容仍未实现 | [local #31 评论](../collaboration/issues/31.md#timeline) · [local #36 评论](../collaboration/issues/36.md#timeline) · [local #40 评论](../collaboration/issues/40.md#timeline) · [local #7 评论](../collaboration/issues/7.md#timeline) |
+| local #8：卡牌升级与可打出性已确认 | [local #8](../collaboration/issues/8.md)；对应四张卡仍未实现 |
 
 ## 日常维护
 
@@ -68,4 +66,4 @@
 5. 同次交付刷新本页统计、README 汇总与看板。设计变更使代码不再符合条目时，退回“进行中”（已着手调整）或“未实现”（待调整），保留旧代码链接和差异说明。
 6. Skill 维护设计文档索引与技术工作流，玩法规则直接链接设计正文。发生冲突时回到原条目核对，不在 Skill 内另存规则副本。
 7. 当前手动维护，没有自动同步。提交前核对编号唯一性、分类计数、设计覆盖与源码链接，运行 `python scripts/verify.py`；该命令检查本地链接、内容 ID 和本地化，不检查设计语义一致性。
-8. 收到评论或 Review 后，按[处理约定](../collaboration.md#状态与维护)在原 Issue／PR 下继续讨论、更新正式文档与看板；同一问题必要时重开。完成后在同次交付中关闭并归档，分别记录设计决策、实现状态、评审结论和实际整合结果。
+8. 收到评论或 Review 后，按[处理约定](../collaboration.md#工作流)在原 Issue／PR 下继续讨论、更新正式文档与看板；同一问题必要时重开。完成后在同次交付中关闭并归档，分别记录设计决策、实现状态、评审结论和实际整合结果。

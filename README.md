@@ -32,7 +32,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 | 工程与测试工具 | 已具备开发能力 | 版本基线、双语本地化、打包部署、场景构造与证据记录；见[验证记录](docs/development/status.md) |
 | 角色与起始配置 | 开发占位 | 当前五打五防两张气、70生命、99金币、蛇之戒及静默外观；见[角色代码](mod/HeavySilentCode/Character/HeavySilentCharacter.cs) |
 | 卡牌设计落地 | **3／77 已实现，0 进行中，74 未实现** | 三张为打击、防御、气；待实现包括两张特殊初始牌、70张攻击／技能／能力牌和两张先古相关卡；见[逐项跟踪](docs/design/implementation-tracker.md#内容统计) |
-| 磨顶／征召 | **0／2 已实现** | 基础规则已按问答确认，原版对照已核对；结算与术语悬停解释均待实现，见[机制条目](docs/design/mechanics.md#术语与实现状态) |
+| 磨顶／征召 | **0／2 已实现** | 基础规则已确认，原版对照已核对；结算与术语悬停解释均待实现，见[机制条目](docs/design/mechanics.md#术语与实现状态) |
 | 遗物 | **0／4 已实现** | 初始、初始升级及两件专属遗物；见[遗物条目](docs/design/relics-events-potions.md#遗物) |
 | 美术与其他内容 | 未完成／未定范围 | 正式角色与卡图仍缺；药水、事件尚无具体设计，不计入内容分母 |
 | 发布验收 | 未开展 | 完整奖励池、爬塔、平衡、联机与 Steam Workshop 发布 |
@@ -41,11 +41,11 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 ## 人类协作看板
 
-问题与工作用 Issue 跟踪，具体改动用 PR／提交 Review 评审，统一从[协作文档](docs/collaboration.md#协作任务)进入。按编号在同一讨论中追加评论，也可在 CLI 回答；Agent 负责同步正式文档、生命周期与归档。这里仅列入口，评论、子项状态与评审结论以对应记录为准。
+问题与工作用 local Issue 跟踪，待整合改动用 local PR 评审，统一从[协作入口](docs/collaboration.md)进入。在对应 Timeline 追加评论，也可在 CLI 按 local 编号回复；Agent 负责同步正式文档、状态与归档。
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
-| 暂无 | [R1 源码与脚手架拆分](docs/collaboration.md#r1)（历史提交 Review，Pending） | **T01 · 共用规则确认**及 Q1～Q8 设计 Issue 均已处理；原回答与多轮评论已写回设计，见[已关闭 Issue 归档](docs/collaboration.md#已关闭-issue-归档) |
+| 暂无 | [local #54 · 评审模组源码与脚手架边界](docs/collaboration/issues/54.md)（Open，Assignee：人类） | **T01 · 共用规则确认**完成；53个设计 Issue 及 sub-issue 已关闭，见[Archive](docs/collaboration/archive.md) |
 
 设计问题关闭表示规则已明确；实现完成和人类 Review 结论分别记录。没有收到回答只影响依赖该答案的任务。
 
@@ -67,7 +67,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 ## 从这里开始
 
 - 策划与 Review：[开发手册与学习路线](docs/README.md)
-- 回答问题与提交评审意见：[协作问答与任务](docs/collaboration.md)
+- 讨论问题与评审改动：[local Issues / Pull requests](docs/collaboration.md)
 - 查原版参考牌与复用入口：[原版效果参考](.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md)
 - 分类设计与源码：[特殊机制](docs/design/mechanics.md) · [卡牌](docs/design/cards.md) · [遗物／事件／药水](docs/design/relics-events-potions.md)
 - 实现进度汇总：[设计到实现跟踪](docs/design/implementation-tracker.md)
@@ -131,6 +131,6 @@ python -m unittest discover -s tests -v
 
 从[所属设计文档](docs/design/README.md)选取条目，使用[对应的策划模板](docs/design/templates/README.md)补齐效果顺序、升级、边界和验收例子，然后让 Agent 实现；新设计先登记编号。
 Markdown 是设计输入，运行时效果由 C# 与本地化 JSON 提供。
-实现前先查[原版参考及调用链](.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md)，优先复用原版机制；涉及尚未解决的设计差异时处理[对应协作问题](docs/collaboration.md#协作任务)。
+实现前先查[原版参考及调用链](.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md)，优先复用原版机制；涉及尚未解决的设计差异时处理[对应协作问题](docs/collaboration.md#issues)。
 
 玩家包中的模板／占位资源许可见 [mod/THIRD_PARTY_NOTICES.md](mod/THIRD_PARTY_NOTICES.md)，测试工具等脚手架许可见[根目录第三方说明](THIRD_PARTY_NOTICES.md)。

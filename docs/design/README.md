@@ -12,7 +12,7 @@
 
 - 直接修改所属设计文档。共用规则只写在特殊机制文档，卡牌、遗物、事件、药水和项目 Skill 都引用它。
 - 事件给予的特殊卡仍属于卡牌设计，事件文档只记录获取入口与设计编号；初始遗物和先古遗物升级属于遗物设计，先古卡属于卡牌设计。
-- 新增内容可使用[策划模板](templates/README.md)。不明确的规则在[协作文档](../collaboration.md)登记 Q 编号，设计条目只留链接；回答确认后由 Agent 写回设计，不在整理文档时补定玩法。
+- 新增内容可使用[策划模板](templates/README.md)。不明确的规则在[协作文档](../collaboration.md)登记 local Issue 编号，设计条目只留链接；回答确认后由 Agent 写回设计，不在整理文档时补定玩法。
 - [教学样例](teaching-samples.md)解释现有代码与验收方式；技术工作流仍在[项目 Skill](../../.agents/skills/sts2-heavysilent-dev/SKILL.md)及其参考中。Skill 不保存独立的玩法规则正文。
 
 ## 历史来源

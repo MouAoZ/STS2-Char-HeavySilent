@@ -6,7 +6,7 @@
 
 1. 根目录 [AGENTS.md](../../../../AGENTS.md) → [本 Skill](../SKILL.md)：工作约定与资料路由。
 2. [README 总览与看板](../../../../README.md#项目进度)、[设计跟踪](../../../../docs/design/implementation-tracker.md)、[项目状态](../../../../docs/development/status.md)：依次定位开发阶段、逐项实现与代码、实机证据。历史验证不能代替本次核对。
-   同时检查[协作任务](../../../../docs/collaboration.md#协作任务)及相关条目的新回答；人类只需填写 A 栏，表内状态可能尚未同步。
+   同时检查 [local Issues / Pull requests](../../../../docs/collaboration.md)及相关条目的 Timeline；人类只需追加评论，状态与索引由 Agent 同步。
 3. [工程结构](architecture.md)：定位本次要改的源码；新接触 STS2 时再读 [API 与第一张卡](api-primer.md)。
 4. 按任务补读：新增内容读[填充教程](content-authoring.md)；涉及磨顶／征召读[机制语义](../../../../docs/design/mechanics.md)；运行游戏读[测试工作流](game-testing.md)。
 
