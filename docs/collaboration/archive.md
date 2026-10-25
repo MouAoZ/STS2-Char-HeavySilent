@@ -60,6 +60,5 @@
 | [local #52](issues/52.md) | 温故升级效果 | Closed (Completed) | [local #8](issues/8.md) |
 | [local #53](issues/53.md) | 赠印的可打出性 | Closed (Completed) | [local #8](issues/8.md) |
 | [local #55](pull-requests/55.md) | 精简 Skill 并接入 worktree 目标执行流程 | Merged | — |
-
 | [local #57](issues/57.md) | 磨顶插入效果改变剩余牌堆的边界 | Closed (Completed) | [local #56](issues/56.md) |
 | [local #58](issues/58.md) | 替代支付在插入效果后失败 | Closed (Completed) | [local #56](issues/56.md) |
