@@ -2,7 +2,7 @@
 
 已关闭的记录保留在各自文件中；本页作为归档索引。当前53个 Issue 为 Closed (Completed)，其中8个父 Issue、45个 sub-issue；没有已终结的 PR。
 
-[Open Issues / Pull requests](../collaboration.md)
+[Open Issues / Pull requests](README.md)
 
 | Number | Title | State | Parent issue |
 | --- | --- | --- | --- |

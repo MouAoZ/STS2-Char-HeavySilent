@@ -97,7 +97,7 @@
 
 ## local Issue / PR 文档验证（2026-10-26）
 
-协作入口采用共享的 `local #编号`，Issue 和 PR 各有独立正文文件及模板；sub-issue 以 Parent issue 与 Sub-issues 关联，评论按 Timeline 维护。关闭与重新打开通过活动／归档索引表达，正文位置固定。
+[协作入口](../collaboration/README.md)与 Issue、归档及模板统一放在 `docs/collaboration/`。采用共享的 `local #编号`，Issue 和 PR 各有独立正文文件及模板；sub-issue 以 Parent issue 与 Sub-issues 关联，评论按 Timeline 维护。关闭与重新打开通过活动／归档索引表达，正文位置固定。
 
 当前54个 local Issue 中，53个 Closed (Completed)，包含8个父 Issue 和45个 sub-issue；local #54 为 Open，等待人类评审源码边界。当前没有 local PR，下一个可用编号为55。
 
@@ -106,6 +106,7 @@
 | 记录完整性 | 45条原回答与4条补充回答保留；每个子项的 Parent issue 与父项列表双向一致；活动及归档记录无重复、无遗漏 |
 | 设计与源码 | 83项设计的编号、名称、费用、效果、实现状态及代码映射均保持；模组源码、开发脚本和测试工具无变更 |
 | 文档与 Skill | `python scripts/verify.py`、Skill `quick_validate.py`、`git diff --check` 通过；导航核对覆盖88篇 Markdown、709处本地链接、108处页内跳转，全部有效 |
+| 入口移动 | 文档与 Skill 检查通过；20份相关文档的443处引用目标（含锚点）保持一致，无旧入口路径引用；Issue 内容与状态未改 |
 | 验证范围 | 仅检查文档组织、记录内容与引用；未重新构建、部署、运行游戏或创建 GitHub Issue／PR |
 
 一次性核对结果保存在忽略目录 `.cache/local-collaboration-20261026/audit.json`。历史构建、打包与实机证据见上方对应记录。

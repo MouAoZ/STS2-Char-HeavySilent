@@ -4,7 +4,7 @@
 
 ## 在哪里提出与回答
 
-一组待整合改动使用 local PR，在[协作入口](../collaboration.md)登记，注明 Linked issues、Base／Head、Files changed 和 Checks。Issue 与 PR 共用递增的 `local #编号`。人类提交 Comment／Approve／Request changes，也可在 CLI 按编号回复；评论、修改和复审追加到同一 Timeline，注明所评 head。模板与流转见[工作流](../collaboration.md#工作流)。
+一组待整合改动使用 local PR，在[协作入口](../collaboration/README.md)登记，注明 Linked issues、Base／Head、Files changed 和 Checks。Issue 与 PR 共用递增的 `local #编号`。人类提交 Comment／Approve／Request changes，也可在 CLI 按编号回复；评论、修改和复审追加到同一 Timeline，注明所评 head。模板与流转见[工作流](../collaboration/README.md#工作流)。
 
 local Issue 跟踪问题和工作，sub-issue 通过 Parent issue 与父项关联。local PR 展示具体改动。两类入口都进入 [README 人类看板](../../README.md#人类协作看板)，确认后的规则写回设计。Review 结论、Checks 与实际 Merged 状态分别记录；新 head 的评审覆盖范围需要核对。执行已授权的实现、验证和本地提交继续推进，实际整合按会话授权处理。
 
@@ -32,7 +32,7 @@ PR 按实际结果记录 Merged 或 Closed，终结后进入 Archive。对已提
 内容变更更新[所属设计文档](../design/README.md)的条目、状态、模型 ID 与代码链接，再同步[设计跟踪](../design/implementation-tracker.md)汇总和 [README 看板](../../README.md#项目进度)；验证结果写入[状态页](status.md)。共用规则直接更新[特殊机制设计](../design/mechanics.md)，涉及术语时分别验收结算和悬停解释；API 或版本变更更新原理、基线与升级说明。
 只修正文案拼写时更新相关文本即可，不要求重写所有文档。
 
-交接信息应落在仓库中：尚未解决的问题、回答与评审结论进[协作文档](../collaboration.md)，确认过的玩法和设计到代码的关系进所属设计文档，共用规则只在特殊机制设计维护，整体进度进 README，验证结论和未测范围进状态页。Skill 索引设计正文与协作入口；条目编号与维护步骤见[跟踪约定](../design/implementation-tracker.md#日常维护)。原始日志、存档和机器路径保留在忽略目录；换机器时缺少这些证据应明确说明，不能当作已复现。
+交接信息应落在仓库中：尚未解决的问题、回答与评审结论进[协作文档](../collaboration/README.md)，确认过的玩法和设计到代码的关系进所属设计文档，共用规则只在特殊机制设计维护，整体进度进 README，验证结论和未测范围进状态页。Skill 索引设计正文与协作入口；条目编号与维护步骤见[跟踪约定](../design/implementation-tracker.md#日常维护)。原始日志、存档和机器路径保留在忽略目录；换机器时缺少这些证据应明确说明，不能当作已复现。
 按任务完成相关验证后创建本地 Git commit，交付提交号；提交前核对差异，不夹带本机配置或测试存档。
 
 卡名可改，稳定模型 ID 不随意改；ID 会进入存档，修改它需要单独说明兼容策略。

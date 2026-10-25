@@ -9,7 +9,7 @@
 
 - 实现、调试或评审本项目：使用 [sts2-heavysilent-dev](.agents/skills/sts2-heavysilent-dev/SKILL.md)。
 - 人类学习与 Review：[docs/README.md](docs/README.md)。
-- 人类待办：[local Issues / Pull requests](docs/collaboration.md)，沿用 GitHub 协作模型，使用共享的 `local #编号`。接手时检查相关文件的 Timeline，将结论写回正式文档；同一问题继续评论或 Reopen，完成后在同次交付中关闭并更新 Archive。sub-issue 通过 Parent issue 关联，Review 与实际 Merged 状态分别记录。
+- 人类待办：[local Issues / Pull requests](docs/collaboration/README.md)，沿用 GitHub 协作模型，使用共享的 `local #编号`。接手时检查相关文件的 Timeline，将结论写回正式文档；同一问题继续评论或 Reopen，完成后在同次交付中关闭并更新 Archive。sub-issue 通过 Parent issue 关联，Review 与实际 Merged 状态分别记录。
 - 内容意图与逐项状态：[设计入口](docs/design/README.md)，按特殊机制、卡牌、遗物／事件／药水分别维护；汇总看[设计跟踪](docs/design/implementation-tracker.md)，总览与看板看[README](README.md)，验证证据看[项目状态](docs/development/status.md)。
 - 环境变更：核对[版本基线](docs/development/baseline.json)及本机程序集。
 - Agent 实机测试与可选回归：[测试工作流](.agents/skills/sts2-heavysilent-dev/references/game-testing.md)。

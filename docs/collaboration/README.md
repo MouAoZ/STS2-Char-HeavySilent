@@ -8,7 +8,7 @@
 
 | Number | Title | State | Assignees |
 | --- | --- | --- | --- |
-| [local #54](collaboration/issues/54.md) | 评审模组源码与脚手架边界 | Open | 人类 |
+| [local #54](issues/54.md) | 评审模组源码与脚手架边界 | Open | 人类 |
 
 ## Pull requests
 
@@ -16,7 +16,7 @@
 
 ## Archive
 
-53个 Closed Issue，0个已终结 PR。完整记录见[归档索引](collaboration/archive.md)。
+53个 Closed Issue，0个已终结 PR。完整记录见[归档索引](archive.md)。
 
 ## 参与讨论
 
@@ -39,8 +39,8 @@
 | --- | --- |
 | Issue 及 sub-issue | `docs/collaboration/issues/<number>.md` |
 | PR | `docs/collaboration/pull-requests/<number>.md` |
-| 已关闭记录索引 | [Archive](collaboration/archive.md) |
-| Issue 模板 | [Issue](collaboration/templates/issue.md) |
-| PR 模板 | [Pull request](collaboration/templates/pull-request.md) |
+| 已关闭记录索引 | [Archive](archive.md) |
+| Issue 模板 | [Issue](templates/issue.md) |
+| PR 模板 | [Pull request](templates/pull-request.md) |
 
-新建前检查 Issue 和 PR 文件中的最大编号，再取下一个整数；同步本页编号。正式玩法见[设计入口](design/README.md)，Review 检查方法见[Review 指引](development/review.md)，开发任务见 [README 看板](../README.md#开发看板)。
+新建前检查 Issue 和 PR 文件中的最大编号，再取下一个整数；同步本页编号。正式玩法见[设计入口](../design/README.md)，Review 检查方法见[Review 指引](../development/review.md)，开发任务见 [README 看板](../../README.md#开发看板)。

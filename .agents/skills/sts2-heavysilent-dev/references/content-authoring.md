@@ -4,7 +4,7 @@
 人类填写设计，Agent 完成代码、本地化、资源与验证。“填充”不要求人类编程，也不表示游戏能直接读取策划 Markdown。
 
 设计按[三类正文](../../../../docs/design/README.md)分别维护：术语及共用规则进入[特殊机制设计](../../../../docs/design/mechanics.md)，所有卡牌进入[卡牌设计](../../../../docs/design/cards.md)，其他内容进入[遗物／事件／药水设计](../../../../docs/design/relics-events-potions.md)。技术教程引用这些规则，不另存副本。
-未解决的问题与人类评论统一从 [local Issues / Pull requests](../../../../docs/collaboration.md)进入，设计条目链接对应 local Issue；Agent 收到结论后写回正式设计，再按依赖开展实现。待整合的具体改动使用 local PR，记录真实提交范围与验证证据。
+未解决的问题与人类评论统一从 [local Issues / Pull requests](../../../../docs/collaboration/README.md)进入，设计条目链接对应 local Issue；Agent 收到结论后写回正式设计，再按依赖开展实现。待整合的具体改动使用 local PR，记录真实提交范围与验证证据。
 开始实现时先按[原版效果参考](vanilla-effects.md)定位相似卡牌及调用链，优先复用原版命令、状态与附魔；原版不能满足明确规则的部分才做独有实现。人类给出参考牌名即可，技术调查和版本差异由 Agent 负责。
 
 ## 如何判断工作量

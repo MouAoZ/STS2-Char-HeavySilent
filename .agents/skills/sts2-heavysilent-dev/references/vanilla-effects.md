@@ -1,6 +1,6 @@
 # 原版效果与接入参考
 
-核对日期：2026-10-26。依据本机 `v0.111.0`／public-beta 程序集，SHA-256 与[版本基线](../../../../docs/development/baseline.json)一致；BaseLib 为既有依赖 3.4.7。本页记录代码入口与复用边界，玩法定义仍以[设计正文](../../../../docs/design/README.md)为准，回答及未解决差异见[协作页](../../../../docs/collaboration.md)。这次是代码阅读与资源核对，未将这些效果实现或实机验收为本模组内容。
+核对日期：2026-10-26。依据本机 `v0.111.0`／public-beta 程序集，SHA-256 与[版本基线](../../../../docs/development/baseline.json)一致；BaseLib 为既有依赖 3.4.7。本页记录代码入口与复用边界，玩法定义仍以[设计正文](../../../../docs/design/README.md)为准，回答及未解决差异见[协作页](../../../../docs/collaboration/README.md)。这次是代码阅读与资源核对，未将这些效果实现或实机验收为本模组内容。
 
 ## 查找与复用顺序
 

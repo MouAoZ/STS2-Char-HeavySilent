@@ -172,6 +172,6 @@ HS-ANCIENT-001 沿用欧罗巴斯 ArchaicTooth 的永久初始牌转化流程，
 
 ## local Issue 引用
 
-问题与讨论从[协作入口](../collaboration.md)进入，本页各条目直接链接对应 local Issue；已确认的共用规则在[特殊机制设计](mechanics.md#共用交互)维护。
+问题与讨论从[协作入口](../collaboration/README.md)进入，本页各条目直接链接对应 local Issue；已确认的共用规则在[特殊机制设计](mechanics.md#共用交互)维护。
 
 升级与可打出性已按 [local #8](../collaboration/issues/8.md) 写回回澜、燃息、赠印和温故；仍均未实现。设计结论与实现状态分别维护。

@@ -14,7 +14,7 @@
 - 无合法目标、手牌满或战斗结束时的行为：
 - 文案／药水图／轮廓图：
 - 验收例子：
-- 待确认问题（仅填[协作文档](../../collaboration.md)的 local Issue 编号与链接）：
+- 待确认问题（仅填[协作文档](../../collaboration/README.md)的 local Issue 编号与链接）：
 
 ## Agent 实现记录
 

@@ -41,7 +41,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 ## 人类协作看板
 
-问题与工作用 local Issue 跟踪，待整合改动用 local PR 评审，统一从[协作入口](docs/collaboration.md)进入。在对应 Timeline 追加评论，也可在 CLI 按 local 编号回复；Agent 负责同步正式文档、状态与归档。
+问题与工作用 local Issue 跟踪，待整合改动用 local PR 评审，统一从[协作入口](docs/collaboration/README.md)进入。在对应 Timeline 追加评论，也可在 CLI 按 local 编号回复；Agent 负责同步正式文档、状态与归档。
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
@@ -67,7 +67,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 ## 从这里开始
 
 - 策划与 Review：[开发手册与学习路线](docs/README.md)
-- 讨论问题与评审改动：[local Issues / Pull requests](docs/collaboration.md)
+- 讨论问题与评审改动：[local Issues / Pull requests](docs/collaboration/README.md)
 - 查原版参考牌与复用入口：[原版效果参考](.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md)
 - 分类设计与源码：[特殊机制](docs/design/mechanics.md) · [卡牌](docs/design/cards.md) · [遗物／事件／药水](docs/design/relics-events-potions.md)
 - 实现进度汇总：[设计到实现跟踪](docs/design/implementation-tracker.md)
@@ -131,6 +131,6 @@ python -m unittest discover -s tests -v
 
 从[所属设计文档](docs/design/README.md)选取条目，使用[对应的策划模板](docs/design/templates/README.md)补齐效果顺序、升级、边界和验收例子，然后让 Agent 实现；新设计先登记编号。
 Markdown 是设计输入，运行时效果由 C# 与本地化 JSON 提供。
-实现前先查[原版参考及调用链](.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md)，优先复用原版机制；涉及尚未解决的设计差异时处理[对应协作问题](docs/collaboration.md#issues)。
+实现前先查[原版参考及调用链](.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md)，优先复用原版机制；涉及尚未解决的设计差异时处理[对应协作问题](docs/collaboration/README.md#issues)。
 
 玩家包中的模板／占位资源许可见 [mod/THIRD_PARTY_NOTICES.md](mod/THIRD_PARTY_NOTICES.md)，测试工具等脚手架许可见[根目录第三方说明](THIRD_PARTY_NOTICES.md)。
