@@ -45,7 +45,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
-| 暂无 | [local #54 · 评审模组源码与脚手架边界](docs/collaboration/issues/54.md)（Open，Assignee：人类） | **T01 · 共用规则确认**完成；53个设计 Issue 及 sub-issue 已关闭，见[Archive](docs/collaboration/archive.md) |
+| 暂无 | [local #54 · 评审模组源码与脚手架边界](docs/collaboration/issues/54.md)；[local #55 · Skill 与 worktree 执行流程](docs/collaboration/pull-requests/55.md) | **T01 · 共用规则确认**完成；53个设计 Issue 及 sub-issue 已关闭，见[Archive](docs/collaboration/archive.md) |
 
 设计问题关闭表示规则已明确；实现完成和人类 Review 结论分别记录。没有收到回答只影响依赖该答案的任务。
 
@@ -66,6 +66,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 ## 从这里开始
 
+- 新会话可输入 `/goal 实现 implementation-tracker.md 中的未实现项`；Agent 按[执行流程](docs/development/workflow.md)在任务 worktree 推进并交付 local PR，按需使用 subagent。人类 Review 通过后整合并清理，要求修改则在原 worktree 继续。
 - 策划与 Review：[开发手册与学习路线](docs/README.md)
 - 讨论问题与评审改动：[local Issues / Pull requests](docs/collaboration/README.md)
 - 查原版参考牌与复用入口：[原版效果参考](.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md)

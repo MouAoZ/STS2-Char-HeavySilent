@@ -1,63 +1,35 @@
 # 首次接手：从仓库恢复工作上下文
 
-本页供没有历史聊天记录的 Agent 使用。目标是找到当前事实、选择本次任务所需资料，然后开始工作；不需要先读完整个文档目录。
+本页供没有历史聊天记录的 Agent 使用，只读与当前任务有关的资料。
 
 ## 最短阅读路径
 
-1. 根目录 [AGENTS.md](../../../../AGENTS.md) → [本 Skill](../SKILL.md)：工作约定与资料路由。
-2. [README 总览与看板](../../../../README.md#项目进度)、[设计跟踪](../../../../docs/design/implementation-tracker.md)、[项目状态](../../../../docs/development/status.md)：依次定位开发阶段、逐项实现与代码、实机证据。历史验证不能代替本次核对。
-   同时检查 [local Issues / Pull requests](../../../../docs/collaboration/README.md)及相关条目的 Timeline；人类只需追加评论，状态与索引由 Agent 同步。
-3. [工程结构](architecture.md)：定位本次要改的源码；新接触 STS2 时再读 [API 与第一张卡](api-primer.md)。
-4. 按任务补读：新增内容读[填充教程](content-authoring.md)；涉及磨顶／征召读[机制语义](../../../../docs/design/mechanics.md)；运行游戏读[测试工作流](game-testing.md)。
+1. 根目录 [AGENTS.md](../../../../AGENTS.md) → [Skill](../SKILL.md) → [执行流程](../../../../docs/development/workflow.md)。
+2. `git status --short`、`git worktree list --porcelain`：定位当前分支、已有改动及可续做的任务 worktree；修改前进入正确 worktree。
+3. [README 看板](../../../../README.md#项目进度)与[设计跟踪](../../../../docs/design/implementation-tracker.md)：选择范围，读取所属设计条目及代码，不从历史草稿推断当前规则。
+4. 检查 [local Issue／PR](../../../../docs/collaboration/README.md)的相关 Timeline；若主目录尚未合入该任务，在已登记 worktree 的协作入口查找。处理新回答和 Request changes，再核对[验证证据](../../../../docs/development/status.md)及剩余工作。
+5. 用[工程结构](architecture.md)定位源码，其余资料由 Skill 按任务路由；不必先读完整个目录。
 
-当前是独立角色的开发骨架，使用静默占位表现。[设计跟踪](../../../../docs/design/implementation-tracker.md)提供统计和分类入口，逐项设计、实现状态、稳定 ID 与代码维护在所属设计文档。设计中出现一张卡，并不代表它已实现；正式初始牌、完整奖励卡池、磨顶与征召以逐项状态为准。
+玩法以当前明确指令及设计正文为准，实际行为以源码和本次观察为准；历史报告只能提供线索。跨会话进度保存在 Issue／PR、设计条目与提交中，不依赖旧聊天。
 
-## 不同问题去哪里找答案
+## 本机配置与 worktree
 
-| 需要确认的事实 | 来源 |
-| --- | --- |
-| 人类想要的玩法 | 当前明确指令与[三类设计正文](../../../../docs/design/README.md)；共用规则直接读[特殊机制设计](../../../../docs/design/mechanics.md)，归档草稿只供历史追溯；冲突或歧义需在相关实现前澄清 |
-| 代码目前实际做什么 | `mod/HeavySilentCode/`、`mod/HeavySilent/` 的双语资源与本次实机观察；状态页提供定位和历史结论 |
-| 内容的稳定编号与模型 ID | 所属[设计文档](../../../../docs/design/README.md)与源码 `CustomID`；编号约定见[设计跟踪](../../../../docs/design/implementation-tracker.md)，新增时登记，重命名显示名不换 ID |
-| 哪些 API 能用 | [基线](../../../../docs/development/baseline.json)、本机程序集和已编译实例；网上文档提供方向，具体签名核对本机 |
-| 下一步应做什么 | 用户当前任务和 [README 看板](../../../../README.md#开发看板)；条目依赖见设计跟踪，机制待确认项不是可以自行补全的规则 |
-| 尚未解决的问题、已收到的回答与 Review 意见 | [协作文档](../../../../docs/collaboration/README.md)；CLI 的明确回答写回同一条目，处理后更新正式文档与状态 |
+同机续做沿用已核实的配置。新 worktree 不带忽略文件；需要构建时从主目录复制 `mod/local.props` 并核对路径，产物在当前 worktree 生成。仅改文档运行 `python scripts/verify.py`，无需初始化游戏工具。
 
-遗物、药水、事件目前有策划模板和实现路线，尚无本项目已编译的完整样例。首次实现时仍需核对对应原版 Model、Hook、注册与资源要求，完成后再把经验补回教程。
+涉及构建或游戏时按[构建指南](build-debug.md)运行 `dev.ps1 doctor` 并选择相应检查；本机 PowerShell 7 入口为 `C:\Program Files\PowerShell\7\pwsh.exe`。不因新会话默认全量回归。
 
-## 同一台机器的新会话
-
-先运行 `git status --short`，识别已有改动，避免覆盖其他人的工作。沿用已有 `mod/local.props`、工具缓存和 MCP 配置；不要因为会话是新的就重新初始化工程或清空测试目录。
-
-```powershell
-& 'C:\Program Files\PowerShell\7\pwsh.exe' -NoProfile -File .\scripts\dev.ps1 doctor
-python scripts/verify.py
-```
-
-`doctor` 核对环境；直接运行 `verify.py` 仅查源码、内容和文档，不编译。需要编译时运行 `dev.ps1 verify`。选择验证范围见[Review 指引](../../../../docs/development/review.md)，不因接手会话就默认开游戏跑全部回归。
-
-要测游戏时先确认 MCP 工具是否实际加载、是否有受管游戏会话。`get_state` 缺少 `active-session.json` 通常意味着尚未启动受管会话；由 `start_session` 启动。`get_report` 在没有历史报告的新克隆中也没有可读内容。工具和游戏状态的排错见[测试工作流](game-testing.md)。
+实机配置含绝对路径：在任务 worktree 执行 `test-setup` 后重新加载该目录的 MCP，确认启动脚本指向当前 worktree；旧会话工具仍指向原目录时，使用当前 worktree 的 CLI／Python 接口。会话、测试档归属和控制锁的共享位置见[测试工作流](game-testing.md#worktree-中的实机测试)。
 
 ## 全新克隆或换机器
 
-仓库不携带游戏、BaseLib 安装、SDK、引擎、Python 环境或个人存档。按[构建环境](build-debug.md)准备依赖，复制 `mod/local.props.example` 为 `mod/local.props` 后填写本机路径；样例中的路径不能保证在其他机器存在。只需要源码打包时使用该指南的独立入口，无需复制外层脚手架。
+仓库不携带游戏、BaseLib、SDK、引擎和本机配置。按[构建指南](build-debug.md)准备依赖，从 `mod/local.props.example` 创建路径配置；需要源码打包时不依赖外层脚手架。缺少工具时记录验证限制，不把历史成功当作本次已验证。
 
-先完成 `doctor`、`verify`、`package`。需要实机测试时再部署并启用 BaseLib／HeavySilent，执行 `test-setup` 生成独立测试桥、仓库内 Python 和本机 MCP 配置。项目移动路径后同样需要刷新 MCP 配置。没有游戏安装时只能完成源码／文档检查，明确记录实机未验证。
-
-以下信息不随 Git 提交：
-
-| 本机信息 | 如何得到／如何对待 |
+| 不随 Git 提交的内容 | 处理方式 |
 | --- | --- |
-| `mod/local.props` | 从样例创建，保存真实依赖路径 |
-| `.codex/config.toml`、`.tools/`、测试 `.venv/` | `test-setup` 生成；安装依赖首次需要网络 |
-| 根及 `mod/` 内的 `.cache/`、`.godot/`、`artifacts/` | 按需重新生成；不当作源码来源 |
-| `artifacts/game-tests/` | 历史日志、截图、个人存档备份及会话记录；新克隆中不会自动出现 |
-| `profile3-owner.json`、`active-session.json` | 位于上述测试目录，标记测试档归属和待清理会话；不能当普通缓存随意删除 |
+| `mod/local.props` | 核对真实依赖路径 |
+| `.codex/config.toml`、`.tools/`、测试 `.venv/` | 按需由 `test-setup` 生成，首次可能需网络；不原样搬用带旧绝对路径的配置 |
+| 构建缓存与包 | 在当前 worktree 重新生成 |
+| 主目录 `artifacts/game-tests/` | 保留会话、报告、存档备份与测试档归属；worktree 共用，不随任务清理 |
+| `.cache/worktrees/` | Git 登记的任务目录；按执行流程清理，不能当普通缓存批量删除 |
 
-状态页给出的旧证据路径是本机历史索引。另一台机器找不到这些文件不代表测试已失败，也不能据此声称自己已复现。新的验证应生成自己的报告。
-
-## 完成一次任务
-
-实现前记录涉及的设计，未解决的沟通事项集中写入[协作文档](../../../../docs/collaboration/README.md)，设计只引用编号；收到答案后由 Agent 写回正式文档。实现后按改动选择构建、资源或实机检查。需要实机时，由 Agent 提出问题、构造场景、实际操作和记录判断；测试夹具只安排前提，不代替被测机制。
-
-将新确认的规则写回特殊机制设计，将条目状态与代码写回所属设计文档，将统计写回设计跟踪，将整体进度与任务写回 README，将验证结果写回状态页。Skill 只索引设计正文。交付给人类的说明包括行为变化、关键源码、验证证据和未测范围；完成本地 Git commit，交付时给出提交号。后续 Agent 应能从这些文件接手，不需要依赖旧聊天或被忽略的临时脚本。
+交付内容与文档回写沿用[Review 指引](../../../../docs/development/review.md)及[跟踪约定](../../../../docs/design/implementation-tracker.md#日常维护)。

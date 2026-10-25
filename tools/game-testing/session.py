@@ -104,6 +104,7 @@ def start(configuration="Debug", config=None, language=None):
     original_profile = read_json(selector)["last_profile_id"] if selector_bytes else 1
     data = {
         "id": run_id, "directory": str(directory), "token": secrets.token_hex(24), "pid": None,
+        "source_root": str(ROOT),
         "account": str(account), "original_profile": original_profile,
         "selector_backup": base64.b64encode(selector_bytes).decode() if selector_bytes else None,
         "original_settings": copy.deepcopy(original_settings), "personal_hashes": personal_hashes(account),

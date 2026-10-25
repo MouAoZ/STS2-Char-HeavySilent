@@ -7,13 +7,30 @@ import hashlib
 import json
 import msvcrt
 from pathlib import Path
+import subprocess
 import time
 import urllib.error
 import urllib.request
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-ARTIFACTS = ROOT / "artifacts/game-tests"
+
+
+def shared_artifacts(root: Path) -> Path:
+    """Keep the one game session, ownership record and lock outside disposable worktrees."""
+    if not (root / ".git").exists():
+        return root / "artifacts/game-tests"
+    result = subprocess.run(
+        ["git", "-C", str(root), "worktree", "list", "--porcelain", "-z"],
+        capture_output=True, check=True, encoding="utf-8",
+    )
+    primary = result.stdout.split("\0", 1)[0]
+    if not primary.startswith("worktree "):
+        raise RuntimeError("Cannot locate the primary worktree for shared game-test state.")
+    return Path(primary.removeprefix("worktree ")) / "artifacts/game-tests"
+
+
+ARTIFACTS = shared_artifacts(ROOT)
 SESSION_FILE = ARTIFACTS / "active-session.json"
 
 
@@ -83,7 +100,10 @@ class GameClient:
                 stream.write(json.dumps(record, ensure_ascii=False) + "\n")
 
     def state(self):
-        return self.request("/hs/state")
+        return self.request("/hs/state") | {
+            "source_root": self.session.get("source_root"),
+            "controller_root": str(ROOT),
+        }
 
     def wait(self, predicate=lambda state: not state["busy"], timeout=30):
         deadline = time.monotonic() + timeout

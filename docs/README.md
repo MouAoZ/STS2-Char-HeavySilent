@@ -19,6 +19,7 @@
 
 | 任务 | 入口 |
 | --- | --- |
+| 用简短目标启动开发、接续 worktree 或处理 PR | [执行流程](development/workflow.md) |
 | 跟踪整体进度与下一项工作 | [README 看板](../README.md#开发看板) |
 | 查看人类待办、回答问题或给出 Review 意见 | [协作任务与 local Issue / PR](collaboration/README.md#issues)；[README 人类看板](../README.md#人类协作看板) |
 | 查设计、实现状态和代码位置 | [设计入口](design/README.md)；汇总见[设计跟踪](design/implementation-tracker.md) |

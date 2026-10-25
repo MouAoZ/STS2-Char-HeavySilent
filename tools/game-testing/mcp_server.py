@@ -89,7 +89,8 @@ def start_session(configuration: str = "Debug", language: str | None = None) -> 
         raise ValueError("Expected Debug or Release")
     with control_lock():
         data = session.start(configuration, language=language)
-    return {"id": data["id"], "status": data["status"], "directory": data["directory"]}
+    return {"id": data["id"], "status": data["status"], "directory": data["directory"],
+            "source_root": data["source_root"]}
 
 
 @mcp.tool()

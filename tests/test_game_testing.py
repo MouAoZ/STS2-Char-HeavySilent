@@ -3,6 +3,7 @@ import copy
 import importlib.util
 from pathlib import Path
 import sys
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -27,6 +28,59 @@ def qi_states():
 
 
 class GameTestingTests(unittest.TestCase):
+    def test_worktrees_share_controller_and_preserve_evidence(self):
+        # Real Git metadata exercises both directory and linked-worktree .git forms.
+        with tempfile.TemporaryDirectory() as temp:
+            primary = Path(temp) / 'primary repo'
+            task = Path(temp) / 'task tree'
+            primary.mkdir()
+
+            def git(*args):
+                return subprocess.run(
+                    ['git', '-C', str(primary), *args],
+                    check=True, capture_output=True,
+                )
+
+            git('init', '--template=')
+            git('-c', 'user.name=Test', '-c', 'user.email=test@example.invalid',
+                '-c', 'core.hooksPath=', 'commit', '--allow-empty', '-m', 'fixture')
+            git('worktree', 'add', '--detach', str(task))
+            artifacts = primary / 'artifacts/game-tests'
+            self.assertEqual(client.shared_artifacts(primary), artifacts)
+            self.assertEqual(client.shared_artifacts(task), artifacts)
+            with patch.object(client, 'ARTIFACTS', client.shared_artifacts(primary)):
+                with client.control_lock():
+                    with patch.object(client, 'ARTIFACTS', client.shared_artifacts(task)):
+                        with self.assertRaisesRegex(RuntimeError, 'owns the game controls'):
+                            with client.control_lock():
+                                self.fail('Another worktree acquired the same game')
+            # Evidence survives removal of the disposable checkout.
+            evidence = artifacts / 'report.json'
+            evidence.write_text('{}')
+            git('worktree', 'remove', str(task))
+            self.assertTrue(evidence.exists())
+
+    def test_source_export_uses_local_game_state(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            self.assertEqual(client.shared_artifacts(root), root / 'artifacts/game-tests')
+
+    def test_state_identifies_source_and_controller_worktrees(self):
+        game = client.GameClient({'directory': '.', 'source_root': 'another-worktree'})
+        with patch.object(game, 'request', return_value={'profile': 3}):
+            state = game.state()
+        self.assertEqual(state['profile'], 3)
+        self.assertEqual(state['source_root'], 'another-worktree')
+        self.assertEqual(state['controller_root'], str(client.ROOT))
+
+    def test_git_discovery_failure_does_not_create_a_second_controller(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / '.git').mkdir()
+            with patch('client.subprocess.run', side_effect=subprocess.CalledProcessError(1, 'git')):
+                with self.assertRaises(subprocess.CalledProcessError):
+                    client.shared_artifacts(root)
+
     def test_patch_context_drift_is_rejected(self):
         with self.assertRaisesRegex(RuntimeError, 'context changed'):
             bootstrap.replace_exact('new upstream', 'old upstream', 'patched')

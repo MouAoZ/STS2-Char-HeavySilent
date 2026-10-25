@@ -181,7 +181,7 @@ try {
             }
             if ($Language) { $arguments += @('--language', $Language) }
             & $testPython @arguments
-            if ($LASTEXITCODE -ne 0) { throw 'Game testing command failed. See artifacts/game-tests for evidence.' }
+            if ($LASTEXITCODE -ne 0) { throw 'Game testing command failed. See artifacts/game-tests in the primary worktree for evidence.' }
         }
         'doctor' {
             $environment = Get-Environment

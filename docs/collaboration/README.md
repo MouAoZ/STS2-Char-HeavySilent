@@ -2,7 +2,7 @@
 
 人类与 Agent 在本仓库文档中使用 **local Issue / PR** 协作。`local #31` 表示本地记录；GitHub Issue／PR 使用实际仓库链接，两个编号空间独立。
 
-采用 GitHub 的 [Issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/quickstart)、[sub-issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues)、[PR](https://docs.github.com/en/pull-requests/reference/pull-requests) 和 [Review](https://docs.github.com/en/pull-requests/reference/pull-request-reviews) 术语。Issue、sub-issue 和 PR 共用一条递增整数序列；当前最后使用 **local #54**，下一个为 **local #55**。
+采用 GitHub 的 [Issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/quickstart)、[sub-issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues)、[PR](https://docs.github.com/en/pull-requests/reference/pull-requests) 和 [Review](https://docs.github.com/en/pull-requests/reference/pull-request-reviews) 术语。Issue、sub-issue 和 PR 共用一条递增整数序列；当前最后使用 **local #55**，下一个为 **local #56**。
 
 ## Issues
 
@@ -12,7 +12,9 @@
 
 ## Pull requests
 
-当前没有 Open PR。
+| Number | Title | State | Reviewers |
+| --- | --- | --- | --- |
+| [local #55](pull-requests/55.md) | 精简 Skill 并接入 worktree 目标执行流程 | Open | 人类 |
 
 ## Archive
 
@@ -31,7 +33,7 @@
 - **Comments：** 记录作者、日期和内容；调查、回复、修正继续追加。需要继续处理已关闭目标时 Reopen 原 Issue，保留之前的关闭记录；新的独立目标另建 Issue。
 - **PR：** 提出一组待整合改动，记录 base／head 分支及提交、关联 Issue、diff、Checks 和 Review。修订后更新 head 和验证证据，在同一 PR 内继续评审。Approve 与 Merged 分别记录；实际整合后记 Merged 和结果提交，放弃时记 Closed 及原因。
 - **Archive：** 同次交付中将已关闭 Issue、Merged／Closed PR 从活动列表移入归档索引；正文文件保持原位置。Reopen 后恢复活动索引。同一记录只有一份正文。
-- **维护：** 收到评论后先落实到正式设计或技术文档，再同步状态、关联条目和 README 看板。已经授权的实现、验证和本地提交继续推进，实际整合按会话授权处理。
+- **维护：** 收到评论后落实到正式设计或技术文档，再同步状态、关联条目和 README 看板。目标拆分、worktree、按需委派、Review 后整合与清理见[执行流程](../development/workflow.md)。
 
 ## 文件与模板
 
@@ -43,4 +45,4 @@
 | Issue 模板 | [Issue](templates/issue.md) |
 | PR 模板 | [Pull request](templates/pull-request.md) |
 
-新建前检查 Issue 和 PR 文件中的最大编号，再取下一个整数；同步本页编号。正式玩法见[设计入口](../design/README.md)，Review 检查方法见[Review 指引](../development/review.md)，开发任务见 [README 看板](../../README.md#开发看板)。
+新建前核对已登记 worktree 及待合入分支中的 Issue／PR 最大编号，再取下一个整数并同步本页。正式玩法见[设计入口](../design/README.md)，Review 检查方法见[Review 指引](../development/review.md)，开发任务见 [README 看板](../../README.md#开发看板)。

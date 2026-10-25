@@ -1,39 +1,31 @@
 # 人类 Review 指引
 
-先检查玩法与实际行为，再看实现是否容易维护。Agent 应提供以下材料，而不是要求人类从全部 diff 中自行猜测意图。
+先检查玩法与实际行为，再看实现是否容易维护。任务 worktree、提交、Approve 后整合与清理统一按[执行流程](workflow.md)。
 
 ## 在哪里提出与回答
 
-一组待整合改动使用 local PR，在[协作入口](../collaboration/README.md)登记，注明 Linked issues、Base／Head、Files changed 和 Checks。Issue 与 PR 共用递增的 `local #编号`。人类提交 Comment／Approve／Request changes，也可在 CLI 按编号回复；评论、修改和复审追加到同一 Timeline，注明所评 head。模板与流转见[工作流](../collaboration/README.md#工作流)。
+从[协作入口](../collaboration/README.md)打开 local PR，在 Timeline 追加 Comment／Approve／Request changes 并注明所评 head，也可在 CLI 按编号回复。Agent 处理修改并补充验证；状态和归档沿用[协作约定](../collaboration/README.md#工作流)。
 
-local Issue 跟踪问题和工作，sub-issue 通过 Parent issue 与父项关联。local PR 展示具体改动。两类入口都进入 [README 人类看板](../../README.md#人类协作看板)，确认后的规则写回设计。Review 结论、Checks 与实际 Merged 状态分别记录；新 head 的评审覆盖范围需要核对。执行已授权的实现、验证和本地提交继续推进，实际整合按会话授权处理。
-
-PR 按实际结果记录 Merged 或 Closed，终结后进入 Archive。对已提交内容的评审任务也可以由 Issue 跟踪，例如 [local #54](../collaboration/issues/54.md)。关闭或 Reopen 时同步活动与归档索引，正文和完整 Timeline 留在原文件。
+Issue 跟踪问题和工作，PR 展示待整合改动。已提交内容的评审也可由 Issue 跟踪，例如 [local #54](../collaboration/issues/54.md)。实现状态、Checks、人类 Review 与实际 Merged 分别记录。
 
 ## 一次交付应说明
 
-1. 对应哪个设计编号，玩家会看到什么变化。
-2. 参考了哪些原版卡牌与实际调用链，复用了哪些游戏命令；新增机制说明原版能力缺少或不符合设计的具体部分，避免为已有能力引入外部代码。已查证入口见[原版效果参考](../../.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md)。
-3. 哪些源码入口值得阅读，以及关键语句的中文解释。
-4. 验证了哪些情形，结果是什么；编译与实机分开报告。
-5. 尚未确定的规则、临时占位、可能影响旧存档的变动；需要继续沟通的内容链接对应 local Issue／PR。
+1. 对应设计编号、玩家可观察的行为变化。
+2. 原版参考及复用入口；新增机制或 Harmony 补丁说明现有能力不足、目标方法、版本与影响范围。查阅[原版效果参考](../../.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md)。
+3. 关键源码入口及必要的中文解释，帮助人类连接设计与结算。
+4. 验证情形、结果、证据及未测范围；编译与实机分开报告。
+5. 临时占位、旧存档影响及未解决的 local Issue／PR。
 
 ## 看卡牌时重点检查
 
-- 费用、目标、升级、关键词是否与设计一致。
-- 操作是否按文案顺序执行；失败是否只跳过应跳过的部分。
-- 数值是否通过 DynamicVar 与描述共用；没有在文案中重复写死可变数值。
-- 伤害、格挡、抽牌和移动是否使用合适的游戏命令。
-- 状态属于哪个玩家、卡牌实例、回合或战斗，何时重置。
-- 自动打出、复制、奖励修改等特殊情况是否有明确测试。
+- 费用、目标、升级、关键词、效果顺序与失败行为是否符合设计。
+- 数值是否通过 DynamicVar 与描述共用；命令、选择上下文和 RNG 是否正确。
+- 状态属于哪个玩家、卡牌实例、回合或战斗；何时重置和保存。
+- 自动打出、复制、奖励修改等受影响边界是否有相应验证。
+- 模型 ID 是否保持稳定；显示名变化不应改变存档 ID。
 
-## 文档随改动更新
+## 文档与交接
 
-内容变更更新[所属设计文档](../design/README.md)的条目、状态、模型 ID 与代码链接，再同步[设计跟踪](../design/implementation-tracker.md)汇总和 [README 看板](../../README.md#项目进度)；验证结果写入[状态页](status.md)。共用规则直接更新[特殊机制设计](../design/mechanics.md)，涉及术语时分别验收结算和悬停解释；API 或版本变更更新原理、基线与升级说明。
-只修正文案拼写时更新相关文本即可，不要求重写所有文档。
+设计和代码映射写回所属[设计文档](../design/README.md)，状态与汇总按[跟踪约定](../design/implementation-tracker.md#日常维护)更新；验证证据及未测范围进[状态页](status.md)，讨论与评审留在 Issue／PR。共用规则只在特殊机制正文维护，Skill 仅索引。
 
-交接信息应落在仓库中：尚未解决的问题、回答与评审结论进[协作文档](../collaboration/README.md)，确认过的玩法和设计到代码的关系进所属设计文档，共用规则只在特殊机制设计维护，整体进度进 README，验证结论和未测范围进状态页。Skill 索引设计正文与协作入口；条目编号与维护步骤见[跟踪约定](../design/implementation-tracker.md#日常维护)。原始日志、存档和机器路径保留在忽略目录；换机器时缺少这些证据应明确说明，不能当作已复现。
-按任务完成相关验证后创建本地 Git commit，交付提交号；提交前核对差异，不夹带本机配置或测试存档。
-
-卡名可改，稳定模型 ID 不随意改；ID 会进入存档，修改它需要单独说明兼容策略。
-引入 Harmony 补丁时，Review 材料须包含被补丁的方法、已有扩展入口不足的原因、版本和影响范围。
+API、命令或版本改变时更新对应技术参考；仅修拼写不要求重写所有文档。原始日志、机器路径和存档留在忽略目录，关键结论必须写入仓库；缺少历史证据时不能声称已复现。

@@ -3,9 +3,7 @@
 核验基线：[baseline.json](../../../../docs/development/baseline.json)。
 人类填写设计，Agent 完成代码、本地化、资源与验证。“填充”不要求人类编程，也不表示游戏能直接读取策划 Markdown。
 
-设计按[三类正文](../../../../docs/design/README.md)分别维护：术语及共用规则进入[特殊机制设计](../../../../docs/design/mechanics.md)，所有卡牌进入[卡牌设计](../../../../docs/design/cards.md)，其他内容进入[遗物／事件／药水设计](../../../../docs/design/relics-events-potions.md)。技术教程引用这些规则，不另存副本。
-未解决的问题与人类评论统一从 [local Issues / Pull requests](../../../../docs/collaboration/README.md)进入，设计条目链接对应 local Issue；Agent 收到结论后写回正式设计，再按依赖开展实现。待整合的具体改动使用 local PR，记录真实提交范围与验证证据。
-开始实现时先按[原版效果参考](vanilla-effects.md)定位相似卡牌及调用链，优先复用原版命令、状态与附魔；原版不能满足明确规则的部分才做独有实现。人类给出参考牌名即可，技术调查和版本差异由 Agent 负责。
+从[设计入口](../../../../docs/design/README.md)读取对应条目；任务执行与交付按[执行流程](../../../../docs/development/workflow.md)。开始实现时按[原版效果参考](vanilla-effects.md)定位同类效果及调用链，核对可直接复用的部分与差异。
 
 ## 如何判断工作量
 
@@ -21,13 +19,13 @@
 ## 填充一张卡：以气为例
 
 1. 在[卡牌模板](../../../../docs/design/templates/card.md)填写：0 费、状态、无目标、抽一张、消耗，升级后抽两张。
-2. Agent 分配 `HS-TOKEN-001` 与稳定 ID `HEAVYSILENT_QI`，建立[Qi](../../../../mod/HeavySilentCode/Cards/Qi.cs)。
+2. 本例已有设计编号 `HS-TOKEN-001`、稳定 ID `HEAVYSILENT_QI` 与[Qi](../../../../mod/HeavySilentCode/Cards/Qi.cs)，阅读时沿用，不重新分配。
 3. 从 `HeavySilentCard` 继承；费用和类型由构造参数给出，抽牌量由 `CardsVar` 给出，消耗由关键词给出。
 4. `OnPlay` 等待原版抽牌命令；`OnUpgrade` 增加抽牌量。
 5. 在 eng／zhs 的 `cards.json` 增加 `.title`、`.description`，描述使用 `{Cards:diff()}`。
 6. 继承基类上的 Pool 注册，暂用基类的占位图；正式卡图准备好后，为这张卡显式覆盖图片路径。
 7. 执行 `verify`、`package`，并验证足量牌、空牌堆、手牌上限和升级情形。
-8. 更新[卡牌设计](../../../../docs/design/cards.md)的状态、模型 ID 和代码链接，以及[设计跟踪](../../../../docs/design/implementation-tracker.md)的汇总；同步 README 看板与状态页验证证据，提交可供人类 Review 的行为说明，新增的教学解释另写入样例文档。
+8. 按[跟踪约定](../../../../docs/design/implementation-tracker.md#日常维护)回写设计、源码和验证结果，提交 local PR；有必要的教学解释写入样例文档。
 
 改“抽 1／2 张”为其他数值时，主要修改 `CanonicalVars` 的基础值和 `OnUpgrade` 的差值。
 改“抽牌”为“征召”则改变了机制，不能只改描述，也不能直接给普通抽牌命令换个中文名字。

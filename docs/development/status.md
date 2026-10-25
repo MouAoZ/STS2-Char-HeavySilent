@@ -56,7 +56,7 @@
 
 | 检查 | 结果／范围 |
 | --- | --- |
-| 迁移完整性 | 与拆分前提交逐条对照通过：83个唯一条目（77张卡、2项机制、4件遗物）的编号、费用、效果、状态和代码映射保留；local #1～Q8的问题正文保留；归档正文与原草稿一致 |
+| 迁移完整性 | 与拆分前提交逐条对照通过：83个唯一条目（77张卡、2项机制、4件遗物）的编号、费用、效果、状态和代码映射保留；local #1～#8的问题正文保留；归档正文与原草稿一致 |
 | 导航与模型映射 | 一次性核对通过：27篇 Markdown、344处本地链接、144处页内跳转；三张已实现卡的模型 ID 与源码一致，无重复条目或旧设计路径引用 |
 | 静态与差异检查 | `python scripts/verify.py`、`git diff --check` 通过 |
 | 实现与实机范围 | 本次仅调整文档组织及分类约定；没有修改游戏代码，也没有构建、打包或实机复验。磨顶／征召的结算与术语悬停解释仍未实现 |
@@ -99,7 +99,7 @@
 
 [协作入口](../collaboration/README.md)与 Issue、归档及模板统一放在 `docs/collaboration/`。采用共享的 `local #编号`，Issue 和 PR 各有独立正文文件及模板；sub-issue 以 Parent issue 与 Sub-issues 关联，评论按 Timeline 维护。关闭与重新打开通过活动／归档索引表达，正文位置固定。
 
-当前54个 local Issue 中，53个 Closed (Completed)，包含8个父 Issue 和45个 sub-issue；local #54 为 Open，等待人类评审源码边界。当前没有 local PR，下一个可用编号为55。
+该次整理时54个 local Issue 中，53个 Closed (Completed)，包含8个父 Issue 和45个 sub-issue；local #54 为 Open。当时没有 local PR，下一个可用编号为55；当前活动条目见协作入口。
 
 | 检查 | 结果／范围 |
 | --- | --- |
@@ -110,3 +110,17 @@
 | 验证范围 | 仅检查文档组织、记录内容与引用；未重新构建、部署、运行游戏或创建 GitHub Issue／PR |
 
 一次性核对结果保存在忽略目录 `.cache/local-collaboration-20261026/audit.json`。历史构建、打包与实机证据见上方对应记录。
+
+## Skill 与 worktree 执行流程（2026-10-26）
+
+[local PR #55](../collaboration/pull-requests/55.md)在 `agent/workflow` 分支交付，等待人类 Review。执行规则集中于[目标执行与 worktree](workflow.md)，Skill 与交接／Review 入口删去重复流程、易过时的进度陈述；已有技术和存档边界保留。
+
+| 检查 | 结果／范围 |
+| --- | --- |
+| 文档压缩 | 按 UTF-8 解码后的字符数，Skill 从2563降至1562（约39%）；AGENTS、Skill、接手和 Review 四份入口加新增执行流程后，合计从9366降至8520（约9%） |
+| 文档与 Skill | `python scripts/verify.py`、`quick_validate.py`、`git diff --check` 通过；页内跳转另作核对 |
+| 测试脚手架 | 24项无游戏脚本测试通过；新增真实 Git worktree 测试证明共用控制锁、移除任务 worktree 后证据保留；另覆盖无 Git 副本、Git 查询失败及来源字段 |
+| 当前 worktree | 客户端源码根位于任务 worktree，测试状态解析为主目录的 `artifacts/game-tests/`；Python 语法检查通过 |
+| 未测范围 | 未重新构建、打包、部署或启动游戏；本次新增的 worktree 实机启动链尚未游戏内验收，模组源码无变更 |
+
+校验记录位于任务 worktree 的忽略目录 `.cache/workflow-review/audit.json`。测试会话、测试档归属及证据改为全仓库 worktree 共用，配置与来源核对见[测试工作流](../../.agents/skills/sts2-heavysilent-dev/references/game-testing.md#worktree-中的实机测试)。

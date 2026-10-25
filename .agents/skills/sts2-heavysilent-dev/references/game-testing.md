@@ -40,7 +40,13 @@
 
 测试桥基于 [Gennadiyev/STS2MCP](https://github.com/Gennadiyev/STS2MCP)，固定提交 `55e064850a68f3b4cde7e5fd525bf9b2dec4e885`。下载 URL、SHA256 与 uv 版本在 [upstream.json](../../../../tools/game-testing/upstream.json)。源码下载到 `.tools/sts2mcp/src`，补丁集中在 [bootstrap.py](../../../../tools/game-testing/bootstrap.py)，上下文不匹配立即失败。
 
-本机旧 GodotExplorer 1.0.0 是场景检查工具，不承担卡牌回归。选择 STS2MCP 是因为它能读取战斗模型并操作原版菜单和 Action 队列；其他候选仍需相似版本适配，直接使用现有旧 MCP 无法覆盖本任务。
+## worktree 中的实机测试
+
+构建、打包、部署和测试桥代码取自启动工具所在的 worktree；`test-setup` 生成的 MCP 配置也必须指向它。切换目录后重载 MCP，或用该 worktree 的 CLI／Python 接口；不能把仍指向主目录的工具当作任务分支的验证入口。
+
+同一 Git 仓库共用主工作目录下的 `artifacts/game-tests/`：控制锁、`active-session.json`、`profile3-owner.json`、报告及存档备份均在此保留，清理任务 worktree 不删除它们。位置由 `git worktree list` 解析；没有 Git 元数据的源码副本继续使用自身目录。不要复制测试档归属标记或并行启动多套游戏。
+
+`start_session` 返回 `source_root`，`get_state` 同时返回会话的 `source_root` 与工具的 `controller_root`。测试前确认两者指向本次目标 worktree，并核对会话中的包指纹；旧报告没有该字段时按原证据核实，不猜来源。结束会话后再清理 worktree；清理步骤见[执行流程](../../../../docs/development/workflow.md#review整合与清理)。
 
 ## Agent 如何测试
 
@@ -150,7 +156,7 @@ print(state["profile"], state["in_combat"])
 
 ## 证据与维护
 
-每次会话在 `artifacts/game-tests/<UTC时间>-<随机后缀>/` 保存 `session.json`、`actions.jsonl`、`game.log` 和截图。Agent 任务在 `tasks/` 下保存 JSON／Markdown 意图与观察记录，每次观察自动保存当时状态。可选回归另写 `report.json` 和夹具前后状态。`latest.json` 指向最近会话。视觉判断必须由查看截图的人或 Agent 给出，不能由脚本自动宣称通过。
+每次会话在主工作目录的 `artifacts/game-tests/<UTC时间>-<随机后缀>/` 保存 `session.json`、`actions.jsonl`、`game.log` 和截图。Agent 任务在 `tasks/` 下保存 JSON／Markdown 意图与观察记录，每次观察自动保存当时状态。可选回归另写 `report.json` 和夹具前后状态。`latest.json` 指向最近会话。视觉判断必须由查看截图的人或 Agent 给出，不能由脚本自动宣称通过。
 
 发现截图疑似缺图层时，先核对保存的原始 PNG：单独以原始分辨率查看，并按需对比相关区域像素。图片预览可能与源文件不同；不要仅凭预览异常就修改游戏渲染或断言素材缺失。记录后续纠正时追加观察，保留原判断与推翻它的证据。
 
@@ -158,4 +164,4 @@ print(state["profile"], state["in_combat"])
 
 升级游戏／上游时核对：`StartRunLobby`／`LoadRunLobby` 字段、种子入口、Action 完成语义、主线程队列、存档生命周期以及截图信号。目前额外修正了上游队列一次处理 10 项时会丢弃第 11 项的问题。修改夹具或 API 时同步更新本页、断言和版本基线。
 
-当前范围不覆盖完整爬塔、空奖励池、联机、尚未实现的磨顶／征召或正式美术。运行中切换 `LocManager` 会涉及已经创建的界面和关键词缓存，因此没有暴露热切换语言工具。使用 `start_session(language='eng')` 或 `test-start -Language eng`，结束时恢复原设置；这样文字和资源都经过游戏正常启动加载。
+固定套件的范围仅为上方列出的样例；新增内容需选择对应场景，当前覆盖证据见项目状态。运行中切换 `LocManager` 会涉及已经创建的界面和关键词缓存，因此没有暴露热切换语言工具。使用 `start_session(language='eng')` 或 `test-start -Language eng`，结束时恢复原设置；这样文字和资源都经过游戏正常启动加载。
