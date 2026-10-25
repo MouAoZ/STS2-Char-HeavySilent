@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
+using HarmonyLib;
 
 namespace HeavySilent;
 
@@ -13,6 +14,7 @@ public static class ModEntry
 
     public static void Initialize()
     {
-        Logger.Info("HeavySilent 0.1.0 initialized (development scaffold; Mill/Recruit not implemented).");
+        new Harmony(ModId).PatchAll(typeof(ModEntry).Assembly);
+        Logger.Info("HeavySilent 0.1.0 initialized.");
     }
 }

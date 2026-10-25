@@ -28,6 +28,14 @@ def qi_states():
 
 
 class GameTestingTests(unittest.TestCase):
+    def test_action_returns_live_selection_without_resending_play(self):
+        game = client.GameClient({'directory': '.'})
+        choice = {'busy': True, 'ui': {'state_type': 'hand_select'}}
+        states = [{'busy': True, 'ui': {'state_type': 'monster'}}, choice, choice, choice]
+        with patch.object(game, 'request') as request, patch.object(game, 'state', side_effect=states), patch('client.time.sleep'):
+            self.assertEqual(game.action('play_card', card_index=0), choice)
+        request.assert_called_once_with('/api/v1/singleplayer', {'action': 'play_card', 'card_index': 0})
+
     def test_worktrees_share_controller_and_preserve_evidence(self):
         # Real Git metadata exercises both directory and linked-worktree .git forms.
         with tempfile.TemporaryDirectory() as temp:

@@ -1,0 +1,6 @@
+{
+  "HEAVYSILENT_MILL.title": "Mill",
+  "HEAVYSILENT_MILL.description": "Move the specified number of cards from the top of your Draw Pile to your Discard Pile. This is not discarding. If there are too few, move none and skip the rest of the card. Costs and earlier effects remain.",
+  "HEAVYSILENT_RECRUIT.title": "Recruit",
+  "HEAVYSILENT_RECRUIT.description": "Draw the specified number of cards from the top of your Draw Pile, or as many as remain, without initiating a shuffle. Obeys draw restrictions and hand limits, and triggers draw effects."
+}

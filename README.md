@@ -31,9 +31,9 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 | --- | --- | --- |
 | 工程与测试工具 | 已具备开发能力 | 版本基线、双语本地化、打包部署、场景构造与证据记录；见[验证记录](docs/development/status.md) |
 | 角色与起始配置 | 开发占位 | 当前五打五防两张气、70生命、99金币、蛇之戒及静默外观；见[角色代码](mod/HeavySilentCode/Character/HeavySilentCharacter.cs) |
-| 卡牌设计落地 | **3／77 已实现，0 进行中，74 未实现** | 三张为打击、防御、气；待实现包括两张特殊初始牌、70张攻击／技能／能力牌和两张先古相关卡；见[逐项跟踪](docs/design/implementation-tracker.md#内容统计) |
-| 磨顶／征召 | **0／2 已实现** | 基础规则已确认，原版对照已核对；结算与术语悬停解释均待实现，见[机制条目](docs/design/mechanics.md#术语与实现状态) |
-| 遗物 | **0／4 已实现** | 初始、初始升级及两件专属遗物；见[遗物条目](docs/design/relics-events-potions.md#遗物) |
+| 卡牌设计落地 | **3／77 已实现，74 进行中，0 未实现** | 三张为打击、防御、气；待实现包括两张特殊初始牌、70张攻击／技能／能力牌和两张先古相关卡；见[逐项跟踪](docs/design/implementation-tracker.md#内容统计) |
+| 磨顶／征召 | **0／2 已实现，2 进行中** | 基础规则已确认，原版对照已核对；结算与术语悬停解释均待实现，见[机制条目](docs/design/mechanics.md#术语与实现状态) |
+| 遗物 | **0／4 已实现，4 进行中** | 初始、初始升级及两件专属遗物；见[遗物条目](docs/design/relics-events-potions.md#遗物) |
 | 美术与其他内容 | 未完成／未定范围 | 正式角色与卡图仍缺；药水、事件尚无具体设计，不计入内容分母 |
 | 发布验收 | 未开展 | 完整奖励池、爬塔、平衡、联机与 Steam Workshop 发布 |
 
@@ -55,7 +55,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 | 待办 | 进行中 | 已完成 |
 | --- | --- | --- |
-| **T02 · 磨顶与征召**：[T01](#人类协作看板) 已完成；按[已确认规则](docs/design/mechanics.md#术语与实现状态)实现两项机制，验收不足牌、满手牌、插入结算、触发边界及术语悬停解释 | —（当前无已开工的玩法任务） | 工程骨架、独立角色与内容池 |
+| **T02 · 磨顶与征召**：[T01](#人类协作看板) 已完成；按[已确认规则](docs/design/mechanics.md#术语与实现状态)实现两项机制，验收不足牌、满手牌、插入结算、触发边界及术语悬停解释 | [local #56](docs/collaboration/issues/56.md)：全范围实现与验证进行中 | 工程骨架、独立角色与内容池 |
 | **T03 · 正式起始内容**：分步实现[两张特殊初始牌](docs/design/cards.md#初始卡组)和[初始遗物](docs/design/relics-events-potions.md#hs-relic-001)，接入角色并验收；磨顶相关部分依赖T02 | — | 打击／防御／气及升级、双语文本；有基础实机记录 |
 | **T04 · 卡池填充**：把[70张攻击／技能／能力牌](docs/design/cards.md#攻击牌)按机制分批实现，先选依赖清楚的组合，再处理自动出牌、保留、费用和奖励干预；每批单独验收 | — | 构建、打包、部署与版本核对 |
 | **T05 · 遗物与先古内容**：实现[其余三件遗物](docs/design/relics-events-potions.md#遗物)、[两张先古卡](docs/design/cards.md#先古卡)，按已确认规则接入获取与替换，并验证保存续玩 | — | Agent 实机工具、场景构造、截图与 Review 记录 |

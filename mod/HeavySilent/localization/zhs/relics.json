@@ -1,0 +1,14 @@
+{
+  "HEAVYSILENT_WHETSTONE.title": "砥石",
+  "HEAVYSILENT_WHETSTONE.description": "每回合首次[gold]磨顶[/gold]时，获得{Block}点[gold]格挡[/gold]。",
+  "HEAVYSILENT_WHETSTONE.flavor": "石上留下千次磨痕。",
+  "HEAVYSILENT_JADE_WHETSTONE.title": "玉砥",
+  "HEAVYSILENT_JADE_WHETSTONE.description": "每回合首次[gold]磨顶[/gold]时，获得两倍于磨顶数值的[gold]格挡[/gold]。",
+  "HEAVYSILENT_JADE_WHETSTONE.flavor": "光华内敛，锋芒自成。",
+  "HEAVYSILENT_BREATH_VESSEL.title": "息壶",
+  "HEAVYSILENT_BREATH_VESSEL.description": "战斗开始时，将{Cards}张[gold]气+[/gold]随机加入抽牌堆。",
+  "HEAVYSILENT_BREATH_VESSEL.flavor": "壶口微启，余息未散。",
+  "HEAVYSILENT_BREATH_CHARM.title": "护息符",
+  "HEAVYSILENT_BREATH_CHARM.description": "每回合首次打出[gold]气[/gold]时，获得{Block}点[gold]格挡[/gold]。",
+  "HEAVYSILENT_BREATH_CHARM.flavor": "一纸护住未尽的呼吸。"
+}

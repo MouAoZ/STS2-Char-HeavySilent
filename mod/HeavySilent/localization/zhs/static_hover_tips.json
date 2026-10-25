@@ -1,0 +1,6 @@
+{
+  "HEAVYSILENT_MILL.title": "磨顶",
+  "HEAVYSILENT_MILL.description": "将抽牌堆顶指定数量的牌置入弃牌堆，不视为弃牌。数量不足时不移动牌，并跳过整张卡的剩余效果；已支付费用与已发生效果保留。",
+  "HEAVYSILENT_RECRUIT.title": "征召",
+  "HEAVYSILENT_RECRUIT.description": "从抽牌堆顶抽取指定数量的牌；不足时抽取余下的牌，本次征召不主动洗牌。遵守禁抽和手牌上限，并触发抽牌效果。"
+}

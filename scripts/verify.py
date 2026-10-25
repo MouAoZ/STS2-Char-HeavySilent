@@ -63,7 +63,7 @@ def check_localization(root: Path) -> list[str]:
             if model_id in ids:
                 errors.append(f"Duplicate model ID {model_id}: {path} and {ids[model_id]}")
             ids[model_id] = path
-            if path.parent.name == "Cards":
+            if (root / "HeavySilentCode" / "Cards") in path.parents:
                 for language in ("eng", "zhs"):
                     cards = tables[language].get("cards.json", {})
                     for suffix in ("title", "description"):

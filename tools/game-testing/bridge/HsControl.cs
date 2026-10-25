@@ -106,6 +106,7 @@ public static partial class McpMod
                     heavy_silent_sha256 = AssemblyHash("HeavySilent")
                 };
             case "/hs/state": return HsSnapshot();
+            case "/hs/content": return await HsContentDispatch(args);
             case "/hs/catalog":
                 string kind = args.GetProperty("kind").GetString()!;
                 string query = args.TryGetProperty("query", out var q) ? q.GetString() ?? "" : "";
@@ -150,6 +151,7 @@ public static partial class McpMod
                 }
                 return new { status = "ok" };
             case "/hs/save-quit":
+                if (HsContentBusy) throw new InvalidOperationException("Finish the pending content selection before saving.");
                 if (!RunManager.Instance.IsInProgress) throw new InvalidOperationException("No active run to save and quit.");
                 // Preserve the game's room-entry checkpoint. Never serialize a fake mid-combat checkpoint.
                 if (SaveManager.Instance.CurrentRunSaveTask is { } saveTask) await saveTask;
@@ -171,6 +173,7 @@ public static partial class McpMod
 
     private static bool HsBusy()
     {
+        if (HsContentBusy) return true;
         if (_hsPreparing) return true;
         if (NGame.Instance?.Transition?.InTransition == true) return true;
         if (!RunManager.Instance.IsInProgress) return false;

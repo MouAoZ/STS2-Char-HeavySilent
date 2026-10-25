@@ -120,7 +120,10 @@ class GameClient:
     def action(self, action, **arguments):
         self.request("/api/v1/singleplayer", {"action": action, **arguments})
         time.sleep(.3)  # Give an enqueued UI action its first frame; then observe actual state.
-        return self.wait()
+        # A live action can deliberately await a player choice. Returning that stable
+        # screen lets the Agent answer it; it is not a claim that the effect completed.
+        return self.wait(lambda state: not state['busy'] or state.get('ui', {}).get('state_type') in
+                         {'card_select', 'hand_select', 'bundle_select', 'relic_select', 'card_reward', 'rewards'})
 
     def prepare(self, case_id):
         self.request("/hs/prepare", {"case_id": case_id})

@@ -2,6 +2,7 @@ using BaseLib.Abstracts;
 using BaseLib.Utils.Attributes;
 using Godot;
 using HeavySilent.Cards;
+using HeavySilent.Relics;
 using MegaCrit.Sts2.Core.Entities.Characters;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
@@ -19,17 +20,17 @@ public sealed class HeavySilentCharacter : PlaceholderCharacterModel
     public override int StartingGold => 99;
 
     // ModelDb 返回规范定义；游戏在创建玩家套牌时生成各自的可变实例。
-    // 两张气占据尚未实现的两张特殊初始牌的位置，不是最终平衡方案。
+    // 正式初始牌保持独立模型，先古替换通过 BaseLib 映射。
     public override IEnumerable<CardModel> StartingDeck =>
     [
         ModelDb.Card<HeavyStrike>(), ModelDb.Card<HeavyStrike>(),
         ModelDb.Card<HeavyStrike>(), ModelDb.Card<HeavyStrike>(), ModelDb.Card<HeavyStrike>(),
         ModelDb.Card<HeavyDefend>(), ModelDb.Card<HeavyDefend>(),
         ModelDb.Card<HeavyDefend>(), ModelDb.Card<HeavyDefend>(), ModelDb.Card<HeavyDefend>(),
-        ModelDb.Card<Qi>(), ModelDb.Card<Qi>()
+        ModelDb.Card<GatherBreath>(), ModelDb.Card<ObliqueStrike>()
     ];
 
-    public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<RingOfTheSnake>()];
+    public override IReadOnlyList<RelicModel> StartingRelics => [ModelDb.Relic<HeavySilent.Relics.Whetstone>()];
     public override CardPoolModel CardPool => ModelDb.CardPool<HeavySilentCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<HeavySilentRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<HeavySilentPotionPool>();
