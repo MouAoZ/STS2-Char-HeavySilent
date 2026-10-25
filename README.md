@@ -45,7 +45,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
-| 暂无（Agent 正在推进 [local #56](docs/collaboration/issues/56.md)） | [local #54 · 评审模组源码与脚手架边界](docs/collaboration/issues/54.md) | **T01 · 共用规则确认**完成；53个设计 Issue 已关闭；[local PR #55](docs/collaboration/pull-requests/55.md) 已合入，见[Archive](docs/collaboration/archive.md) |
+| [local #57 · 磨顶插入时序](docs/collaboration/issues/57.md)；Agent 正在推进 [local #56](docs/collaboration/issues/56.md) | [local #54 · 评审模组源码与脚手架边界](docs/collaboration/issues/54.md) | **T01 · 共用规则确认**完成；53个设计 Issue 已关闭；[local PR #55](docs/collaboration/pull-requests/55.md) 已合入，见[Archive](docs/collaboration/archive.md) |
 
 设计问题关闭表示规则已明确；实现完成和人类 Review 结论分别记录。没有收到回答只影响依赖该答案的任务。
 
