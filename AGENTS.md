@@ -9,7 +9,7 @@
 
 - 实现、调试或评审本项目：使用 [sts2-heavysilent-dev](.agents/skills/sts2-heavysilent-dev/SKILL.md)。
 - 人类学习与 Review：[docs/README.md](docs/README.md)。
-- 人类待办、未解决的 Issue 与 Review 意见：[协作文档](docs/collaboration.md)。接手时检查新回答，将结论写回正式文档，并在同次交付中关闭、归档已解决事项；归档入口与编号沿用协作页约定。
+- 人类待办、Issue／PR 与 Review：[协作文档](docs/collaboration.md)，沿用 GitHub 协作模型。接手时检查新评论，将结论写回正式文档；同一问题多轮交流留在原条目，必要时重开，完成后在同次交付中关闭并归档。子项、PR、Review 与合并事实按协作页分别记录。
 - 内容意图与逐项状态：[设计入口](docs/design/README.md)，按特殊机制、卡牌、遗物／事件／药水分别维护；汇总看[设计跟踪](docs/design/implementation-tracker.md)，总览与看板看[README](README.md)，验证证据看[项目状态](docs/development/status.md)。
 - 环境变更：核对[版本基线](docs/development/baseline.json)及本机程序集。
 - Agent 实机测试与可选回归：[测试工作流](.agents/skills/sts2-heavysilent-dev/references/game-testing.md)。

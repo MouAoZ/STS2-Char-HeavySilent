@@ -1,6 +1,6 @@
 # 设计文档
 
-当前设计按下列三类分别维护。每个条目在所属文档中记录设计编号、效果或规则、实现状态、代码位置及协作问题链接；[进度跟踪](implementation-tracker.md)汇总统计，[README 看板](../../README.md#开发看板)安排工作，[项目状态](../development/status.md)保存验证证据。[协作文档](../collaboration.md)统一索引活动 Issue 和已关闭归档，保留问题、回答和 Review 反馈。
+当前设计按下列三类分别维护。每个条目在所属文档中记录设计编号、效果或规则、实现状态、代码位置及协作问题链接；[进度跟踪](implementation-tracker.md)汇总统计，[README 看板](../../README.md#开发看板)安排工作，[项目状态](../development/status.md)保存验证证据。[协作文档](../collaboration.md)统一索引 Issue、PR／提交 Review 与归档，保留多轮讨论和评审反馈。
 
 | 类别 | 文档 | 归属边界 |
 | --- | --- | --- |

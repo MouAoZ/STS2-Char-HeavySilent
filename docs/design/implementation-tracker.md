@@ -56,7 +56,7 @@
 | --- | --- |
 | Q1、Q2：磨顶与征召基础规则已确认 | [Q1](../collaboration.md#q1) · [Q2](../collaboration.md#q2)；实现仍未开始 |
 | Q3：生成、复制与转化已确认 | [Q3](../collaboration.md#q3)；原版参考已核对 |
-| Q4～Q7：补充回答已写回并关闭，相关内容仍未实现 | [状态牌范围](../collaboration.md#q4-followup) · [先古替换对象](../collaboration.md#q5-followup) · [伏笔费用采样](../collaboration.md#q6-followup) · [支付优先级](../collaboration.md#q7-followup) |
+| Q4～Q7：多轮讨论已完成，原 Issue 及子项已关闭；相关内容仍未实现 | [Q4.5 评论](../collaboration.md#q4-followup) · [Q5.4 评论](../collaboration.md#q5-followup) · [Q6.3 评论](../collaboration.md#q6-followup) · [Q7 评论](../collaboration.md#q7-followup) |
 | Q8：卡牌升级与可打出性已确认 | [Q8](../collaboration.md#q8)；对应四张卡仍未实现 |
 
 ## 日常维护
@@ -68,4 +68,4 @@
 5. 同次交付刷新本页统计、README 汇总与看板。设计变更使代码不再符合条目时，退回“进行中”（已着手调整）或“未实现”（待调整），保留旧代码链接和差异说明。
 6. Skill 维护设计文档索引与技术工作流，玩法规则直接链接设计正文。发生冲突时回到原条目核对，不在 Skill 内另存规则副本。
 7. 当前手动维护，没有自动同步。提交前核对编号唯一性、分类计数、设计覆盖与源码链接，运行 `python scripts/verify.py`；该命令检查本地链接、内容 ID 和本地化，不检查设计语义一致性。
-8. 收到协作回答或 Review 意见后，按[处理约定](../collaboration.md#状态与维护)更新正式文档和人类看板，并在同次交付中关闭、归档已解决的 Issue；设计问题关闭与内容实现状态分开维护。
+8. 收到评论或 Review 后，按[处理约定](../collaboration.md#状态与维护)在原 Issue／PR 下继续讨论、更新正式文档与看板；同一问题必要时重开。完成后在同次交付中关闭并归档，分别记录设计决策、实现状态、评审结论和实际整合结果。

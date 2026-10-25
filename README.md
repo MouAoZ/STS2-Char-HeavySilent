@@ -41,11 +41,11 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 ## 人类协作看板
 
-待回答的问题与待 Review 的交付作为 Issue 统一在[协作文档](docs/collaboration.md#协作任务)维护。点击编号填写 A 栏，也可在 CLI 按编号回答；Agent 负责整理结论、同步正式文档，并关闭和归档已解决事项。这里仅列入口，具体状态和处理记录以协作文档及其归档为准。
+问题与工作用 Issue 跟踪，具体改动用 PR／提交 Review 评审，统一从[协作文档](docs/collaboration.md#协作任务)进入。按编号在同一讨论中追加评论，也可在 CLI 回答；Agent 负责同步正式文档、生命周期与归档。这里仅列入口，评论、子项状态与评审结论以对应记录为准。
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
-| 暂无 | [R1 源码与脚手架拆分](docs/collaboration.md#r1) | **T01 · 共用规则确认**及 Q1～Q8 设计 Issue 均已处理；原回答与补充回答已写回设计，见[已关闭 Issue 归档](docs/collaboration.md#已关闭-issue-归档) |
+| 暂无 | [R1 源码与脚手架拆分](docs/collaboration.md#r1)（历史提交 Review，Pending） | **T01 · 共用规则确认**及 Q1～Q8 设计 Issue 均已处理；原回答与多轮评论已写回设计，见[已关闭 Issue 归档](docs/collaboration.md#已关闭-issue-归档) |
 
 设计问题关闭表示规则已明确；实现完成和人类 Review 结论分别记录。没有收到回答只影响依赖该答案的任务。
 
