@@ -30,5 +30,6 @@
 | Review 一次改动 | [Review 指引](development/review.md)说明方法；具体请求与结论写在[协作文档](collaboration.md) |
 | 在游戏里验证 | [实机清单](development/smoke-test.md) |
 | 查 API 来源 | [上游资料索引](../.agents/skills/sts2-heavysilent-dev/references/sources.md) |
+| 按参考牌查找原版实现 | [原版效果与接入参考](../.agents/skills/sts2-heavysilent-dev/references/vanilla-effects.md)：已核对类型、Command／Hook 和需要保留的差异 |
 
 每份技术参考的“核验基线”指向具体版本。发现网上文档与本机代码不同，先核对版本，再修改实现与说明。

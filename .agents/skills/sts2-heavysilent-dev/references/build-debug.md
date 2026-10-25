@@ -109,6 +109,7 @@ OpenAI Docs MCP 可辅助查询 Codex 配置；GitHub 工具在需要 PR／Issue
 ## 查询一个不确定的 API
 
 先读本项目类似内容，再读原版同类效果及其调用的 Command／Hook。不要只凭方法名判断它是否触发抽牌、弃牌或保存流程。
+策划给出中文参考牌名时，先从本机中文本地化定位 ID，再沿对应类型核对调用链；已查证的入口见[原版效果参考](vanilla-effects.md)，原版足以表达效果时直接复用。
 本机 `ilspycmd --version` 为 10.0.1.8346；以下 PowerShell 命令已实际读取当前基线的 `StrikeSilent`：
 
 ```powershell

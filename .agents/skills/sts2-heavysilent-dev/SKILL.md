@@ -7,7 +7,7 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 
 服务于这个仓库的 STS2 角色模组。人类给出策划与 Review，Agent 完成程序实现、验证和解释。
 模组源码集中在 `mod/`，包含独立构建所需配置和入口；本 Skill、设计文档、开发脚本及测试工具属于脚手架，只能由外层调用源码构建入口。文件边界见下方工程结构。
-优先复用本机目标版本的游戏接口与 BaseLib；网上示例需要核对签名和行为。
+优先复用本机原版卡牌和 Command／Hook／Power／附魔；不确定时追查实际代码及本地化，不能凭牌名猜行为。原版机制缺失或不能满足明确设计时才添加本项目实现，并说明差异；注册等扩展使用既有 BaseLib，不为已有能力引入新的外部代码。网上示例需要核对签名和行为。
 首次接手且没有会话上下文时，先看[首次接手指南](references/first-session.md)，再按本次任务读取下表中的正文。
 
 ## 按任务读取
@@ -17,6 +17,7 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 | 接手新回答、未解决问题与人类 Review | [协作任务与 Q&A](../../../docs/collaboration.md)；[Review 方法](../../../docs/development/review.md) |
 | 理解代码结构、注册与资源归属 | [工程结构](references/architecture.md) |
 | 解释代码、检查命令与生命周期 | [API 与教学](references/api-primer.md) |
+| 查原版参考牌、调用链与可复用边界 | [原版效果参考](references/vanilla-effects.md) |
 | 增加卡牌、遗物、药水或事件 | [内容填充](references/content-authoring.md) |
 | 特殊机制、术语解释与共用规则 | [特殊机制设计](../../../docs/design/mechanics.md) |
 | 初始卡组、角色卡牌、状态牌、诅咒牌与特殊来源卡牌 | [卡牌设计](../../../docs/design/cards.md) |
@@ -33,7 +34,7 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 - 将已有命令组合与新增机制分开。未在 CLI 解决的问题集中登记到[协作页](../../../docs/collaboration.md)，不限于玩法；设计条目只留编号链接。只追问影响当前工作的事项，其他工作继续推进。
 - 接手时检查协作页的新回答和当前对话，已有明确答案直接记录来源并处理；技术事实先自行查证。确认后的玩法写回设计，工程约定写回技术参考，再同步协作状态和人类看板，不以测试通过代替人类 Review。
 - 保持卡牌效果顺序可读，使用游戏 Command、玩家选择上下文和游戏 RNG。
-- 新机制先核对原版类似实现；必要补丁单独说明目标方法和版本。
+- 新机制先核对原版类似实现及其底层调用，区分可直接复用的操作与本项目真正缺少的规则；必要补丁单独说明目标方法、版本与现有入口不足之处。原版参考与明确设计有差异时，记录差异并保留人类答案，不静默改玩法。
 - 教学解释连接策划语句、源码和可观察行为，不只描述语法。
 
 ## 交付与维护
