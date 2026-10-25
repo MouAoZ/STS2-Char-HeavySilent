@@ -4,12 +4,13 @@
 
 本入口及 Issue／PR 记录统一在主工作目录 main 维护并纳入 Git。Agent 新建请求、接收评论或更新状态时直接同步此处和 README 人类看板，不必等实现分支合入；人类无需切换分支找 PR。worktree 中的副本可能滞后，以这里为准；同步方式见[执行流程](../development/workflow.md)。
 
-采用 GitHub 的 [Issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/quickstart)、[sub-issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues)、[PR](https://docs.github.com/en/pull-requests/reference/pull-requests) 和 [Review](https://docs.github.com/en/pull-requests/reference/pull-request-reviews) 术语。Issue、sub-issue 和 PR 共用一条递增整数序列；当前最后使用 **local #57**，下一个为 **local #58**。
+采用 GitHub 的 [Issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/learning-about-issues/quickstart)、[sub-issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-sub-issues)、[PR](https://docs.github.com/en/pull-requests/reference/pull-requests) 和 [Review](https://docs.github.com/en/pull-requests/reference/pull-request-reviews) 术语。Issue、sub-issue 和 PR 共用一条递增整数序列；当前最后使用 **local #58**，下一个为 **local #59**。
 
 ## Issues
 
 | Number | Title | State | Assignees |
 | --- | --- | --- | --- |
+| [local #58](issues/58.md) | 替代支付在插入效果后失败 | Open | 人类 |
 | [local #56](issues/56.md) | 完整实现现有设计范围 | Open | Agent |
 | [local #54](issues/54.md) | 评审模组源码与脚手架边界 | Open | 人类 |
 
