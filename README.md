@@ -35,7 +35,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 | 磨顶／征召 | **2项机制已接入** | 共享结算、计数、支付及双语悬停提示；见[机制条目](docs/design/mechanics.md#术语与实现状态) |
 | 遗物 | **4件遗物代码已落地** | 初始砥石、升级玉砥、息壶和护息符；见[遗物条目](docs/design/relics-events-potions.md#遗物) |
 | 美术与其他内容 | 未完成／未定范围 | 正式角色与卡图仍缺；药水、事件尚无具体设计，不计入内容分母 |
-| 发布验收 | 未开展 | 完整奖励池、爬塔、平衡、联机与 Steam Workshop 发布 |
+| 发布验收 | 未开展 | 全部奖励交互组合、完整爬塔、平衡、联机与 Steam Workshop 发布 |
 
 卡牌按不同设计计数，升级、起始重复张数及微调的界面选项不另计；内容落地数量不是整个项目的完成率。详细状态以[设计到实现跟踪](docs/design/implementation-tracker.md)为准，构建、实机和未测范围分别记录在[项目状态](docs/development/status.md)。
 
@@ -45,7 +45,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
-| 暂无；Agent 正在推进 [local #56](docs/collaboration/issues/56.md) | [local #54 · 评审模组源码与脚手架边界](docs/collaboration/issues/54.md) | **T01 · 共用规则确认**完成；55个设计 Issue 已关闭；[local PR #55](docs/collaboration/pull-requests/55.md) 已合入，见[Archive](docs/collaboration/archive.md) |
+| 暂无；完整设计交付见 [local #56](docs/collaboration/issues/56.md) | 以主目录 main 的[协作入口](docs/collaboration/README.md)为准；既有[local #54](docs/collaboration/issues/54.md)保留 | **T01 · 共用规则确认**完成；设计决定和本次实现分别记录；[local PR #55](docs/collaboration/pull-requests/55.md) 已合入，见[Archive](docs/collaboration/archive.md) |
 
 设计问题关闭表示规则已明确；实现完成和人类 Review 结论分别记录。没有收到回答只影响依赖该答案的任务。
 
@@ -55,7 +55,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 | 待办 | 进行中 | 已完成 |
 | --- | --- | --- |
-| **T06 · 正式资源与内容定稿**：命名、双语文案、角色／卡牌／遗物美术、起始数值；药水和事件待有设计后再建条目 | [local #56](docs/collaboration/issues/56.md)：T02–T05 的全范围验证、记录与唯一 local PR 交付 | **T02 · 共用实现**：磨顶／征召、计数、术语显示及替代支付 |
+| **T06 · 正式资源与内容定稿**：命名、双语文案、角色／卡牌／遗物美术、起始数值；药水和事件待有设计后再建条目 | — | **T02 · 共用实现**：磨顶／征召、计数、术语显示及替代支付；本轮目标见[local #56](docs/collaboration/issues/56.md) |
 | **T07 · 发布验收**：完整奖励池交互、爬塔和平衡、联机、兼容与 Workshop 发布 | — | **T03 · 起始内容代码**：凝息、偏锋、砥石及正式套牌配置 |
 | — | — | **T04 · 卡池代码**：70张攻击／技能／能力牌、双语文本与奖励效果 |
 | — | — | **T05 · 遗物与先古代码**：4件遗物、2张先古卡、原版获取映射及永久改牌 |

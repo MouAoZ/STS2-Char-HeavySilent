@@ -262,7 +262,7 @@ public static partial class McpMod
             // wasPicked is a field; explicitly project it because the HTTP serializer
             // serializes properties only (unlike the game's save serializer).
             card_choice_history = player.RunState.CurrentMapPointHistoryEntry?.GetEntry(player.NetId).CardChoices
-                .Select(entry => new { card = entry.Card.ToSerializable(), was_picked = entry.wasPicked }).ToArray()
+                .Select(entry => new { card = entry.Card, was_picked = entry.wasPicked }).ToArray()
         };
     }
 
