@@ -5,21 +5,21 @@
 - **Author:** Agent
 - **Reviewers:** 人类
 - **Base:** 目标分支及提交
-- **Head:** 工作分支；当前提交用 `git rev-parse <branch>` 查询，交付消息及 Review 注明实际提交号
+- **Head:** 工作分支及本次交付的固定提交号；修订后同步 main 中此记录
 - **Worktree:** 相对主工作目录的任务路径
 - **Linked issues:** Issue 链接
 
 ## Description
 
-解决的问题、具体行为变化和关键实现。
+本批次可体验的成果、试玩方法与需要人类判断的问题。关键实现供按需深入阅读。
 
 ## Files changed
 
-`git diff <base>...<head>`，以及需要重点阅读的文件链接。
+`git diff <base>...<head>`。待合入文件用 `<head>:<path>` 和 `git show <head>:<path>` 定位，避免链接到 main 尚不存在的文件或临时 worktree。
 
 ## Checks
 
-已运行的检查、结果与证据；注明未测范围。
+主 Agent 技术 Review 结论、已运行检查及证据；注明未测范围。
 
 ## Timeline
 

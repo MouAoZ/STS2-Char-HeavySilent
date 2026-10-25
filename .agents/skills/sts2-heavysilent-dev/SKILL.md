@@ -5,7 +5,7 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 
 # HeavySilent 开发
 
-遵守仓库 [AGENTS.md](../../../AGENTS.md)。首次接手读[接手指南](references/first-session.md)；开始修改或续做目标读[执行流程](../../../docs/development/workflow.md)，其中维护 worktree、按需委派、验证与 local PR 的项目约定。
+遵守仓库 [AGENTS.md](../../../AGENTS.md)。首次接手读[接手指南](references/first-session.md)；开始修改或续做目标读[执行流程](../../../docs/development/workflow.md)，其中维护 worktree／直接 main、按需委派、技术验收与功能批次 PR 的约定。
 
 只加载当前任务需要的资料。玩法与逐项状态以[设计正文](../../../docs/design/README.md)为准，技术参考不另存玩法或进度副本。
 
@@ -14,7 +14,7 @@ description: Implement or review HeavySilent mod content, shared mechanics, buil
 | 当前任务 | 参考 |
 | --- | --- |
 | 领取设计条目、更新进度 | [设计跟踪](../../../docs/design/implementation-tracker.md)；[项目状态](../../../docs/development/status.md) |
-| 接手问题、评论与 Review | [local Issues / Pull requests](../../../docs/collaboration/README.md)；[Review 指引](../../../docs/development/review.md) |
+| 接手问题、评论与 Review | 主工作目录 main 的 [local Issues / Pull requests](../../../docs/collaboration/README.md)；[Review 指引](../../../docs/development/review.md) |
 | 定位源码、注册与资源 | [工程结构](references/architecture.md) |
 | 理解调用链、向人类解释代码 | [API 与教学](references/api-primer.md)；[教学样例](../../../docs/design/teaching-samples.md) |
 | 查原版效果与可复用边界 | [原版效果参考](references/vanilla-effects.md) |
