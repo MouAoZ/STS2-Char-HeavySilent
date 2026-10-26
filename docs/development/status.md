@@ -10,6 +10,21 @@
 
 ## 验证记录
 
+### 人类试玩日志修订（2026-10-26）
+
+人类试玩会话 `20261026T030041Z-8d6f18` 已正常结束，个人第1、2档哈希一致。本次没有本地化格式错误或模组业务异常；日志中的诊断逐类调查，修订继续交付同一 [local PR #59](../collaboration/pull-requests/59.md)。
+
+| 诊断 | 处理与证据 |
+| --- | --- |
+| `Packet writer is growing` | 本机原版 `PacketWriter.ResizeBufferIfNecessary` 倍增并复制缓冲区；单机 `CombatReplayWriter`／`ChecksumTracker` 也使用它。64→128 KiB 提示与战斗结束写回放的时序吻合，无相伴写入失败或校验分歧；未禁用回放或屏蔽 WARN |
+| 模组 `text_energy.png` 缓存遗漏 | `HeavySilentCharacter.ExtraAssetPaths` 纳入文字能量图标，沿原版整局资源生命周期保留。会话 `20261026T032058Z-8627ed`／任务 `032149-0c1353` 中，进入战斗及保存退出续玩后的焚息原始卡面均正常，图标缓存遗漏与本地化错误均为0。自动开局途中遇到先古奖励，读取现场后通过正常 UI 继续；难度沿用测试档 A6，不冒充 A0 |
+| 测试桥退出遗漏清理 | `/hs/quit` 改为延迟调用原版 `NGame.Quit`，并在请求和主线程检查第3档。退出后恢复 `target_display` 等五项显示／语言设置。最终会话 `20261026T033007Z-f9ff83` 第395行确认原版退出执行，设置恢复与个人档哈希核对通过 |
+| `Invalid Task ID` | 首次 Common 异步预加载的脚本加载栈，最后会话第381、383行再次出现，随后主菜单完成加载；根因未定，保持 [local #60](../collaboration/issues/60.md) Open |
+| 退出 RID／resources 残留 | 详细日志对照 `20261026T032618Z-ec207a`（Explorer开）与 `20261026T032739Z-bdc144`（关）都正常调用 `NGame.Quit`，均1080 CanvasItem、66 resources。原版两类预热池各30个节点组，按场景逐类核对为30×(34+2)=1080；65条资源属于原版卡面依赖闭包，另1条是原版摘出树的WorldEnvironment资源。未在角色模组添加全局清池补丁；Explorer开额外3个Image及所有RenderingServer RID未逐个归因，仍保留 #60 边界 |
+| 其他提示 | 原版资源的 `Asset not cached` 为同步加载后的缓存遗漏，尚未确认需要角色模组修补；D3D12 PSO caching 为后端能力提示；GodotExplorer最低版本缺项为其manifest元数据。保留日志，不修改第三方文件或渲染设置来隐藏提示 |
+
+Debug模组与测试桥构建、打包、资源挂载和25项无游戏测试通过；独立源码边界未改变。退出保护有源码第二视角Review；未通过切换真实个人档试验拒绝分支。修复包与测试桥均已部署。四轮修订验证会话全部关闭，设置及个人第1、2档哈希检查通过，GodotExplorer临时禁用已恢复。原版退出仍有资源残留，不能将正常清理入口的修复描述为整个环境零错误。
+
 ### 完整设计实现（2026-10-26）
 
 任务 `agent/complete-design`／[local #56](../collaboration/issues/56.md) 完成目标开始时全部80项待实现内容：74张新卡、4件遗物、2项机制，并接入正式起始套牌、先古映射、双语提示及永久改牌。当前83条设计项均已实现；77张设计牌之外的2个隐藏微调选项不计入设计分母。交付仍按一个 goal 一个 local PR，主目录 main 的[协作入口](../collaboration/README.md)维护实际评审与整合状态。

@@ -26,7 +26,7 @@
 | `test -TaskFile <task.json>` | 启动并登记本次改动的测试任务，随后由 Agent 决定如何操作和调查 |
 | `test -Suite smoke` | 1 轮：选角开局、升级保存续玩、三张基础牌、当前语言文本与截图、结束回合 |
 | `test -Suite regression` | 同一种子重复 2 轮；每轮增加升级牌、抽牌边界、力量／敏捷／虚弱／敌人格挡，共 38 项 |
-| `test-stop` | 退出受管局和游戏，恢复原档位选择与显示／语言设置，核对第 1、2 档哈希 |
+| `test-stop` | 通过原版 `NGame.Quit` 退出受管局和游戏，恢复原档位选择与显示／语言设置，核对第 1、2 档哈希 |
 
 无游戏脚本测试：`python -m unittest discover -s tests -v`。脚本测试、编译与实机测试是不同证据。
 
@@ -138,13 +138,15 @@ print(state["profile"], state["in_combat"])
 
 ## 保存隔离与测试边界
 
-首次只接受空的 `modded/profile3`；以后通过本机 `profile3-owner.json` 识别本项目登记的测试档。已有未登记数据时停止，不自行覆盖。该档只用于测试，`start_combat(fresh=true)` 或固定回归会放弃这个档的上一局，并调用游戏自身的 `unlock all` 准备解锁环境，避免强制时间线阻止新局。新局难度保持 A0。
+首次只接受空的 `modded/profile3`；以后通过本机 `profile3-owner.json` 识别本项目登记的测试档。已有未登记数据时停止，不自行覆盖。该档只用于测试，`start_combat(fresh=true)` 或固定回归会放弃这个档的上一局，并调用游戏自身的 `unlock all` 准备解锁环境，避免强制时间线阻止新局。新局沿用测试档的选角难度；人类试玩后可能不是历史验收的 A0，必须读取 `ui.run.ascension`，需要特定难度时先在选角界面设置。开局先古若给出额外奖励，自动入口可能停在奖励界面；读取现场后通过正常 UI 继续，不要重复开局。
 
 游戏的 Steam 云同步会覆盖启动前写入的档位选择，因此桥在 `NGame` 初始化档位之前使用游戏公开的 `SaveManager.MockInstanceForTesting(new SaveManager(localStore))` 注入 `GodotFileIo` 本地后端。序列化、迁移、异步磁盘写入仍走原版；受管进程不进行游戏云存档读写。此设置只存在于该进程，不修改 Steam 全局云开关。
 
 启动前记录并备份原版与 modded 第 1、2 档全部文件，结束时在同一范围比较文件清单和 SHA256。备份位于当前报告目录 `personal-saves-before.zip`。原档位选择器另存字节备份并恢复；个人存档不会被测试脚本自动还原覆盖，出现真实不一致时保留证据并报错。旧会话缺少新检查范围时按启动时的范围验证，不能把未纳入基线的文件误报为新增。
 
 桥只监听 localhost 15526，要求随机会话令牌；无测试环境变量时不启动服务、不替换存档后端。会话检查 PID 和部署 DLL 哈希；写操作限定第 3 档，禁用上游档位管理和多人 API。它不是公网服务，不应转发端口。
+
+受管退出先回到主菜单，再延迟调用原版 `NGame.Quit`，执行设置／测试档保存、文本段落与字体缓存清理；不能用 `SceneTree.Quit` 代替。该操作也必须处于第3档，并在主线程再次检查。进程退出后恢复语言、窗口模式、大小、位置和显示器编号 `target_display`，再恢复原档位选择并核对个人档。手动试玩期间保持第3档，不通过原版菜单切换个人档。
 
 `HeavySilentTestBridge` 是单独的开发模组，位于游戏 `mods/HeavySilentTestBridge`；正式 `artifacts/package/HeavySilent` 只包含本角色。平时启动游戏即使桥被启用也不提供控制能力。不要把测试桥发布给玩家作为前置。
 

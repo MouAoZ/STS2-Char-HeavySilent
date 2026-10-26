@@ -61,8 +61,8 @@ public static partial class McpMod
             SendError(response, 403, "The managed bridge permits singleplayer actions only; profile management is disabled.");
             return false;
         }
-        // Profile transitions are guarded separately. Never allow upstream profile deletion.
-        if (request.HttpMethod == "POST" && path != "/hs/quit" && HsProfile != 3)
+        // Every managed mutation, including normal exit, stays on the test profile.
+        if (request.HttpMethod == "POST" && HsProfile != 3)
         {
             SendError(response, 409, "Switch to the registered test profile 3 before performing actions.");
             return false;
@@ -158,8 +158,12 @@ public static partial class McpMod
                 await (NGame.Instance ?? throw new InvalidOperationException("Game unavailable.")).ReturnToMainMenu();
                 return HsSnapshot();
             case "/hs/quit":
+                if (HsProfile != 3) throw new InvalidOperationException("Refusing to save and quit a personal profile.");
                 if (RunManager.Instance.IsInProgress) throw new InvalidOperationException("Return to menu before closing the test session.");
-                ((SceneTree)Engine.GetMainLoop()).CallDeferred(SceneTree.MethodName.Quit);
+                // Match the game's normal exit: save profile/settings and dispose the
+                // shared text/font caches before quitting the scene tree.
+                (NGame.Instance ?? throw new InvalidOperationException("Game unavailable."))
+                    .CallDeferred(NGame.MethodName.Quit);
                 return new { status = "quitting" };
             default: throw new ArgumentException($"Unknown test route: {path}");
         }

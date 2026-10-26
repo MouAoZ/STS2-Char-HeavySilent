@@ -193,7 +193,7 @@ def stop():
         selector.unlink()
     # Restore only settings that the visible test launch can change.
     current = read_json(account / "settings.save")
-    for key in ("language", "fullscreen", "window_position", "window_size"):
+    for key in ("language", "fullscreen", "window_position", "window_size", "target_display"):
         if key in data["original_settings"]:
             current[key] = data["original_settings"][key]
     write_json(account / "settings.save", current)

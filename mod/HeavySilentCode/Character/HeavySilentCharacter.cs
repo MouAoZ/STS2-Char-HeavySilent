@@ -34,4 +34,9 @@ public sealed class HeavySilentCharacter : PlaceholderCharacterModel
     public override CardPoolModel CardPool => ModelDb.CardPool<HeavySilentCardPool>();
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<HeavySilentRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<HeavySilentPotionPool>();
+
+    // 原版只收集卡池的大能量图标；正文中的能量图标也要随角色整局保留。
+    // 交给原版资源生命周期管理，避免每次切换房间后再次按需加载。
+    protected override IEnumerable<string> ExtraAssetPaths =>
+        base.ExtraAssetPaths.Append(ModelDb.CardPool<HeavySilentCardPool>().TextEnergyIconPath);
 }
