@@ -45,13 +45,15 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
-| 暂无；完整设计交付见 [local #56](docs/collaboration/issues/56.md) | 以主目录 main 的[协作入口](docs/collaboration/README.md)为准；既有[local #54](docs/collaboration/issues/54.md)保留 | **T01 · 共用规则确认**完成；设计决定和本次实现分别记录；[local PR #55](docs/collaboration/pull-requests/55.md) 已合入，见[Archive](docs/collaboration/archive.md) |
+| 暂无 | **[local PR #59 · 完整实现83条设计](docs/collaboration/pull-requests/59.md)**，最新head以主目录main记录为准；既有[local #54 · 源码边界评审](docs/collaboration/issues/54.md)保留 | [local #56](docs/collaboration/issues/56.md)完整目标已交付，代码待Review合入；55个设计问题已关闭；[local PR #55](docs/collaboration/pull-requests/55.md)已合入 |
 
 设计问题关闭表示规则已明确；实现完成和人类 Review 结论分别记录。没有收到回答只影响依赖该答案的任务。
 
 ## 开发看板
 
 待办按建议依赖顺序排列；“待确认”是阻塞原因，不等于正在开发。实际开工后才移入进行中，任务完成须写回设计条目和验证证据。
+
+T02–T05 已在 `agent/complete-design` 完成并交付[local PR #59](docs/collaboration/pull-requests/59.md)，等待整个goal Review。下表表示本交付分支的实现状态；main的整合状态以主目录协作记录为准。试玩后剩余的引擎诊断见[local #60](docs/collaboration/issues/60.md)。
 
 | 待办 | 进行中 | 已完成 |
 | --- | --- | --- |
