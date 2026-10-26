@@ -45,7 +45,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
-| 暂无 | **[local PR #59 · 完整实现83条设计](docs/collaboration/pull-requests/59.md)**，head `7f484fe`；既有[local #54 · 源码边界评审](docs/collaboration/issues/54.md)保留 | [local #56](docs/collaboration/issues/56.md)完整目标已交付，代码待Review合入；55个设计问题已关闭；[local PR #55](docs/collaboration/pull-requests/55.md)已合入 |
+| 暂无 | **[local PR #59 · 完整实现83条设计](docs/collaboration/pull-requests/59.md)**，修订head `8021d2c`；既有[local #54 · 源码边界评审](docs/collaboration/issues/54.md)保留 | [local #56](docs/collaboration/issues/56.md)完整目标已交付，代码待Review合入；已修复试玩中的图标预加载与测试退出问题，剩余引擎诊断由Agent跟踪[local #60](docs/collaboration/issues/60.md)；[local PR #55](docs/collaboration/pull-requests/55.md)已合入 |
 
 设计问题关闭表示规则已明确；实现完成和人类 Review 结论分别记录。没有收到回答只影响依赖该答案的任务。
 
