@@ -45,7 +45,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 | 待回答 | 待 Review | 已处理 |
 | --- | --- | --- |
-| 暂无 | **[local PR #59 · 完整实现83条设计](docs/collaboration/pull-requests/59.md)**，修订head `8021d2c`；既有[local #54 · 源码边界评审](docs/collaboration/issues/54.md)保留 | [local #56](docs/collaboration/issues/56.md)完整目标已交付，代码待Review合入；已修复试玩中的图标预加载与测试退出问题，剩余引擎诊断由Agent跟踪[local #60](docs/collaboration/issues/60.md)；[local PR #55](docs/collaboration/pull-requests/55.md)已合入 |
+| 暂无 | 既有[local #54 · 源码边界评审](docs/collaboration/issues/54.md)保留；暂无待评审PR | **[local PR #59 · 完整实现83条设计](docs/collaboration/pull-requests/59.md)** 已获批并合入，合并提交 `ec3a157`，Release试玩包已生成；剩余受管环境诊断[local #60](docs/collaboration/issues/60.md)按人类反馈暂缓；[local PR #55](docs/collaboration/pull-requests/55.md)已合入 |
 
 设计问题关闭表示规则已明确；实现完成和人类 Review 结论分别记录。没有收到回答只影响依赖该答案的任务。
 
@@ -53,7 +53,7 @@ Copy-Item .\mod\local.props.example .\mod\local.props
 
 待办按建议依赖顺序排列；“待确认”是阻塞原因，不等于正在开发。实际开工后才移入进行中，任务完成须写回设计条目和验证证据。
 
-T02–T05 已在 `agent/complete-design` 完成并交付[local PR #59](docs/collaboration/pull-requests/59.md)，等待整个goal Review。下表表示本交付分支的实现状态；main的整合状态以主目录协作记录为准。试玩后剩余的引擎诊断见[local #60](docs/collaboration/issues/60.md)。
+T02–T05 已通过[local PR #59](docs/collaboration/pull-requests/59.md)整体Review并合入main。下表表示当前已整合的实现状态；设计师Release试玩包及验证信息见[项目状态](docs/development/status.md)。试玩后剩余的受管环境诊断见[local #60](docs/collaboration/issues/60.md)，目前暂缓。
 
 | 待办 | 进行中 | 已完成 |
 | --- | --- | --- |

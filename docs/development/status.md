@@ -10,6 +10,16 @@
 
 ## 验证记录
 
+### PR #59整合与设计师试玩包（2026-10-26）
+
+人类批准head `8021d2c`，已在main合并为 `ec3a157`。合并准备只同步协作记录与README看板；玩法、构建源码、工具及技术参考保持获批内容。任务分支／worktree已经清理，实机记录保留在 `artifacts/game-tests/`，额外诊断缓存、原Debug包与日志保留在 `artifacts/review-evidence/pr59/`。
+
+从main生成 `artifacts/releases/HeavySilent-0.1.0-playtest-20261026-8021d2c.zip`：Release DLL、PCK、manifest、第三方许可、中文安装／试玩说明和不含本机路径的构建信息。未包含测试桥、MCP、BaseLib或原版程序集。基线为Windows public-beta v0.111.0／Steam build 24724944、BaseLib 3.4.7。
+
+Release编译0错误、4条CS8602可空诊断（4张技能的OnPlay访问CombatState），未修改已获批行为；静态检查、PCK清单／哈希与引擎实际加载5纹理、6文本表通过。ZIP共6个条目，CRC与逐文件SHA256比对通过，文件大小111845字节，包SHA256为 `217d3577bb89f0b5b3a2e552699c1774b738d4215659fa1da78ef5fbbff2d1f3`。本次未另启游戏，玩法实机证据沿用同源码的前述Debug测试，不宣称独立Release包已做完整爬塔。
+
+用户反馈普通Steam启动未观察到受管环境的error。#60据此保留环境差异线索并暂缓，不把原版资源路径当作已排除MCP／测试工具影响的证明。
+
 ### 人类试玩日志修订（2026-10-26）
 
 人类试玩会话 `20261026T030041Z-8d6f18` 已正常结束，个人第1、2档哈希一致。本次没有本地化格式错误或模组业务异常；日志中的诊断逐类调查，修订继续交付同一 [local PR #59](../collaboration/pull-requests/59.md)。

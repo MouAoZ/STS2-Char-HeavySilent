@@ -11,17 +11,17 @@
 | Number | Title | State | Assignees |
 | --- | --- | --- | --- |
 | [local #54](issues/54.md) | 评审模组源码与脚手架边界 | Open | 人类 |
-| [local #60](issues/60.md) | 跟踪启动加载错误与退出资源残留 | Open | Agent |
+| [local #60](issues/60.md) | 跟踪启动加载错误与退出资源残留（按人类反馈暂缓） | Open | Agent |
 
 ## Pull requests
 
 | Number | Title | State | Reviewers |
 | --- | --- | --- | --- |
-| [local #59](pull-requests/59.md) | 完整实现现有83条设计内容 | Open | 人类 |
+| — | 暂无待评审PR | — | — |
 
 ## Archive
 
-56个 Closed Issue，1个 Merged PR。完整记录见[归档索引](archive.md)。
+56个 Closed Issue，2个 Merged PR。完整记录见[归档索引](archive.md)。
 
 ## 参与讨论
 

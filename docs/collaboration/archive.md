@@ -1,6 +1,6 @@
 # local Issue / PR Archive
 
-已关闭的记录保留在各自文件中；本页作为归档索引。当前56个 Issue 为 Closed (Completed)，其中9个已关闭父 Issue、47个 sub-issue；1个 PR 为 Merged。
+已关闭的记录保留在各自文件中；本页作为归档索引。当前56个 Issue 为 Closed (Completed)，其中9个已关闭父 Issue、47个 sub-issue；2个 PR 为 Merged。
 
 [Open Issues / Pull requests](README.md)
 
@@ -63,3 +63,4 @@
 | [local #56](issues/56.md) | 完整实现现有设计范围 | Closed (Completed) | — |
 | [local #57](issues/57.md) | 磨顶插入效果改变剩余牌堆的边界 | Closed (Completed) | [local #56](issues/56.md) |
 | [local #58](issues/58.md) | 替代支付在插入效果后失败 | Closed (Completed) | [local #56](issues/56.md) |
+| [local #59](pull-requests/59.md) | 完整实现现有83条设计内容 | Merged | — |
