@@ -90,6 +90,13 @@ PCK 在 `mod/.cache` 下的独立资源工程导出，避免 Godot 再次发布�
 游戏日志通常在 `%APPDATA%/SlayTheSpire2/logs/godot.log`。控制台 `open logs` 可定位，BaseLib 的 `showlog` 可显示日志窗口。
 控制台命令参数用当前版本 `help` 确认。断点调试可让 Rider／支持 .NET 的调试器附加游戏进程，PDB 应与当前 DLL 一起部署。
 
+当前基线的常见诊断要按来源处理，不能把 WARN 全部屏蔽，也不能把构建通过当成运行时零错误：
+
+- `Packet writer is growing`：原版 `PacketWriter` 空间不足时倍增缓冲区并复制原内容。单机也保存战斗回放与状态校验，64→128 KiB 本身不是写入失败；结合是否出现校验分歧、写入异常及异常增长判断。
+- `Asset not cached`：原版 `AssetCache` 转为同步按需加载后记录的缓存遗漏，不等同于资源文件不存在。角色专用资源应通过 `CharacterModel.ExtraAssetPaths` 纳入整局预加载；HeavySilent 的正文能量图标使用此入口。原版资源遗漏须另查调用者，不能批量预载所有资源来隐藏提示。
+- `Invalid Task ID`：引擎等待加载任务时的错误；保留前后加载路径和C#栈。偶发且单次未复现不能标记修复。`--verbose` 可提供资源路径，但其退出孤儿节点诊断还会追加 `Cannot get path of node as it is not in a scene tree`，需与游戏进行中的错误区分。
+- 退出时 RID／resources 残留：先确认调用了原版 `NGame.Quit`，再用详细日志与受控环境对比。原版退出也可能留有资源，不能仅凭路径或禁用某模组后的一次结果断言全部根因。D3D12 的 PSO caching 提示是驱动后端能力提示；不为消除日志而擅改用户渲染后端。GodotExplorer 缺少最低版本声明属于它的 manifest 元数据，不修改其文件冒充兼容验证。
+
 ## 游戏更新后
 
 1. Steam 完成 public-beta 更新，再运行 `doctor -CheckLatest`。在线镜像不可用时使用 Steam 客户端确认，不把网络失败当作“没有新版本”。
@@ -127,4 +134,4 @@ ilspycmd -t MegaCrit.Sts2.Core.Models.Cards.StrikeSilent $gameAssembly > .cache/
 
 自动构建、资源验证不能证明玩家实际交互正确。实机步骤见[清单](../../../../docs/development/smoke-test.md)，结果写入[状态](../../../../docs/development/status.md)。
 回退本模组时，在游戏关闭状态部署先前已验证的包，或在游戏模组设置中禁用 HeavySilent；无需恢复或修改原版 DLL。
-发布到 Workshop 不是本次初始化内容，未来使用 Mega Crit 的官方上传工具并单独整理发布信息。
+Workshop 发布尚未开展；发布时使用 Mega Crit 的官方上传工具并单独整理发布信息。

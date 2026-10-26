@@ -61,8 +61,8 @@ public static partial class McpMod
             SendError(response, 403, "The managed bridge permits singleplayer actions only; profile management is disabled.");
             return false;
         }
-        // Profile transitions are guarded separately. Never allow upstream profile deletion.
-        if (request.HttpMethod == "POST" && path != "/hs/quit" && HsProfile != 3)
+        // Every managed mutation, including normal exit, stays on the test profile.
+        if (request.HttpMethod == "POST" && HsProfile != 3)
         {
             SendError(response, 409, "Switch to the registered test profile 3 before performing actions.");
             return false;
@@ -106,6 +106,7 @@ public static partial class McpMod
                     heavy_silent_sha256 = AssemblyHash("HeavySilent")
                 };
             case "/hs/state": return HsSnapshot();
+            case "/hs/content": return await HsContentDispatch(args);
             case "/hs/catalog":
                 string kind = args.GetProperty("kind").GetString()!;
                 string query = args.TryGetProperty("query", out var q) ? q.GetString() ?? "" : "";
@@ -150,14 +151,19 @@ public static partial class McpMod
                 }
                 return new { status = "ok" };
             case "/hs/save-quit":
+                if (HsContentBusy) throw new InvalidOperationException("Finish the pending content selection before saving.");
                 if (!RunManager.Instance.IsInProgress) throw new InvalidOperationException("No active run to save and quit.");
                 // Preserve the game's room-entry checkpoint. Never serialize a fake mid-combat checkpoint.
                 if (SaveManager.Instance.CurrentRunSaveTask is { } saveTask) await saveTask;
                 await (NGame.Instance ?? throw new InvalidOperationException("Game unavailable.")).ReturnToMainMenu();
                 return HsSnapshot();
             case "/hs/quit":
+                if (HsProfile != 3) throw new InvalidOperationException("Refusing to save and quit a personal profile.");
                 if (RunManager.Instance.IsInProgress) throw new InvalidOperationException("Return to menu before closing the test session.");
-                ((SceneTree)Engine.GetMainLoop()).CallDeferred(SceneTree.MethodName.Quit);
+                // Match the game's normal exit: save profile/settings and dispose the
+                // shared text/font caches before quitting the scene tree.
+                (NGame.Instance ?? throw new InvalidOperationException("Game unavailable."))
+                    .CallDeferred(NGame.MethodName.Quit);
                 return new { status = "quitting" };
             default: throw new ArgumentException($"Unknown test route: {path}");
         }
@@ -171,6 +177,7 @@ public static partial class McpMod
 
     private static bool HsBusy()
     {
+        if (HsContentBusy) return true;
         if (_hsPreparing) return true;
         if (NGame.Instance?.Transition?.InTransition == true) return true;
         if (!RunManager.Instance.IsInProgress) return false;

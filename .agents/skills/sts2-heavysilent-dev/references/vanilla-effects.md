@@ -1,6 +1,6 @@
 # 原版效果与接入参考
 
-核对日期：2026-10-26。依据本机 `v0.111.0`／public-beta 程序集，SHA-256 与[版本基线](../../../../docs/development/baseline.json)一致；BaseLib 为既有依赖 3.4.7。本页记录代码入口与复用边界，玩法定义仍以[设计正文](../../../../docs/design/README.md)为准，回答及未解决差异见[协作页](../../../../docs/collaboration/README.md)。这次是代码阅读与资源核对，未将这些效果实现或实机验收为本模组内容。
+核对日期：2026-10-26。依据本机 `v0.111.0`／public-beta、Steam build `24724944`，程序集指纹见[版本基线](../../../../docs/development/baseline.json)；BaseLib 为3.4.7。本页记录已接入内容的原版入口、共用封装和补丁边界。玩法以[设计正文](../../../../docs/design/README.md)为准，实际验证与未测范围见[项目状态](../../../../docs/development/status.md)，代码对照本身不代表实机验收。
 
 ## 查找与复用顺序
 
@@ -46,12 +46,25 @@
 | 特殊初始牌替换 | `Orobas` → `Models.Relics.ArchaicTooth`：从永久 Deck 找映射牌，转化时保留升级及已有附魔 | 初始牌实现 `BaseLib.Abstracts.ITranscendenceCard.GetTranscendenceTransformedCard()` |
 | 达弗专属先古卡 | `Models.Events.Darv` → `Models.Relics.DustyTome`：选择职业先古卡，升级后加入永久 Deck | 先古卡实现 `BaseLib.Abstracts.ITomeCard`，`TomeCharacter` 指向本角色 |
 
-三条路径已核对对应 BaseLib 补丁：`StarterUpgradePatches`、`ArchaicToothTranscendenceUpgradesPatch`、`DustyTomePatch`。这些扩展只接入原版流程，不需要再写一套先古事件或存档系统。原版 `SavedProperty`、`SerializableCard` 与永久 Deck 保存负责跨房间／保存续玩；角色具体替换哪张初始牌仍由设计明确。
+三条路径分别接入砥石→玉砥、偏锋→合流、易脉+，对应 BaseLib 的 `StarterUpgradePatches`、`ArchaicToothTranscendenceUpgradesPatch`、`DustyTomePatch`。获取及永久 Deck 保存仍走原版流程，不另建先古事件。合流在 `ModifyShuffleOrder` 中委托原版 `PerfectFit`，同时保留偏锋继承来的附魔槽；提示也取自原版附魔。
+
+铭刻与赠印的永久关键词另由 BaseLib `CardModifier` 扩展保存。`PermanentKeywordModifier` 使用稳定位标记 `Retain=1`、`Innate=2`，在载入、升级和降级后重新应用，并随 BaseLib 的克隆／序列化流程传递。直接 `AddKeyword` 只修改实例，不能独自证明保存续玩后仍存在；普通战斗保留不使用这层永久修正。
 
 ## 设计差异与实现边界
 
-- 磨顶可复用原版牌堆移动、自动出牌、RNG 与选择上下文；磨顶结果、一次操作计数、失败截断需要本项目封装，进度以设计条目为准。`CardPileCmd.Add` 与 `CardCmd.Discard` 的事件语义不同，不能用普通弃牌替代磨顶。
-- 征召需要保留原版抽牌 Hook、历史、禁抽与满手限制，同时禁止本次抽牌主动洗牌。只先取 `min(X, 抽牌堆数量)` 再一次普通 Draw，无法保证插入触发改变牌堆后仍不洗牌；应在实现时采用最小封装并验证该差异。
-- 涤尘已确认沿用散射炮排除消耗堆的筛选，可以复用其范围处理；原版随机选敌与本卡同一敌人的要求不同，目标按[伤害与牌堆设计](../../../../docs/design/mechanics.md#伤害斩杀与目标)执行。
-- 伏笔的费用采样时点已经确认，可将选牌结束时算出的金额交给原版 `EnergyNextTurnPower`，复用侧步的延迟发放流程；当前规则见[费用与回合设计](../../../../docs/design/mechanics.md#计数费用保留与回合)。
-- 先古卡替换对象与两种磨顶支付的优先级均已由策划明确，分别见[先古获取与保存](../../../../docs/design/mechanics.md#奖励先古获取与保存)和[替代支付](../../../../docs/design/mechanics.md#替代支付修正与原版术语)。先古映射接入上表的既有 BaseLib 接口；本项目支付规则需在实现时核对费用生命周期，不能由原版参考自行推导玩法。
+- [MillCmd](../../../../mod/HeavySilentCode/Mechanics/MillCmd.cs)复用 `CardPileCmd.Add`，不派发普通弃牌事件；调用者检查 `Success` 以截断余下效果。`IMilledCard` 每移动一张后等待插入结算。`MillResult.Amount` 为锁定的最终数值，`Cards` 为实际移动集合，`OrdinalThisTurn` 让首次遗物不受嵌套计数干扰；先觉及中途空堆规则见[机制正文](../../../../docs/design/mechanics.md#磨顶-x实现约束)。
+- [RecruitCmd](../../../../mod/HeavySilentCode/Mechanics/RecruitCmd.cs)逐次检查非空抽牌堆，再执行原版单张 Draw。每次等待早期／普通抽牌 Hook 后重读牌顶，不一次调用 `Draw(min(X, 初始牌数))`，也不拦截插入效果自身的洗牌。
+- [涤尘](../../../../mod/HeavySilentCode/Cards/Attacks/Purge.cs)排除消耗堆并按实际消耗数量攻击同一目标；仅复用散射炮的范围，不沿用其随机目标。[伏笔](../../../../mod/HeavySilentCode/Cards/Skills/Foresight.cs)在选牌完成后采样费用，交给 `EnergyNextTurnPower` 延迟发放。
+- [MillPayment](../../../../mod/HeavySilentCode/Mechanics/MillPayment.cs)在出牌资源阶段捕获差额与 X，保留实际能量支出，进入原版出牌包装前执行磨顶。若插入触发导致支付磨顶失败，按[替代支付规则](../../../../docs/design/mechanics.md#替代支付修正与原版术语)继续原版打出和归堆，只跳过源卡 `OnPlay` 效果；原先已发生的抽牌与费用不回滚。
+- [RewardContent](../../../../mod/HeavySilentCode/Mechanics/RewardContent.cs)分开处理赠印的奖励出现、舍离／兼收的实际奖励选择与最终入 Deck。异步作用域隔离并行选择，兼收附赠不会再次触发“选择舍离”；若原版入组 Hook 替换实例，永久关键词转移到最终获得实例。
+
+## 当前补丁边界
+
+以下均由 `ModEntry.Initialize` 的 `Harmony.PatchAll` 安装，目标为上方本机基线。升级游戏后须重新反编译目标并验证，不能只凭编译通过判断运行时补丁仍有效。永久关键词复用现有 BaseLib `CardModifier`，没有为保存格式另加本项目补丁。
+
+| 实现 | 目标方法 | 原版入口不足与适配范围 |
+| --- | --- | --- |
+| [MillTurnState](../../../../mod/HeavySilentCode/Mechanics/MillTurnState.cs) | `Hook.BeforeSideTurnStart`、`AfterCardPlayed`、`AfterCardChangedPiles`、`AfterShuffle` 的 Prefix | 按 `PlayerCombatState` 记录回合计数，在原版监听前更新；重置先于己方 `BeforeHandDraw`、起手 Draw 与 `AfterPlayerTurnStart`，牌堆变化刷新动态费用。避免依赖某张手牌或可移除 Power 承担全局计数 |
+| [MillPayment](../../../../mod/HeavySilentCode/Mechanics/MillPayment.cs) | `PlayerCombatState.HasEnoughResourcesFor`、`CardModel.SpendResources`、`CardEnergyCost.GetAmountToSpend`、`CardModel.OnPlayWrapper` | 原版只提供不足能量转星星，没有可等待抽牌／选择的磨顶支付入口；适配资格、实际支付、锁定 X 与待支付状态，不改普通卡费用 |
+| 同上 | `CardModel.OnPlayWrapper` 的异步状态机 `MoveNext` 中唯一 `CardModel.OnPlay` 调用 | 支付失败时跳过源卡效果，同时让原版历史、打出 Hook、消耗／弃置、费用清理继续运行；Transpiler 要求恰好匹配一次，否则显式报错，避免静默套用变更后的 IL |
+| [RewardPatches](../../../../mod/HeavySilentCode/Patches/RewardPatches.cs) | `CardReward.Populate`、`CardReward.OnSelect`、单张 `CardPileCmd.Add(CardModel, PileType, CardPilePosition, AbstractModel, bool)` | 奖励候选不是原版 Hook 监听者，也没有所选卡回调；仅在相应奖励作用域识别候选入 Deck，保留原版选择、同步、UI 和获得 Hook，不将普通生成或购买当作选择 |

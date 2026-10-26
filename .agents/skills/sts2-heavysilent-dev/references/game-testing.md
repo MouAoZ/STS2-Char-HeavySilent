@@ -4,7 +4,7 @@
 
 ## 日常使用
 
-主工作流是 Agent 针对当前改动制定测试、操作游戏并调查结果。固定回归是可选积累，不是每次提交的默认仪式。打击等样例用于首次验证控制链或在相关公共逻辑变化时复查；实现磨顶后应围绕牌堆顺序、触发链、空堆和界面表现选择新场景。
+主工作流是 Agent 针对当前改动制定测试、操作游戏并调查结果。固定回归是可选积累，不是每次提交的默认仪式。打击等样例用于首次验证控制链或在相关公共逻辑变化时复查；磨顶／征召及依赖内容需要围绕牌堆顺序、插入触发、空堆、支付与界面表现选择相应场景。
 
 先关闭已有游戏实例，确保启用 BaseLib、HeavySilent。本机 GodotExplorer 可以保留；其他模组会触发环境检查。首次运行需要联网下载固定版本工具和源码：
 
@@ -26,7 +26,7 @@
 | `test -TaskFile <task.json>` | 启动并登记本次改动的测试任务，随后由 Agent 决定如何操作和调查 |
 | `test -Suite smoke` | 1 轮：选角开局、升级保存续玩、三张基础牌、当前语言文本与截图、结束回合 |
 | `test -Suite regression` | 同一种子重复 2 轮；每轮增加升级牌、抽牌边界、力量／敏捷／虚弱／敌人格挡，共 38 项 |
-| `test-stop` | 退出受管局和游戏，恢复原档位选择与显示／语言设置，核对第 1、2 档哈希 |
+| `test-stop` | 通过原版 `NGame.Quit` 退出受管局和游戏，恢复原档位选择与显示／语言设置，核对第 1、2 档哈希 |
 
 无游戏脚本测试：`python -m unittest discover -s tests -v`。脚本测试、编译与实机测试是不同证据。
 
@@ -91,6 +91,7 @@ MCP 请求使用工具参数对象。比如手牌下标 0 的无目标卡：
 | --- | --- |
 | `start_session`／`stop_session` | 前者构建部署并启动游戏，后者退出并恢复设置；不是连接任意手动开启的游戏 |
 | `get_state`／`list_models` | 前者读取现场；后者以 `kind=cards|powers` 和 ID 子串查询注册模型，最多返回100项，不能把默认结果当完整目录 |
+| `content_check` | `models` 读取全部匹配卡的基础／升级模型，`snapshot` 读取永久套牌／遗物／奖励池／选择历史；其余操作只允许受管单人 HeavySilent 局、战斗外且无覆盖界面时执行 |
 | `start_combat`／`prepare_scenario` | 前者进入战斗；后者在可出牌阶段安排条件。构造过程也会调用游戏 Command，出现运行时错误时重新读现场，不假设自动回滚 |
 | `perform_action` | `action` 与 `arguments` 分开；菜单为 `menu_select`＋`option`，选地图／事件选项使用 `index`；参数以当前状态与上游 `McpMod.Actions.cs` 为准 |
 | `inspect_card`／`capture_screenshot` | 放大查看后调用 `inspect_card(close=true)` 再继续操作；截图 `name` 使用唯一字母／数字／下划线／连字符，避免覆盖证据 |
@@ -100,6 +101,14 @@ MCP 请求使用工具参数对象。比如手牌下标 0 的无目标卡：
 
 状态的 `busy=false` 表示当前未观察到桥准备、Action 执行或切场等活动，并不自动证明本次效果正确。`play_phase` 确认可出牌阶段，`piles` 是真实战斗牌堆，`visible_hand_count` 是手牌界面节点数量；数值、去向和必要的界面表现应分别检查。
 卡牌 `instance_id` 仅供同一进程内短期比对，保存续玩时应比较稳定 `id`、升级状态等，而非运行时对象哈希。`ui` 提供原版菜单／战斗／选牌状态，出现等待玩家选择时应先处理选择，不要反复发送出牌或重建场景。
+
+### 奖励、先古与持久化
+
+[HsContentChecks.cs](../../../../tools/game-testing/bridge/HsContentChecks.cs) 提供战斗外前提安排，仍由原版 UI／Command 执行效果。`content_check({"op":"reward","cards":[{"id":"HEAVYSILENT_WINDFALL"},{"id":"HEAVYSILENT_PARTING_MARK"}]})` 创建真实奖励；随后用 `claim_reward(index)`、`select_card_reward(card_index)` 或 `skip_card_reward` 选择。`relic` 加 `id` 通过 `RelicCmd.Obtain` 获得遗物；三项先古遗物先调用原版 `SetupForPlayer`。`upgrade_deck` 加 `indices` 通过 `CardCmd.Upgrade` 设置替换前提，桥不直接写入期待的替换结果。
+
+这些操作返回 `operation_id` 和 `pending/completed/failed` 状态。等待选牌时用原版选择动作继续，并以 `{"op":"status","operation_id":"原句柄"}` 查询完成；禁止因超时重复创建奖励或获得遗物。未完成内容操作阻止重建场景与保存退出，普通 UI 选择仍可操作。地图可能覆盖尚未卸载的战斗奖励界面；此时前提检查会拒绝，应进入正常的非战斗房间再测试。
+
+`reward` 的可选 `no_hook_upgrades:true` 用原版 `CardCreationFlags.NoHookUpgrades` 保留未升级奖励预览，用于检查蛋类遗物在入组时克隆升级的路径。此模式要求互异、未升级、属于当前奖励池的候选，显示顺序由原版 RNG 决定，选择前按 ID 重新找下标。保存验证需先正常进入下一房间，让原版写入房间检查点，再返回菜单续玩，比较永久 ID、升级和关键词；夹具自身不会制造任意时刻存档。
 
 ## 会话缺失与故障处理
 
@@ -129,13 +138,15 @@ print(state["profile"], state["in_combat"])
 
 ## 保存隔离与测试边界
 
-首次只接受空的 `modded/profile3`；以后通过本机 `profile3-owner.json` 识别本项目登记的测试档。已有未登记数据时停止，不自行覆盖。该档只用于测试，`start_combat(fresh=true)` 或固定回归会放弃这个档的上一局，并调用游戏自身的 `unlock all` 准备解锁环境，避免强制时间线阻止新局。新局难度保持 A0。
+首次只接受空的 `modded/profile3`；以后通过本机 `profile3-owner.json` 识别本项目登记的测试档。已有未登记数据时停止，不自行覆盖。该档只用于测试，`start_combat(fresh=true)` 或固定回归会放弃这个档的上一局，并调用游戏自身的 `unlock all` 准备解锁环境，避免强制时间线阻止新局。新局沿用测试档的选角难度；人类试玩后可能不是历史验收的 A0，必须读取 `ui.run.ascension`，需要特定难度时先在选角界面设置。开局先古若给出额外奖励，自动入口可能停在奖励界面；读取现场后通过正常 UI 继续，不要重复开局。
 
 游戏的 Steam 云同步会覆盖启动前写入的档位选择，因此桥在 `NGame` 初始化档位之前使用游戏公开的 `SaveManager.MockInstanceForTesting(new SaveManager(localStore))` 注入 `GodotFileIo` 本地后端。序列化、迁移、异步磁盘写入仍走原版；受管进程不进行游戏云存档读写。此设置只存在于该进程，不修改 Steam 全局云开关。
 
 启动前记录并备份原版与 modded 第 1、2 档全部文件，结束时在同一范围比较文件清单和 SHA256。备份位于当前报告目录 `personal-saves-before.zip`。原档位选择器另存字节备份并恢复；个人存档不会被测试脚本自动还原覆盖，出现真实不一致时保留证据并报错。旧会话缺少新检查范围时按启动时的范围验证，不能把未纳入基线的文件误报为新增。
 
 桥只监听 localhost 15526，要求随机会话令牌；无测试环境变量时不启动服务、不替换存档后端。会话检查 PID 和部署 DLL 哈希；写操作限定第 3 档，禁用上游档位管理和多人 API。它不是公网服务，不应转发端口。
+
+受管退出先回到主菜单，再延迟调用原版 `NGame.Quit`，执行设置／测试档保存、文本段落与字体缓存清理；不能用 `SceneTree.Quit` 代替。该操作也必须处于第3档，并在主线程再次检查。进程退出后恢复语言、窗口模式、大小、位置和显示器编号 `target_display`，再恢复原档位选择并核对个人档。手动试玩期间保持第3档，不通过原版菜单切换个人档。
 
 `HeavySilentTestBridge` 是单独的开发模组，位于游戏 `mods/HeavySilentTestBridge`；正式 `artifacts/package/HeavySilent` 只包含本角色。平时启动游戏即使桥被启用也不提供控制能力。不要把测试桥发布给玩家作为前置。
 

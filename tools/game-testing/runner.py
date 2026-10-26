@@ -119,7 +119,8 @@ def enter_run(client, prefix, seed=SEED, upgrade_deck=True):
     require(state['seed'], seed, 'actual run seed')
     if upgrade_deck:
         require(Counter(c['id'] for c in state['deck']),
-                Counter(HEAVYSILENT_STRIKE=5, HEAVYSILENT_DEFEND=5, HEAVYSILENT_QI=2), 'starting deck')
+                Counter(HEAVYSILENT_STRIKE=5, HEAVYSILENT_DEFEND=5,
+                        HEAVYSILENT_GATHER_BREATH=1, HEAVYSILENT_OBLIQUE_STRIKE=1), 'starting deck')
         client.request('/hs/prepare', {'case_id': 'save_upgrade'})
     # Normal room navigation. A fresh profile skips Neow; an existing one may show it.
     for _ in range(12):
@@ -129,6 +130,10 @@ def enter_run(client, prefix, seed=SEED, upgrade_deck=True):
         kind = state['ui']['state_type']
         if kind == 'map':
             client.action('choose_map_node', index=state['ui']['map']['next_options'][0]['index'])
+        elif kind == 'bundle_select':
+            if not state['ui']['bundle_select']['preview_showing']:
+                client.action('select_bundle', index=0)
+            client.action('confirm_bundle_selection')
         elif kind in ('event', 'ancient'):
             state = client.wait(lambda s: not s['busy'] and s.get('event_ui_ready', False))
             if state['ui']['event'].get('in_dialogue'):

@@ -28,7 +28,7 @@ public static partial class McpMod
         if (name == "save_upgrade")
         {
             if (CombatManager.Instance.IsInProgress) throw new InvalidOperationException("Upgrade the permanent deck outside combat.");
-            foreach (string id in new[] { "HEAVYSILENT_STRIKE", "HEAVYSILENT_DEFEND", "HEAVYSILENT_QI" })
+            foreach (string id in new[] { "HEAVYSILENT_STRIKE", "HEAVYSILENT_DEFEND", "HEAVYSILENT_GATHER_BREATH" })
                 CardCmd.Upgrade(player.Deck.Cards.First(c => c.Id.Entry == id));
             return;
         }

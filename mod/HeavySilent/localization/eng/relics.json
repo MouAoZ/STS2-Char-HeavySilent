@@ -1,0 +1,14 @@
+{
+  "HEAVYSILENT_WHETSTONE.title": "Whetstone",
+  "HEAVYSILENT_WHETSTONE.description": "The first time you [gold]Mill[/gold] each turn, gain {Block} [gold]Block[/gold].",
+  "HEAVYSILENT_WHETSTONE.flavor": "A thousand strokes have left their mark.",
+  "HEAVYSILENT_JADE_WHETSTONE.title": "Jade Whetstone",
+  "HEAVYSILENT_JADE_WHETSTONE.description": "The first time you [gold]Mill[/gold] each turn, gain [gold]Block[/gold] equal to twice the Mill amount.",
+  "HEAVYSILENT_JADE_WHETSTONE.flavor": "Its quiet luster conceals a perfect edge.",
+  "HEAVYSILENT_BREATH_VESSEL.title": "Breath Vessel",
+  "HEAVYSILENT_BREATH_VESSEL.description": "At the start of combat, shuffle {Cards} [gold]Qi+[/gold] into your Draw Pile.",
+  "HEAVYSILENT_BREATH_VESSEL.flavor": "The lid is open, yet a breath remains within.",
+  "HEAVYSILENT_BREATH_CHARM.title": "Breath Charm",
+  "HEAVYSILENT_BREATH_CHARM.description": "The first time you play [gold]Qi[/gold] each turn, gain {Block} [gold]Block[/gold].",
+  "HEAVYSILENT_BREATH_CHARM.flavor": "A slip of paper shelters one last breath."
+}

@@ -76,6 +76,17 @@ def prepare_scenario(scenario: dict) -> dict:
 
 
 @mcp.tool()
+def content_check(operation: dict) -> dict:
+    """Inspect registered models or prepare native reward/ancient checks on managed profile 3.
+    op=models|snapshot reads run data. op=reward accepts cards:[{id,upgraded?}],
+    op=relic accepts id, op=upgrade_deck accepts indices. Mutations require outside combat.
+    Long operations return operation_id; poll op=status with that ID and answer normal UI choices.
+    """
+    with control_lock():
+        return GameClient().request('/hs/content', operation)
+
+
+@mcp.tool()
 def inspect_card(index: int = 0, close: bool = False) -> dict:
     """Open/close the real enlarged card view for screenshot review; index refers to current hand."""
     with control_lock():
